@@ -1,5 +1,10 @@
 // import express from 'express'
 
-// router.get('/login', checkAuth, authHandler.login)
+// const router = express.Router()
+
+// import { authUser, createUser } from '../controllers/userController'
+
+// router.route('/warehouses').get(authUser)
+// router.route('/register').post(createUser)
 
 // export default router

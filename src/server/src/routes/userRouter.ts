@@ -2,8 +2,13 @@ import express from 'express'
 
 const router = express.Router()
 
-import { authUser, fdsfds } from '../controllers/userController'
+import { authUser, createUser, logoutUser } from '../controllers/userController'
+import { verifyUserToken, verifyTokenStored } from '../middlewares/Auth'
 
-router.post('/login', authUser).get('./login', fdsfds)
+// verifyUserToken, verifyTokenStored
+
+router.route('/login').post(authUser)
+router.route('/register').post(createUser)
+router.route('/logout').post(logoutUser)
 
 export default router

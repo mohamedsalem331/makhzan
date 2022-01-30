@@ -1,10 +1,13 @@
-const redis = require('redis')
+import * as redis from 'redis'
 
-// connect to redis
-const redis_client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST)
+const redis_client = redis.createClient()
+export default redis_client
 
-redis_client.on('connect', function () {
-  console.log('redis client connected')
-})
+// .then(() => {
+//   return jwtr.verify('64564564563342gdfs432', secret)
+// })
+// const redis_client = redis.createClient(6379, process.env.REDIS_HOST)
 
-module.exports = redis_client
+// redis_client.on('connect', function () {
+//   console.log('redis client connected')
+// })

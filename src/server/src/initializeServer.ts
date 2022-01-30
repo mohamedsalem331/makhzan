@@ -5,7 +5,6 @@ import compression from 'compression'
 import morgan from 'morgan'
 
 import userRouter from './routes/userRouter'
-// import taskRouter from ('./routers/task')
 
 export default function initializeServer(router: Router) {
   const app = express()
@@ -23,6 +22,7 @@ export default function initializeServer(router: Router) {
 
   // app.use(express.static(path.join(__dirname, '../../dist/')))
 
+  // express routers
   app.use(userRouter)
   // app.use(taskRouter)
 

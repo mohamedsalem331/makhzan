@@ -1,6 +1,12 @@
 import initializeServer from './initializeServer'
 import sequelize from './config/pgsql'
 import { Router } from 'express'
+import redis_client from './config/redis'
+
+import User from './models/userModel'
+import Warehouse from './models/warehouseModel'
+
+require('dotenv').config()
 
 const port = process.env.PORT || 5000
 
@@ -11,13 +17,24 @@ const app = initializeServer(router)
 ;(async (): Promise<void> => {
   try {
     await sequelize.authenticate()
-    await sequelize.sync({ force: true })
-    console.log('Database Connection has been established successfully.')
+    await sequelize.sync({ alter: true })
+    console.log('Database Connected Successfully.')
   } catch (error) {
-    console.error('Unable to connect to the database:', error)
     sequelize.close()
-    process.exit()
+    process.exit(1)
+  }
+})()
+;(async (): Promise<void> => {
+  redis_client.on('error', (err) => console.log('Redis redis_client Error', err))
+  try {
+    await redis_client.connect()
+    console.log('Redis Connected Successfully.')
+  } catch (e) {
+    process.exit(1)
   }
 })()
 
-app.listen(port, () => console.log(`Listening on port ${port}`)) // eslint-disable-line
+User.hasMany(Warehouse)
+Warehouse.belongsTo(User)
+
+app.listen(port, () => console.log(`Server Listening on port ${port}`)) // eslint-disable-line
