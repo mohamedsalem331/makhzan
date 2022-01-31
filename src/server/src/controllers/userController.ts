@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import User, { findByCredentials, generateJWTAuthToken } from '../models/userModel'
 import { UserAttributes } from '../constants/types'
 import { Op } from 'sequelize'
@@ -43,7 +43,7 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const existingUser = await User.findOne({
       where: {
-        [Op.or]: [{ email: NewUser.email }, { phoneNumber: NewUser.password }],
+        [Op.or]: [{ email: NewUser.email }, { phoneNumber: NewUser.phoneNumber }],
       },
     })
 
@@ -74,14 +74,16 @@ const createUser = async (req: Request, res: Response) => {
 // @access  Private
 const logoutUser = async (req: Request, res: Response) => {
   try {
-    const user = req.userData
-    const token = req.token
+    // const user = req.userData
+    // const token = req.token
+
+    // if (!user || !token) throw new Error('User or Token is invalid')
 
     // remove the refresh token
-    await delRedisValue(user.id.toString())
+    // await delRedisValue(user.id.toString())
 
     // blacklist current access token
-    await setRedisValue('BL_' + user.id.toString(), { token })
+    // await setRedisValue('BL_' + user.id.toString(), { token })
 
     res.status(200).send({ message: 'User Logged out' })
   } catch (e: any) {
@@ -92,5 +94,25 @@ const logoutUser = async (req: Request, res: Response) => {
     res.status(400).send({ error: e.message })
   }
 }
+
+// const deleteUser = async (req: Request, res: Response) => {
+//   try {
+//     const user = req.userData
+
+//     await User.destroy({
+//       where: {
+//         [Op.or]: [{ email: user.email }, { phoneNumber: user.phoneNumber }],
+//       },
+//     })
+
+//     res.status(200).send({ message: 'User Logged out' })
+//   } catch (e: any) {
+//     let errorMessage = 'Wrong Credentials'
+//     if (e instanceof Error) {
+//       errorMessage = e.message
+//     }
+//     res.status(400).send({ error: e.message })
+//   }
+// }
 
 export { authUser, createUser, logoutUser }

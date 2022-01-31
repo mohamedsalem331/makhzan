@@ -34,7 +34,7 @@ const app = initializeServer(router)
   }
 })()
 
-User.hasMany(Warehouse)
-Warehouse.belongsTo(User)
+// User.hasMany(Warehouse)
+// Warehouse.belongsTo(User)
 
 app.listen(port, () => console.log(`Server Listening on port ${port}`)) // eslint-disable-line

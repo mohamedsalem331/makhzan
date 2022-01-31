@@ -9,18 +9,15 @@ const verifyUserToken = async (req: any, res: Response, next: NextFunction) => {
     const token = req.headers.authorization.split(' ')[1]
 
     const decoded = jwt.verify(token, 'verysecretjwttokenmsg')
-
-    // const user = User.findByPk(decoded.id)
-
-    // if (!user) {
-    //     throw new Error("Authentication Failed")
-    // }
-
     console.log(decoded)
+
+    // const user = User.findByPk(decoded.id.toString())
+
+    // if (!user) throw new Error('Authentication Failed')
 
     // const data = getRedisValue('BL_' + decoded.id)
 
-    // if(data === token) return res.status(401).send({message: "blacklisted token."});
+    // if (data === token) return res.status(401).send({ message: 'blacklisted token.' })
 
     req.userData = decoded
     req.token = token

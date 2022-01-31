@@ -19,6 +19,7 @@ interface WarehouseAttributes {
   location: string
   street: string
   services: Array<string>
+  images: Array<string>
 }
 
 export { UserAttributes, WarehouseAttributes }

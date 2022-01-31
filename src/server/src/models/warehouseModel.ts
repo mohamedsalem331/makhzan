@@ -16,15 +16,16 @@ const Warehouse = sequelize.define<WarehouseInstance>('Warehouse', {
     allowNull: false,
     unique: true,
   },
-  name: { type: DataTypes.STRING, allowNull: false },
-  email: { type: DataTypes.STRING, allowNull: false, unique: true },
-  password: { type: DataTypes.STRING, allowNull: false },
-  phoneNumber: { type: DataTypes.INTEGER, allowNull: false, unique: true },
-  isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-  isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-  isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-  isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-  "userId" INTEGER REFERENCES "Teams" ("id") ON DELETE SET NULL ON UPDATE CASCADE, // foreign key
+  title: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.STRING(600), allowNull: false },
+  size: { type: DataTypes.INTEGER, allowNull: false },
+  rent: { type: DataTypes.INTEGER, allowNull: false, unique: true },
+  governorate: { type: DataTypes.STRING, defaultValue: 'cairo' },
+  location: { type: DataTypes.STRING, allowNull: false },
+  street: { type: DataTypes.STRING, allowNull: false },
+  services: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
+  images: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
+  // "userId" INTEGER REFERENCES "Teams" ("id") ON DELETE SET NULL ON UPDATE CASCADE, // foreign key
 })
 
 export default Warehouse
