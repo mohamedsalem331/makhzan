@@ -22,4 +22,11 @@ interface WarehouseAttributes {
   images: Array<string>
 }
 
-export { UserAttributes, WarehouseAttributes }
+interface IFilters {
+  size: number[]
+  rent: number[]
+  governorate: string
+  location: string
+}
+
+export { UserAttributes, WarehouseAttributes, IFilters }

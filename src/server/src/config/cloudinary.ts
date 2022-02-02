@@ -10,7 +10,9 @@ type promiseObjectResolve = {
   secure_url: string
 }
 
-export const uploadCloudinary = (file_path: string): Promise<promiseObjectResolve> => {
+export const uploadCloudinary = (
+  file_path: string
+): Promise<cloudinary.UploadApiResponse | undefined> => {
   return new Promise((resolve, reject) => {
     cloudinary.v2.uploader.upload(file_path, function (error, result) {
       if (error) reject('upload on cloudinary failed')

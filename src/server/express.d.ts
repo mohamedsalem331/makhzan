@@ -1,6 +1,7 @@
 declare namespace Express {
+  import jwt from 'jsonwebtoken'
   export interface Request {
-    userData?: object
+    userData?: jwt.JwtPayload
     token?: string
   }
 }

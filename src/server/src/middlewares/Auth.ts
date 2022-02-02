@@ -4,9 +4,11 @@ import { Request, Response, NextFunction } from 'express'
 import { getRedisValue, setRedisValue, delRedisValue } from '../utils/redisUtils'
 import User from '../models/userModel'
 
-const verifyUserToken = async (req: any, res: Response, next: NextFunction) => {
+const verifyUserToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req?.header('Authorization')?.replace('Bearer ', '')
+
+    if (!token) throw new Error('Token is Invalid')
 
     const decoded = jwt.verify(token, 'verysecretjwttokenmsg')
     console.log(decoded)
@@ -27,9 +29,9 @@ const verifyUserToken = async (req: any, res: Response, next: NextFunction) => {
   }
 }
 
-const verifyTokenStored = async (req: any, res: Response, next: NextFunction) => {
+const verifyTokenStored = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = await getRedisValue(req.userData.id)
+    const data = await getRedisValue(req?.userData?.id)
 
     if (data === null)
       return res.status(401).send({ message: 'Invalid request. Token is not in store.' })
@@ -43,4 +45,12 @@ const verifyTokenStored = async (req: any, res: Response, next: NextFunction) =>
   }
 }
 
-export { verifyUserToken, verifyTokenStored }
+const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.userData && req.userData.isAdmin) {
+    next()
+  } else {
+    return res.status(401).send({ message: 'You are not an Admin' })
+  }
+}
+
+export { verifyUserToken, verifyTokenStored, verifyAdmin }

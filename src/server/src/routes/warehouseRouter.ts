@@ -1,10 +1,22 @@
-// import express from 'express'
+import express from 'express'
 
-// const router = express.Router()
+const router = express.Router()
 
-// import { authUser, createUser } from '../controllers/userController'
+import {
+  getAllWarehouses,
+  getWarehouse,
+  createWarehouse,
+  deleteWarehouse,
+} from '../controllers/warehouseController'
+import { verifyUserToken, verifyTokenStored, verifyAdmin } from '../middlewares/Auth'
 
-// router.route('/warehouses').get(authUser)
-// router.route('/register').post(createUser)
+// http://localhost:3000/warehouses/
 
-// export default router
+router.route('/').get(getAllWarehouses)
+router.route('/create').post(verifyUserToken, verifyTokenStored, createWarehouse)
+router
+  .route('/:id')
+  .get(getWarehouse)
+  .delete(verifyUserToken, verifyTokenStored, verifyAdmin, deleteWarehouse)
+
+export default router

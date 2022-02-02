@@ -1,9 +1,12 @@
-import express, { Request } from 'express'
-import multer from 'multer'
+import { Request } from 'express'
+import multer, { FileFilterCallback } from 'multer'
 import path from 'path'
 import fs from 'fs'
 import { uploadCloudinary } from '../config/cloudinary'
-const router = express.Router()
+
+interface IFileFilterCallback extends FileFilterCallback {
+  (error: Error | null): void
+}
 
 const storage = multer.diskStorage({
   destination(
@@ -16,7 +19,7 @@ const storage = multer.diskStorage({
   filename(
     req: Request,
     file: Express.Multer.File,
-    cb: (error: Error | null, filename: string) => void
+    cb: (error: Error | null, destination: string) => void
   ) {
     cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
   },
@@ -33,49 +36,41 @@ function checkFileType(
   if (extname && mimetype) {
     return cb(null, true)
   } else {
-    cb(undefined, 'Images format is only acceptable')
+    cb(null, 'Images format is only acceptable')
   }
 }
 
 const upload = multer({
   storage,
-  fileFilter: function (req, file, cb) {
+  fileFilter: function (req, file, cb: IFileFilterCallback) {
     checkFileType(file, cb)
   },
 })
 
-router.post('/', upload.array('avatar', 3), async (req: Request, res) => {
-  try {
-    const files = JSON.parse(JSON.stringify(req.files))
+const uploadImagesCloud = async (myFiles: any): Promise<string[]> => {
+  let myImages: any = []
 
-    const myImages = await fetchImages(files)
-
-    res.send({ myImages })
-  } catch (e) {
-    res.status(404).send({ message: 'error Image upload' })
-  }
-})
-
-const fetchImages = async (myFiles: any): Promise<string[]> => {
-  let myImages: Array<string> = []
-  for (let i = 0; i < myFiles.length; i++) {
-    fs.stat(myFiles[i].path, (err, stats) => {
-      if (err) throw new Error('Image file doesnt exist in the root')
-
-      uploadCloudinary(myFiles[i].path)
-        .then((res) => {
-          myImages.push(res.secure_url)
-          if (stats.isFile()) {
-            fs.unlink(myFiles[i].path, function (err) {
-              if (err) return console.log(err)
-              console.log('file deleted successfully')
-            })
-          }
-        })
-        .catch((err) => console.log(err))
+  myImages = await Promise.all(
+    myFiles.map(async (file: any) => {
+      try {
+        const fileExists = fs.statSync('src//uploads//images//avatar-1643744186674.jpg').isFile()
+        if (fileExists) {
+          const img = await uploadCloudinary(file.path)
+          fs.unlink(file.path, function (err) {
+            if (err) return console.log(err)
+            console.log('file deleted successfully')
+          })
+          return img?.secure_url
+        }
+      } catch (error) {
+        console.log('file does not exist')
+      }
     })
-  }
+  )
+
   return myImages
 }
 
-export default router
+export { uploadImagesCloud }
+
+export default upload

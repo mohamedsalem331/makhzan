@@ -1,8 +1,5 @@
-import { NextFunction, Request, Response } from 'express'
-import { Method } from '../constants/enums/enums'
+import { Request, Response } from 'express'
 
-const notFoundRoute = (req: Request, res: Response) => {
+export const notFoundRoute = (req: Request, res: Response) => {
   res.status(404).send({ message: `Route not found - ${req.originalUrl}` })
 }
-
-exports.errorRouteMiddleware = notFoundRoute
