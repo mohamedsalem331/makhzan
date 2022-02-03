@@ -46,6 +46,8 @@ const authUser = async (req: Request, res: Response) => {
       .status(200)
       .send({ email: user.email, username: user.name, phoneNumber: user.phoneNumber, token })
   } catch (e: any) {
+    console.log(e)
+
     let errorMessage = 'Wrong Credentials'
     if (e instanceof Error) {
       errorMessage = e.message

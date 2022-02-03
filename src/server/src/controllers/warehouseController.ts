@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import Warehouse from '../models/warehouseModel'
-import { WarehouseAttributes, IFilters } from '../constants/types'
+import User from '../models/userModel'
+import { WarehouseAttributes } from '../constants/types'
 import { Op } from 'sequelize'
-import { setRedisValue, delRedisValue } from '../utils/redisUtils'
 
 // 400 Bad Request -> The 400 status code, or Bad Request error, means the HTTP request that was sent to the server has invalid syntax.
 // 401 unauthneticated
@@ -11,39 +11,19 @@ import { setRedisValue, delRedisValue } from '../utils/redisUtils'
 // @desc    fetch all warehouses
 // @route   GET /warehouses
 // @access  Public
-
 const getAllWarehouses = async (req: Request, res: Response) => {
   let warehouses
+
   try {
-    // const filters: IFilters = req.body
-    const filters = req.body
+    warehouses = await Warehouse.findAll()
 
-    // const rentFilter = filters.rent ? filters.rent : [0]
-
-    Object.keys(filters)
-
-    warehouses = Warehouse.findAll({
-      where: {
-        rent: {
-          [Op.between]: filters.rent,
-        },
-        size: {
-          [Op.between]: filters.size,
-        },
-        governorate: {
-          [Op.eq]: filters.governorate,
-        },
-        location: {
-          [Op.eq]: filters.governorate,
-        },
-      },
-    })
-
-    if (!warehouses) throw new Error('Couldnt retreive all warehouses')
+    if (!warehouses || !warehouses.every((warehouse) => warehouse instanceof Warehouse)) {
+      throw new Error('Couldnt retreive all warehouses')
+    }
 
     res.status(200).send({ warehouses })
   } catch (e: any) {
-    let errorMessage = 'Wrong Credentials'
+    let errorMessage = 'Something went wrong, fetching warehouses'
     if (e instanceof Error) {
       errorMessage = e.message
     }
@@ -51,7 +31,49 @@ const getAllWarehouses = async (req: Request, res: Response) => {
   }
 }
 
-// @desc    post or create a warehouse
+// @desc    filter  warehouses
+// @route   POST /warehouses
+// @access  Public
+const filterAllWarehouses = async (req: Request, res: Response) => {
+  let warehouses
+
+  try {
+    const filters = req.body
+
+    if (!filters) throw new Error('error happened with filtering warehouses')
+
+    const maxRent = await Warehouse.max('rent')
+    const maxSize = await Warehouse.max('size')
+
+    warehouses = await Warehouse.findAll({
+      where: {
+        rent: {
+          [Op.between]: filters.rent ? filters.rent : [0, maxRent],
+        },
+        size: {
+          [Op.between]: filters.rent ? filters.rent : [0, maxSize],
+        },
+        governorate: {
+          [Op.or]: filters.governorate,
+        },
+        services: { [Op.contains]: filters.services },
+      },
+    })
+
+    if (!warehouses || !warehouses.every((warehouse) => warehouse instanceof Warehouse)) {
+      throw new Error('Couldnt filter all warehouses')
+    }
+    res.status(200).send({ warehouses })
+  } catch (e: any) {
+    let errorMessage = 'Something went wrong, filtering warehouses'
+    if (e instanceof Error) {
+      errorMessage = e.message
+    }
+    res.status(400).send({ error: e.message })
+  }
+}
+
+// @desc    post/create a warehouse
 // @route   POST /warehouses/create
 // @access  Private
 const createWarehouse = async (req: Request, res: Response) => {
@@ -60,13 +82,13 @@ const createWarehouse = async (req: Request, res: Response) => {
 
     const warehouse = await Warehouse.create(NewWarehouse)
 
-    if (!warehouse) {
+    if (!warehouse || !(warehouse instanceof Warehouse)) {
       return res.status(400).send({ message: 'Error happened with Warehouse Creation' })
     }
 
-    res.status(200).send({ message: 'Warehouse Created' })
+    res.status(201).send({ message: 'Warehouse Created' })
   } catch (e: any) {
-    let errorMessage = 'Warehouse not created'
+    let errorMessage = 'Unable to create Warehouse'
     if (e instanceof Error) {
       errorMessage = e.message
     }
@@ -83,11 +105,11 @@ const getWarehouse = async (req: Request, res: Response) => {
 
     const warehouse = Warehouse.findByPk(id)
 
-    if (!warehouse) throw new Error('Warehouse not found')
+    if (!warehouse || !(warehouse instanceof Warehouse)) throw new Error('Warehouse not found')
 
     res.status(200).send({ warehouse })
   } catch (e: any) {
-    let errorMessage = 'Wrong Credentials'
+    let errorMessage = 'Unable to fetch warehouse'
     if (e instanceof Error) {
       errorMessage = e.message
     }
@@ -102,6 +124,14 @@ const deleteWarehouse = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
 
+    // const user = req.userData
+
+    // if (!user || !(user instanceof User)) throw new Error('User Not Found or Unauthorized')
+
+    // if (user.id !== Warehouse.foreginKey) {
+    //    throw new Error('Unauthorized operation')
+    // }
+
     await Warehouse.destroy({
       where: {
         id,
@@ -110,7 +140,7 @@ const deleteWarehouse = async (req: Request, res: Response) => {
 
     res.status(200).send({ message: 'Warehouse deleted' })
   } catch (e: any) {
-    let errorMessage = 'Wrong Credentials'
+    let errorMessage = 'Unable to delete the warehouse'
     if (e instanceof Error) {
       errorMessage = e.message
     }
@@ -118,4 +148,4 @@ const deleteWarehouse = async (req: Request, res: Response) => {
   }
 }
 
-export { getAllWarehouses, getWarehouse, createWarehouse, deleteWarehouse }
+export { getAllWarehouses, getWarehouse, createWarehouse, deleteWarehouse, filterAllWarehouses }

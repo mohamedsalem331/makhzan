@@ -20,13 +20,7 @@ interface WarehouseAttributes {
   street: string
   services: Array<string>
   images: Array<string>
+  UserId?: number | string
 }
 
-interface IFilters {
-  size: number[]
-  rent: number[]
-  governorate: string
-  location: string
-}
-
-export { UserAttributes, WarehouseAttributes, IFilters }
+export { UserAttributes, WarehouseAttributes }

@@ -13,17 +13,18 @@ const importData = async (): Promise<void> => {
   } catch (e) {
     console.log(e)
   }
-  process.exit(1)
+  process.exit(0)
 }
 
 const destoryData = async () => {
-  console.log('data destroyed')
   try {
     // await User.drop()
+    await Warehouse.drop()
+    console.log('data destroyed')
   } catch (e) {
     console.log(e)
   }
-  process.exit(1)
+  process.exit(0)
 }
 
 if (process.argv[2] === '-populate') {

@@ -13,7 +13,7 @@ import { verifyUserToken, verifyTokenStored, verifyAdmin } from '../middlewares/
 
 //http:localhost:3000/users/
 
-router.route('/').get(getAllUsers)
+router.route('/').get(verifyUserToken, verifyTokenStored, verifyAdmin, getAllUsers)
 router.route('/login').post(authUser)
 router.route('/register').post(createUser)
 router.route('/logout').post(verifyUserToken, verifyTokenStored, logoutUser)

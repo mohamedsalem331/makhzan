@@ -68,9 +68,11 @@ export async function generateJWTAuthToken(user: UserAttributes): Promise<string
     expiresIn: '2d',
   })
 
-  if (!token) throw new Error('Token Creation Error')
+  if (!token) throw new Error('Token Creation Failed')
 
   const key = await getRedisValue(user.id.toString())
+
+  console.log(key)
 
   if (!key) setRedisValue(user.id.toString(), { token })
 

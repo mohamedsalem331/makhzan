@@ -6,9 +6,8 @@ const setRedisValue = async (key: string, value: object | string): Promise<strin
   return data
 }
 
-const getRedisValue = async (key: string): Promise<string> => {
+const getRedisValue = async (key: string): Promise<string | null> => {
   const data = await redis_client.get(key.toString())
-  if (!data) throw new Error()
   return data
 }
 

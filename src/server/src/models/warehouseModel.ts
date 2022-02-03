@@ -25,7 +25,7 @@ const Warehouse = sequelize.define<WarehouseInstance>('Warehouse', {
   street: { type: DataTypes.STRING, allowNull: false },
   services: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
   images: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
-  // "userId" INTEGER REFERENCES "Teams" ("id") ON DELETE SET NULL ON UPDATE CASCADE, // foreign key
+  UserId: { type: DataTypes.UUID },
 })
 
 export default Warehouse

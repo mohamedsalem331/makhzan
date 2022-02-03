@@ -14,6 +14,7 @@ const Warehouses = [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
     ],
+    UserId: '9f205fbd-73e2-4e62-a200-a657d578427e',
   },
 
   {
@@ -30,6 +31,41 @@ const Warehouses = [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
     ],
+    UserId: '9f205fbd-73e2-4e62-a200-a657d578427e',
+  },
+
+  {
+    title: 'the most massive warehouse in egypt',
+    description: 'Warehouse for Rent in New Cairod',
+    size: 650, // sqm/sqft
+    rent: 12000,
+    governorate: 'cairo',
+    location: 'nasr city',
+    street: 'street zamboly',
+    services: ['wifi', 'iot', 'bathroom', 'thermostat', 'forklift', 'alarm'],
+    images: [
+      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+    ],
+    UserId: 'c23bd2d9-7400-48f3-936a-caa169ebfd62',
+  },
+
+  {
+    title: 'this warehouse can bring you happiness in no time',
+    description: 'warehouse awesome awesome awesome',
+    size: 999, // sqm/sqft
+    rent: 6150,
+    governorate: 'alexandria',
+    location: 'bawlino',
+    street: 'mohrem beeh',
+    services: ['wifi', 'iot', 'bathroom', 'thermostat', 'forklift', 'alarm'],
+    images: [
+      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+    ],
+    UserId: 'c5187fe8-4c93-469c-ab65-a252e60504c2',
   },
 ]
 

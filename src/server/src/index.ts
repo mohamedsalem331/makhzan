@@ -5,6 +5,7 @@ import redis_client from './config/redis'
 
 import User from './models/userModel'
 import Warehouse from './models/warehouseModel'
+import { Op } from 'sequelize'
 
 require('dotenv').config()
 
@@ -34,7 +35,7 @@ const app = initializeServer(router)
   }
 })()
 
-// User.hasMany(Warehouse)
-// Warehouse.belongsTo(User)
+User.hasMany(Warehouse)
+Warehouse.belongsTo(User)
 
 app.listen(port, () => console.log(`Server Listening on port ${port}`)) // eslint-disable-line
