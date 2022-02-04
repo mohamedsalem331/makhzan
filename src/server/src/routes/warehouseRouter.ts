@@ -1,5 +1,5 @@
 import express from 'express'
-
+import { warehouse_routes } from '../constants/enums/routes'
 const router = express.Router()
 
 import {
@@ -14,7 +14,12 @@ import { verifyUserToken, verifyTokenStored } from '../middlewares/Auth'
 // http://localhost:3000/warehouses/
 
 router.route('/').get(getAllWarehouses).post(filterAllWarehouses)
-router.route('/create').post(verifyUserToken, verifyTokenStored, createWarehouse)
-router.route('/:id').get(getWarehouse).delete(verifyUserToken, verifyTokenStored, deleteWarehouse)
+router
+  .route(warehouse_routes.CREATE_WAREHOUSE)
+  .post(verifyUserToken, verifyTokenStored, createWarehouse)
+router
+  .route(warehouse_routes.FETCH_DELETE_WAREHOUSE)
+  .get(getWarehouse)
+  .delete(verifyUserToken, verifyTokenStored, deleteWarehouse)
 
 export default router

@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
-import redis_client from '../config/redis'
 import { Request, Response, NextFunction } from 'express'
-import { getRedisValue, setRedisValue, delRedisValue } from '../utils/redisUtils'
+import { getRedisValue } from '../utils/redisUtils'
 import User from '../models/userModel'
 import { JwtPayload } from 'jsonwebtoken'
 
@@ -19,17 +18,15 @@ const verifyUserToken = async (req: Request, res: Response, next: NextFunction) 
 
     const decoded: IDecoded = await jwt.verify(token, 'verysecretjwttokenmsg')
 
-    if (!decoded) throw new Error()
-
     const user = await User.findByPk(decoded.id)
 
-    if (!user) throw new Error('Authentication Failed')
+    if (!user || !decoded) throw new Error('Authentication Failed')
 
     const data = await getRedisValue('BL_' + decoded.id)
 
     if (data === token) return res.status(401).send({ message: 'blacklisted token.' })
 
-    res.locals.user = decoded
+    res.locals.user = user
     res.locals.token = token
 
     next()
@@ -37,7 +34,7 @@ const verifyUserToken = async (req: Request, res: Response, next: NextFunction) 
     const errorMessage = 'Please Authenticate'
     return res
       .status(401)
-      .send({ message: 'Your session1 is not valid. ' + e.message ?? errorMessage })
+      .send({ error: 'Your session is not valid. ' + e.message ?? errorMessage })
   }
 }
 
@@ -53,7 +50,7 @@ const verifyTokenStored = async (req: Request, res: Response, next: NextFunction
     }
 
     if (JSON.parse(data).token !== token) {
-      return res.status(401).send({ message: 'Invalid request. Token is not same in store.' })
+      return res.status(401).send({ error: 'Invalid request. Token not equal one in redis store.' })
     }
 
     next()
@@ -61,7 +58,7 @@ const verifyTokenStored = async (req: Request, res: Response, next: NextFunction
     const errorMessage = 'Please Authenticate'
     return res
       .status(401)
-      .send({ message: 'Your session is not valid. ' + e.message ?? errorMessage })
+      .send({ error: 'Your session is not valid. ' + e.message ?? errorMessage })
   }
 }
 
@@ -71,7 +68,7 @@ const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (userData && userData.isAdmin) {
     next()
   } else {
-    return res.status(401).send({ message: 'UnAuthorized You are not an Admin' })
+    return res.status(403).send({ error: 'UnAuthorized You are not an Admin' })
   }
 }
 

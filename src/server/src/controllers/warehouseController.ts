@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 import Warehouse from '../models/warehouseModel'
 import User from '../models/userModel'
-import { WarehouseAttributes } from '../constants/types'
+import { WarehouseAttributes, UserAttributes } from '../constants/types'
 import { Op } from 'sequelize'
+var _ = require('lodash')
 
 // 400 Bad Request -> The 400 status code, or Bad Request error, means the HTTP request that was sent to the server has invalid syntax.
 // 401 unauthneticated
@@ -12,18 +13,39 @@ import { Op } from 'sequelize'
 // @route   GET /warehouses
 // @access  Public
 const getAllWarehouses = async (req: Request, res: Response) => {
-  let warehouses
+  let warehouses: Array<object> = []
+  let userWarehouses: Array<object> | [] = []
+  let UserId: string | undefined
 
   try {
+    UserId = req?.header('UserID')
+
     warehouses = await Warehouse.findAll()
 
-    if (!warehouses || !warehouses.every((warehouse) => warehouse instanceof Warehouse)) {
+    if (UserId) {
+      userWarehouses = await Warehouse.findAll({
+        where: {
+          UserId,
+        },
+      })
+      warehouses = _.filter(warehouses, function (storage_unit: WarehouseAttributes) {
+        return storage_unit.UserId !== UserId
+      })
+    }
+
+    if (
+      !warehouses ||
+      !userWarehouses ||
+      !warehouses.every((warehouse) => warehouse instanceof Warehouse)
+    ) {
       throw new Error('Couldnt retreive all warehouses')
     }
 
-    res.status(200).send({ warehouses })
+    res.status(200).send({ warehouses: [...userWarehouses, ...warehouses] })
   } catch (e: any) {
-    let errorMessage = 'Something went wrong, fetching warehouses'
+    console.log(e)
+
+    let errorMessage = 'Something went wrong, couldnt fetch warehouses'
     if (e instanceof Error) {
       errorMessage = e.message
     }
@@ -51,7 +73,7 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
           [Op.between]: filters.rent ? filters.rent : [0, maxRent],
         },
         size: {
-          [Op.between]: filters.rent ? filters.rent : [0, maxSize],
+          [Op.between]: filters.size ? filters.size : [0, maxSize],
         },
         governorate: {
           [Op.or]: filters.governorate,
@@ -83,7 +105,7 @@ const createWarehouse = async (req: Request, res: Response) => {
     const warehouse = await Warehouse.create(NewWarehouse)
 
     if (!warehouse || !(warehouse instanceof Warehouse)) {
-      return res.status(400).send({ message: 'Error happened with Warehouse Creation' })
+      throw new Error('Error happened with Creaing Warehouse Instance')
     }
 
     res.status(201).send({ message: 'Warehouse Created' })
@@ -103,12 +125,14 @@ const getWarehouse = async (req: Request, res: Response) => {
   try {
     const id: string = req.body.params
 
-    const warehouse = Warehouse.findByPk(id)
+    const warehouse = await Warehouse.findByPk(id)
 
     if (!warehouse || !(warehouse instanceof Warehouse)) throw new Error('Warehouse not found')
 
     res.status(200).send({ warehouse })
   } catch (e: any) {
+    console.log(e)
+
     let errorMessage = 'Unable to fetch warehouse'
     if (e instanceof Error) {
       errorMessage = e.message
@@ -121,16 +145,23 @@ const getWarehouse = async (req: Request, res: Response) => {
 // @route   DELETE /warehouses/:id
 // @access  Private
 const deleteWarehouse = async (req: Request, res: Response) => {
+  let user: UserAttributes
+  let warehouse: WarehouseAttributes | null
+
   try {
-    const id = req.params.id
+    const id: string = req.params.id
 
-    // const user = req.userData
+    user = res.locals.user
 
-    // if (!user || !(user instanceof User)) throw new Error('User Not Found or Unauthorized')
+    if (!user || !(user instanceof User)) {
+      throw new Error('User Not Found or Unauthorized to Delete this associated warehouse')
+    }
 
-    // if (user.id !== Warehouse.foreginKey) {
-    //    throw new Error('Unauthorized operation')
-    // }
+    warehouse = await Warehouse.findByPk(id)
+
+    if (user.id !== warehouse?.UserId) {
+      throw new Error('Unauthorized operation')
+    }
 
     await Warehouse.destroy({
       where: {
@@ -144,7 +175,7 @@ const deleteWarehouse = async (req: Request, res: Response) => {
     if (e instanceof Error) {
       errorMessage = e.message
     }
-    res.status(400).send({ error: e.message })
+    res.status(403).send({ error: e.message })
   }
 }
 

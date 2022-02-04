@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import sequelize from '../config/pgsql'
 import { hashPass } from '../utils/hashedPassword'
 import jwt from 'jsonwebtoken'
-import { getRedisValue, setRedisValue } from '../utils/redisUtils'
+import { setRedisValue } from '../utils/redisUtils'
 import { UserAttributes } from '../constants/types'
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
@@ -21,7 +21,7 @@ const User = sequelize.define<UserInstance>('User', {
   name: { type: DataTypes.STRING, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false, unique: true },
   password: { type: DataTypes.STRING, allowNull: false },
-  phoneNumber: { type: DataTypes.INTEGER, allowNull: false, unique: true },
+  phoneNumber: { type: DataTypes.BIGINT, allowNull: false, unique: true },
   isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
 })
 
@@ -48,7 +48,7 @@ export async function findByCredentials(
   const user = await User.findOne({ where: { email } })
 
   if (!user || !(user instanceof User)) {
-    throw new Error('Unable to login, User not found')
+    throw new Error('Unable to login, Wrong Email or Password')
   }
 
   const isMatch = await bcrypt.compare(password, user.password)
@@ -70,11 +70,7 @@ export async function generateJWTAuthToken(user: UserAttributes): Promise<string
 
   if (!token) throw new Error('Token Creation Failed')
 
-  const key = await getRedisValue(user.id.toString())
-
-  console.log(key)
-
-  if (!key) setRedisValue(user.id.toString(), { token })
+  await setRedisValue(user.id.toString(), { token })
 
   return token
 }

@@ -5,7 +5,6 @@ import redis_client from './config/redis'
 
 import User from './models/userModel'
 import Warehouse from './models/warehouseModel'
-import { Op } from 'sequelize'
 
 require('dotenv').config()
 

@@ -53,7 +53,7 @@ const uploadImagesCloud = async (myFiles: any): Promise<string[]> => {
   myImages = await Promise.all(
     myFiles.map(async (file: any) => {
       try {
-        const fileExists = fs.statSync('src//uploads//images//avatar-1643744186674.jpg').isFile()
+        const fileExists = fs.statSync(file.path).isFile()
         if (fileExists) {
           const img = await uploadCloudinary(file.path)
           fs.unlink(file.path, function (err) {

@@ -1,5 +1,5 @@
 declare namespace Express {
-  import jwt from 'jsonwebtoken'
+  const jwt = require('jsonwebtoken')
   export interface Request {
     userData?: jwt.JwtPayload
     token?: string

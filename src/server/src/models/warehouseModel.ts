@@ -19,13 +19,13 @@ const Warehouse = sequelize.define<WarehouseInstance>('Warehouse', {
   title: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.STRING(600), allowNull: false },
   size: { type: DataTypes.INTEGER, allowNull: false },
-  rent: { type: DataTypes.INTEGER, allowNull: false, unique: true },
+  rent: { type: DataTypes.INTEGER, allowNull: false },
   governorate: { type: DataTypes.STRING, defaultValue: 'cairo' },
   location: { type: DataTypes.STRING, allowNull: false },
   street: { type: DataTypes.STRING, allowNull: false },
   services: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
   images: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false },
-  UserId: { type: DataTypes.UUID },
+  UserId: { type: DataTypes.UUID, allowNull: false },
 })
 
 export default Warehouse

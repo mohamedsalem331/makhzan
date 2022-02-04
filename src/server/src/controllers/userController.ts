@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import User, { findByCredentials, generateJWTAuthToken } from '../models/userModel'
 import { UserAttributes } from '../constants/types'
 import { Op } from 'sequelize'
+import { delRedisValue, setRedisValue } from '../utils/redisUtils'
 
 // 400 Bad Request -> The 400 status code, or Bad Request error, means the HTTP request that was sent to the server has invalid syntax.
 // 401 unauthneticated
@@ -13,7 +14,7 @@ import { Op } from 'sequelize'
 const getAllUsers = async (req: Request, res: Response) => {
   let users
   try {
-    users = await User.findAll
+    users = await User.findAll()
 
     if (!users) throw new Error('Couldnt retreive all users')
 
@@ -23,7 +24,7 @@ const getAllUsers = async (req: Request, res: Response) => {
     if (e instanceof Error) {
       errorMessage = e.message
     }
-    res.status(400).send({ error: e.message })
+    res.status(403).send({ error: e.message })
   }
 }
 
@@ -42,9 +43,9 @@ const authUser = async (req: Request, res: Response) => {
 
     const token = await generateJWTAuthToken(user)
 
-    res
-      .status(200)
-      .send({ email: user.email, username: user.name, phoneNumber: user.phoneNumber, token })
+    if (!token) throw new Error('Generating Token Failed')
+
+    res.status(200).send({ user, token })
   } catch (e: any) {
     console.log(e)
 
@@ -52,7 +53,7 @@ const authUser = async (req: Request, res: Response) => {
     if (e instanceof Error) {
       errorMessage = e.message
     }
-    res.status(400).send({ error: e.message })
+    res.status(401).send({ error: e.message })
   }
 }
 
@@ -70,20 +71,20 @@ const createUser = async (req: Request, res: Response) => {
     })
 
     if (existingUser) {
-      return res.status(400).send({ message: 'User already Exists' })
+      throw new Error('User already Exists, Try different Phone number or Email Address')
     }
 
     const user = await User.create(NewUser)
 
-    if (!user) {
-      return res.status(401).send({ message: 'Error happened with User Creation' })
-    }
+    if (!user || !(user instanceof User)) throw new Error('Error happened with User Creation')
 
     const token = await generateJWTAuthToken(user)
 
-    res.status(200).send({ message: 'User Created', token })
+    if (!token) throw new Error('Generating Token Failed')
+
+    res.status(201).send({ message: 'User Created', token, NewUser })
   } catch (e: any) {
-    let errorMessage = 'User not created'
+    let errorMessage = 'User not created, Failed Operation'
     if (e instanceof Error) {
       errorMessage = e.message
     }
@@ -96,24 +97,24 @@ const createUser = async (req: Request, res: Response) => {
 // @access  Private
 const logoutUser = async (req: Request, res: Response) => {
   try {
-    // const user = req.userData
-    // const token = req.token
+    const user = res.locals.user
+    const token = res.locals.token
 
-    // if (!user || !token) throw new Error('User or Token is invalid')
+    if (!user || !token) throw new Error('User or Token is invalid')
 
     // remove the refresh token
-    // await delRedisValue(user.id.toString())
+    await delRedisValue(user.id.toString())
 
     // blacklist current access token
-    // await setRedisValue('BL_' + user.id.toString(), { token })
+    await setRedisValue('BL_' + user.id.toString(), { token })
 
     res.status(200).send({ message: 'User Logged out' })
   } catch (e: any) {
-    let errorMessage = 'Wrong Credentials'
+    let errorMessage = 'Logging User out, failed operation'
     if (e instanceof Error) {
       errorMessage = e.message
     }
-    res.status(400).send({ error: e.message })
+    res.status(403).send({ error: e.message })
   }
 }
 
@@ -132,11 +133,11 @@ const deleteUser = async (req: Request, res: Response) => {
 
     res.status(200).send({ message: 'User Deleted' })
   } catch (e: any) {
-    let errorMessage = 'Wrong Credentials'
+    let errorMessage = 'Deleting user failed'
     if (e instanceof Error) {
       errorMessage = e.message
     }
-    res.status(400).send({ error: e.message })
+    res.status(403).send({ error: e.message })
   }
 }
 
