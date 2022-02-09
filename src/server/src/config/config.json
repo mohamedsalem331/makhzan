@@ -1,0 +1,20 @@
+{
+    "development": {
+      "username": "postgres",
+      "password": "25256268",
+      "database": "makhzan",
+      "host": "localhost",
+      "dialect": "postgres",
+      "logging": false
+    },
+    "test": {
+      "username": "postgres",
+      "password": "25256268",
+      "database": "makhzan_test",
+      "host": "localhost",
+      "dialect": "postgres"
+    },
+    "production": {
+
+    }
+}

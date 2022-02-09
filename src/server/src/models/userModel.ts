@@ -65,7 +65,7 @@ export async function generateJWTAuthToken(user: UserAttributes): Promise<string
   if (!user.id) throw new Error('user id invalid')
 
   const token = jwt.sign({ id: user.id.toString() }, 'verysecretjwttokenmsg', {
-    expiresIn: '2d',
+    expiresIn: '3d',
   })
 
   if (!token) throw new Error('Token Creation Failed')

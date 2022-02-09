@@ -14,13 +14,13 @@ const Warehouses = [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
     ],
-    UserId: '3f285323-7632-44b3-9fde-4073c319a551',
+    UserId: '1c023ede-c424-45e6-bae0-0c61b0d2a2d1',
   },
 
   {
     title: 'Amazing warehouse with 5 floors',
     description: 'Warehouse for Rent in New Cairod',
-    size: 2000, // sqm/sqft
+    size: 2000,
     rent: 200000,
     governorate: 'giza',
     location: 'dokki',
@@ -31,30 +31,13 @@ const Warehouses = [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
     ],
-    UserId: '3f285323-7632-44b3-9fde-4073c319a551',
-  },
-
-  {
-    title: 'the most massive warehouse in egypt',
-    description: 'Warehouse for Rent in New Cairod',
-    size: 650, // sqm/sqft
-    rent: 12000,
-    governorate: 'cairo',
-    location: 'nasr city',
-    street: 'street zamboly',
-    services: ['wifi', 'iot', 'bathroom', 'thermostat', 'forklift', 'alarm'],
-    images: [
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-    ],
-    UserId: 'c5187fe8-4c93-469c-ab65-a252e60504c2',
+    UserId: '2c023ede-c424-45e6-bae0-0c61b0d2a2d2',
   },
 
   {
     title: 'this warehouse can bring you happiness in no time',
     description: 'warehouse awesome awesome awesome',
-    size: 999, // sqm/sqft
+    size: 999,
     rent: 6150,
     governorate: 'alexandria',
     location: 'bawlino',
@@ -65,7 +48,7 @@ const Warehouses = [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
     ],
-    UserId: 'c5187fe8-4c93-469c-ab65-a252e60504c2',
+    UserId: '38c023ede-c424-45e6-bae0-0c61b0d2a2d3',
   },
 ]
 

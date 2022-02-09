@@ -2,6 +2,7 @@ import redis_client from '../config/redis'
 
 const setRedisValue = async (key: string, value: object | string): Promise<string> => {
   const data = await redis_client.set(key.toString(), JSON.stringify(value))
+  await redis_client.expire(key.toString(), 259200) // expires in 3 days
   if (!data) throw new Error()
   return data
 }

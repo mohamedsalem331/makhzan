@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import User, { findByCredentials, generateJWTAuthToken } from '../models/userModel'
+import Warehouse from '../models/warehouseModel'
 import { UserAttributes } from '../constants/types'
 import { Op } from 'sequelize'
 import { delRedisValue, setRedisValue } from '../utils/redisUtils'
@@ -45,7 +46,12 @@ const authUser = async (req: Request, res: Response) => {
 
     if (!token) throw new Error('Generating Token Failed')
 
-    res.status(200).send({ user, token })
+    res.status(200).send({
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      token,
+    })
   } catch (e: any) {
     console.log(e)
 
@@ -82,7 +88,13 @@ const createUser = async (req: Request, res: Response) => {
 
     if (!token) throw new Error('Generating Token Failed')
 
-    res.status(201).send({ message: 'User Created', token, NewUser })
+    res.status(201).send({
+      message: 'User Created',
+      token,
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+    })
   } catch (e: any) {
     let errorMessage = 'User not created, Failed Operation'
     if (e instanceof Error) {
@@ -131,7 +143,13 @@ const deleteUser = async (req: Request, res: Response) => {
       },
     })
 
-    res.status(200).send({ message: 'User Deleted' })
+    await Warehouse.destroy({
+      where: {
+        UserId: id,
+      },
+    })
+
+    res.status(200).send({ message: 'User Deleted With Associated warehouses' })
   } catch (e: any) {
     let errorMessage = 'Deleting user failed'
     if (e instanceof Error) {

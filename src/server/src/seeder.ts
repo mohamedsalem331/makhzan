@@ -7,7 +7,7 @@ import WarehouseMockData from './utils/data/warehouses'
 const importData = async (): Promise<void> => {
   try {
     await sequelize.sync()
-    // await User.bulkCreate(UserMockData)
+    await User.bulkCreate(UserMockData)
     await Warehouse.bulkCreate(WarehouseMockData)
     console.log('data created')
   } catch (e) {
@@ -18,7 +18,7 @@ const importData = async (): Promise<void> => {
 
 const destoryData = async () => {
   try {
-    // await User.drop()
+    await User.drop()
     await Warehouse.drop()
     console.log('data destroyed')
   } catch (e) {

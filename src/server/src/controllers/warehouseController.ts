@@ -82,7 +82,7 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
       },
     })
 
-    if (!warehouses || !warehouses.every((warehouse) => warehouse instanceof Warehouse)) {
+    if (!warehouses || !warehouses.every((warehouse: any) => warehouse instanceof Warehouse)) {
       throw new Error('Couldnt filter all warehouses')
     }
     res.status(200).send({ warehouses })
@@ -100,9 +100,10 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
 // @access  Private
 const createWarehouse = async (req: Request, res: Response) => {
   try {
+    const userData = res.locals.user
     const NewWarehouse: WarehouseAttributes = req.body
 
-    const warehouse = await Warehouse.create(NewWarehouse)
+    const warehouse = await Warehouse.create({ ...NewWarehouse, UserId: userData.id })
 
     if (!warehouse || !(warehouse instanceof Warehouse)) {
       throw new Error('Error happened with Creaing Warehouse Instance')
@@ -123,7 +124,7 @@ const createWarehouse = async (req: Request, res: Response) => {
 // @access  Public
 const getWarehouse = async (req: Request, res: Response) => {
   try {
-    const id: string = req.body.params
+    const id: string = req.params.id
 
     const warehouse = await Warehouse.findByPk(id)
 

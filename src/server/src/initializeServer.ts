@@ -8,7 +8,7 @@ import userRouter from './routes/userRouter'
 import warehouseRouter from './routes/warehouseRouter'
 import uploadRouter from './routes/uploadRouter'
 
-export default function initializeServer(router: Router) {
+export default function initializeServer() {
   const app = express()
   const isProduction = process.env.NODE_ENV === 'production'
   const origin = { origin: isProduction ? false : '*' }
