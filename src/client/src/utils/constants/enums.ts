@@ -1,0 +1,7 @@
+export enum Folder {
+  ALL = 'ALL',
+  CATEGORY = 'CATEGORY',
+  FAVORITES = 'FAVORITES',
+  SCRATCHPAD = 'SCRATCHPAD',
+  TRASH = 'TRASH',
+}

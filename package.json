@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "description": "a warehouse renting website",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "idependencies": "cd src && cd server && npm install && cd ../client && npm install",
+    "build": "cd src && client && npm run build",
+    "client": "cd src && cd client && npm start"
   },
   "author": "Mohamed Salem",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
 }

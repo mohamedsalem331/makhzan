@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.4.1",
     "@mui/material": "^5.3.0",
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -45,6 +46,15 @@
       "last 1 safari version"
     ]
   },
+  "keywords": [
+    "react",
+    "create-react-app",
+    "template",
+    "typescript",
+    "redux",
+    "reduxjs",
+    "react-redux"
+  ],
   "devDependencies": {
     "prettier": "^2.5.1"
   }
