@@ -17,6 +17,9 @@ const getAllWarehouses = async (req: Request, res: Response) => {
   let userWarehouses: Array<object> | [] = []
   let UserId: string | undefined
 
+  const maxRent = await Warehouse.max('rent')
+  const maxSize = await Warehouse.max('size')
+
   try {
     UserId = req?.header('UserID')
 
@@ -41,7 +44,7 @@ const getAllWarehouses = async (req: Request, res: Response) => {
       throw new Error('Couldnt retreive all warehouses')
     }
 
-    res.status(200).send({ warehouses: [...userWarehouses, ...warehouses] })
+    res.status(200).send({ warehouses: [...userWarehouses, ...warehouses], maxRent, maxSize })
   } catch (e: any) {
     console.log(e)
 
@@ -130,7 +133,11 @@ const getWarehouse = async (req: Request, res: Response) => {
 
     if (!warehouse || !(warehouse instanceof Warehouse)) throw new Error('Warehouse not found')
 
-    res.status(200).send({ warehouse })
+    const user = await User.findByPk(warehouse.UserId)
+
+    if (!user || !(user instanceof User)) throw new Error('Associated User not found')
+
+    res.status(200).send({ warehouse, userName: user.name, userPhone: user.phoneNumber })
   } catch (e: any) {
     console.log(e)
 

@@ -51,19 +51,6 @@
   z-index: 0;
 }
 
-.landingnavbar-container {
-  position: absolute;
-  background-color: #0000002c;
-  z-index: 1;
-  width: 100%;
-  padding: 15px 20px;
-}
-
-.landingnavbar-wrapper {
-  max-width: 90%;
-  margin: 0 auto;
-}
-
 .logo-wrapper {
   cursor: pointer;
 }

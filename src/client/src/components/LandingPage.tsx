@@ -2,16 +2,13 @@ import React from 'react'
 
 import '../styles/LandingPage.css'
 import SearchComponent from './Filter/SearchComponent'
-import LandingNavbar from './Navbar/LandingNavbar'
+import LandingNavbar from './Navbar/NavbarComponent'
 
 const LandingPage: React.FC = () => {
   return (
     <>
-      <div className="landingnavbar-container">
-        <div className="landingnavbar-wrapper">
-          <LandingNavbar />
-        </div>
-      </div>
+      <LandingNavbar />
+
       <div className="ImageContainer">
         <div className="overlay"></div>
         <div className="main-image"></div>

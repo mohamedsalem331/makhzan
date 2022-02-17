@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search'
 const SearchComponent: React.FC = () => {
   const [locationInput, setLocation] = useState<string | null>(null)
   const [governorateInput, setGovernorate] = useState<string | null>(null)
+  console.log('fds')
 
   return (
     <div>
