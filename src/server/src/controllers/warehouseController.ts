@@ -46,7 +46,6 @@ const getAllWarehouses = async (req: Request, res: Response) => {
 
     res.status(200).send({ warehouses: [...userWarehouses, ...warehouses], maxRent, maxSize })
   } catch (e: any) {
-    console.log(e)
 
     let errorMessage = 'Something went wrong, couldnt fetch warehouses'
     if (e instanceof Error) {

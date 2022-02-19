@@ -1,4 +1,4 @@
-import { TextField, Autocomplete, Stack, InputAdornment } from '@mui/material'
+import { TextField, Autocomplete, Stack, InputAdornment, Paper } from '@mui/material'
 
 import React from 'react'
 import { Box } from '@mui/system'
@@ -10,6 +10,7 @@ const FilterComponent = () => {
   const [filteredGovernorates, setGovernorates] = React.useState<string[]>([])
   const [filteredLocations, setLocations] = React.useState<string[]>([])
   const [value, setValue] = React.useState('')
+  const [rent, setRent] = React.useState('')
   const [personName, setPersonName] = React.useState<string[]>([])
 
   const handlePanelChange =
@@ -40,7 +41,7 @@ const FilterComponent = () => {
   }
 
   const handleChangetext = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
+    console.log(event.target.value)
   }
 
   const myNewLocations = LOCATIONS.slice(0, 10)
@@ -58,75 +59,82 @@ const FilterComponent = () => {
         <AccordionDetails sx={{ height: '15rem', overflowY: 'scroll' }}></AccordionDetails>
       </Accordion> */}
 
-      <Stack sx={{ textAlign: 'left' }} spacing={5}>
-        <Autocomplete
-          multiple
-          id="tags-outlined"
-          options={GOVERNORATES}
-          getOptionLabel={(option) => option}
-          defaultValue={[GOVERNORATES[2]]}
-          filterSelectedOptions
-          renderInput={(params) => (
-            <TextField {...params} label="filterSelectedOptions" placeholder="Favorites" />
-          )}
-        />
-        <Autocomplete
-          multiple
-          id="tags-outlined"
-          options={LOCATIONS}
-          getOptionLabel={(option) => option}
-          defaultValue={[LOCATIONS[2]]}
-          filterSelectedOptions
-          renderInput={(params) => (
-            <TextField {...params} label="filterSelectedOptions" placeholder="Favorites" />
-          )}
-        />
-        <Box>
-          Size
-          <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'row'}>
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Min"
-              onChange={handleChangetext}
-              defaultValue={0}
-              InputProps={{
-                startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
-              }}
-            />
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Max"
-              onChange={handleChangetext}
-              InputProps={{
-                startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
-              }}
-            />
-          </Stack>
-        </Box>
+      <Paper sx={{ p: 2 }} variant="outlined" square>
+        <Stack sx={{ textAlign: 'left' }} spacing={5}>
+          <Autocomplete
+            multiple
+            id="tags-outlined"
+            options={GOVERNORATES}
+            getOptionLabel={(option) => option}
+            defaultValue={[GOVERNORATES[2]]}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField {...params} label="filterSelectedOptions" placeholder="Favorites" />
+            )}
+          />
+          <Autocomplete
+            multiple
+            id="tags-outlined"
+            options={LOCATIONS}
+            getOptionLabel={(option) => option}
+            defaultValue={[LOCATIONS[2]]}
+            filterSelectedOptions
+            renderInput={(params) => (
+              <TextField {...params} label="filterSelectedOptions" placeholder="Favorites" />
+            )}
+          />
+          <Box>
+            Size
+            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'row'}>
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Min"
+                type="number"
+                onChange={handleChangetext}
+                defaultValue={0}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
+                }}
+              />
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Max"
+                type="number"
+                onChange={handleChangetext}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
+                }}
+              />
+            </Stack>
+          </Box>
 
-        <Box>
-          Rent
-          <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'row'}>
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Min"
-              onChange={handleChangetext}
-              defaultValue={0}
-              InputProps={{
-                startAdornment: <InputAdornment position="start">E£</InputAdornment>,
-              }}
-            />
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Max"
-              onChange={handleChangetext}
-              InputProps={{
-                startAdornment: <InputAdornment position="start">E£</InputAdornment>,
-              }}
-            />
-          </Stack>
-        </Box>
-      </Stack>
+          <Box>
+            Rent
+            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'row'}>
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Min"
+                type="number"
+                onChange={handleChangetext}
+                defaultValue={0}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">E£</InputAdornment>,
+                }}
+              />
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Max"
+                type="text"
+                value={rent}
+                onChange={handleChangetext}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">E£</InputAdornment>,
+                }}
+              />
+            </Stack>
+          </Box>
+        </Stack>
+      </Paper>
     </>
   )
 }

@@ -44,3 +44,11 @@ export interface Route {
   appendDivider?: boolean
   expanded?: boolean
 }
+
+export interface Services {
+  wifi?: JSX.Element,
+  power?: JSX.Element,
+  bathroom?: JSX.Element,
+  thermostat?: JSX.Element,
+  iot?: JSX.Element,
+}
