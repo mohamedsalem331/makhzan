@@ -2,7 +2,8 @@ import { TextField, Autocomplete, Stack, InputAdornment, Paper } from '@mui/mate
 
 import React from 'react'
 import { Box } from '@mui/system'
-import { GOVERNORATES, LOCATIONS } from '../../utils/constants/constants'
+import { GOVERNORATES, LOCATIONS } from '../../utils/constants'
+import { formatRentValue } from '../../utils/formatNumber'
 
 const FilterComponent = () => {
   const [expanded, setExpanded] = React.useState<string | false>(false)

@@ -1,6 +1,7 @@
 // User Model
 import { ComponentType, FC } from 'react'
 
+
 export interface UserAttributes {
   id?: number | string
   name: string
@@ -52,3 +53,5 @@ export interface Services {
   thermostat?: JSX.Element,
   iot?: JSX.Element,
 }
+
+

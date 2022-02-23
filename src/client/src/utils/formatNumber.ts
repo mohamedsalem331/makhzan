@@ -1,6 +1,5 @@
-export const formatRentValue = (rent: number) => {
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'EGY',
-    }).format(rent)
+export const formatRentValue = (rent: number | string) => {
+    const myVal = rent.toString().replace(/,/g, '')
+
+    return new Intl.NumberFormat().format(Number(myVal))
 }

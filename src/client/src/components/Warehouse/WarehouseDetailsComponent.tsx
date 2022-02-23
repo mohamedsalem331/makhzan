@@ -5,6 +5,7 @@ import Image1 from '../../Assets/image1.jpeg'
 import Image2 from '../../Assets/image2.jpeg'
 import Image3 from '../../Assets/image3.jpeg'
 import LandingNavbar from '../Navbar/NavbarComponent'
+
 import WarehouseDescription from './WarehouseDescription'
 
 const WarehouseDetailsComponent: React.FC = () => {

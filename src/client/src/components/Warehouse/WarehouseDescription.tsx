@@ -20,17 +20,7 @@ import AcUnitIcon from '@mui/icons-material/AcUnit'
 import CompassCalibrationIcon from '@mui/icons-material/CompassCalibration'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-import { Services } from '../../types/index'
-
-const services: Services = {
-  wifi: <WifiIcon />,
-  power: <PowerIcon />,
-  bathroom: <WcIcon />,
-  thermostat: <AcUnitIcon />,
-  iot: <CompassCalibrationIcon />,
-}
-
-const servicesList = ['wifi', 'thermostat']
+import { filteredServices } from '../../utils/filterServices'
 
 const DividerComponent: React.FC = (props) => (
   <Divider sx={{ marginY: '10px' }}>
@@ -41,6 +31,7 @@ const DividerComponent: React.FC = (props) => (
 )
 
 const WarehouseDescription: React.FC = () => {
+  const myServices = filteredServices(['Wifi', 'Thermostat'])
   return (
     <>
       <Box sx={{ marginTop: '2rem', textAlign: 'left' }}>
@@ -53,16 +44,16 @@ const WarehouseDescription: React.FC = () => {
               fully finish apartment at mivida emaar low price
             </Typography>
             <DividerComponent>Services</DividerComponent>
-            {servicesList.map((item: string) => {
+            {myServices.map(({ label, Icon }, indx: number) => {
               return (
-                <Box key={item} sx={{ display: 'flex' }}>
-                  {services[item as keyof Services]}
+                <Box key={indx} sx={{ display: 'flex' }}>
+                  {<Icon />}
                   <Typography
                     sx={{ marginLeft: '10px', marginBottom: '15px' }}
                     variant="body1"
                     component="div"
                   >
-                    {item.toUpperCase()}
+                    {label.toUpperCase()}
                   </Typography>
                 </Box>
               )

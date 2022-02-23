@@ -19,15 +19,19 @@ const initialState: WarehousesListState = {
 }
 
 const id = '4354dfgdft543'
+let headers = {}
+if (!!id) {
+  headers = {
+    UserId: id,
+  }
+}
 
 const fetchWarehouses = createAsyncThunk('warehouses/fetch', async (_, thunkAPI) => {
   try {
     const response = await axios({
       method: 'get',
       url: `http://localhost:5000/warehouses`,
-      headers: {
-        UserId: id,
-      },
+      headers
     })
     return response.data
   } catch (err: any) {
