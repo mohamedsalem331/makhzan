@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Autocomplete, Box, Button, Grid, Stack, TextField } from '@mui/material'
-import { GOVERNORATES, LOCATIONS } from '../../utils/constants/constants'
+import { GOVERNORATES, LOCATIONS } from '../../utils/constants/index'
 import SearchIcon from '@mui/icons-material/Search'
 
 const SearchComponent: React.FC = () => {

@@ -12,20 +12,34 @@ import {
   Link,
   Alert,
   AlertTitle,
+  CircularProgress,
 } from '@mui/material'
 import React, { useState } from 'react'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { registerUser } from '../slices/UserRegisterSlice'
+import { RegisterState } from '../types/index'
 
 import '../styles/RegisterPage.css'
+import CustomizedSnackBar from '../components/SnackBarComponent'
 
-interface RegisterState {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  phoneNumber: string
-}
+const RegisterUserr: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
 
-const RegisterPage = () => {
+  const { message, token, name, email, phoneNumber, error, pending } = useAppSelector(
+    (state) => state.userRegister
+  )
+
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+  const dispatch = useAppDispatch()
+  const _registerUser = (data: RegisterState) => dispatch(registerUser(data))
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
   const [values, setValues] = useState<RegisterState>({
     firstName: '',
     lastName: '',
@@ -47,6 +61,7 @@ const RegisterPage = () => {
   }
 
   const handleSubmit = (): void => {
+    _registerUser(values)
     console.log('submiited')
     console.log(values)
   }
@@ -57,9 +72,10 @@ const RegisterPage = () => {
     !!values.email &&
     !!values.password &&
     !!values.phoneNumber
-
   return (
     <>
+      {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
+      {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
       <section className="register-wrapper">
         <Container
           sx={{ backgroundColor: 'white', borderRadius: '5px', paddingY: '2.5rem' }}
@@ -165,6 +181,7 @@ const RegisterPage = () => {
                   >
                     Sign Up
                   </Button>
+                  {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
                 </Grid>
               </Grid>
               {/* {error && (
@@ -184,4 +201,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage
+export default RegisterUserr

@@ -20,7 +20,7 @@ import AcUnitIcon from '@mui/icons-material/AcUnit'
 import CompassCalibrationIcon from '@mui/icons-material/CompassCalibration'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-import { filteredServices } from '../../utils/filterServices'
+import { useFilteredServices } from '../../app/hooks'
 
 const DividerComponent: React.FC = (props) => (
   <Divider sx={{ marginY: '10px' }}>
@@ -31,7 +31,7 @@ const DividerComponent: React.FC = (props) => (
 )
 
 const WarehouseDescription: React.FC = () => {
-  const myServices = filteredServices(['Wifi', 'Thermostat'])
+  const myServices = useFilteredServices(['Wifi', 'Thermostat'])
   return (
     <>
       <Box sx={{ marginTop: '2rem', textAlign: 'left' }}>
@@ -44,16 +44,16 @@ const WarehouseDescription: React.FC = () => {
               fully finish apartment at mivida emaar low price
             </Typography>
             <DividerComponent>Services</DividerComponent>
-            {myServices.map(({ label, Icon }, indx: number) => {
+            {myServices.map((service: any, indx: number) => {
               return (
                 <Box key={indx} sx={{ display: 'flex' }}>
-                  {<Icon />}
+                  {<service.Icon />}
                   <Typography
                     sx={{ marginLeft: '10px', marginBottom: '15px' }}
                     variant="body1"
                     component="div"
                   >
-                    {label.toUpperCase()}
+                    {service.label.toUpperCase()}
                   </Typography>
                 </Box>
               )

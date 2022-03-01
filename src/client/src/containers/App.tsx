@@ -6,7 +6,7 @@ import '../styles/App.css'
 import WarehousesList from './WarehousesList'
 import Warehouse from './WarehouseDetails'
 import PostWarehouse from './PostWarehouse'
-import RegisterPage from './RegisterPage'
+import RegisterPage from './RegisterUser'
 import LoginPage from './LoginPage'
 
 // const routes = [

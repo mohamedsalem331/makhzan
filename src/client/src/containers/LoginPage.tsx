@@ -12,17 +12,33 @@ import {
   Link,
   Alert,
   AlertTitle,
+  CircularProgress,
 } from '@mui/material'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
 import React, { useState } from 'react'
+import { authUser } from '../slices/UserLoginSlice'
+import { LoginState } from '../types/index'
+import CustomizedSnackBar from '../components/SnackBarComponent'
 
-import '../styles/RegisterPage.css'
+const LoginPage: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
 
-interface LoginState {
-  email: string
-  password: string
-}
+  const { token, name, email, phoneNumber, error, pending } = useAppSelector(
+    (state) => state.userLogin
+  )
 
-const LoginPage = () => {
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
+  const dispatch = useAppDispatch()
+  const _authUser = (data: LoginState) => dispatch(authUser(data))
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
   const [values, setValues] = useState<LoginState>({
     email: '',
     password: '',
@@ -37,19 +53,19 @@ const LoginPage = () => {
     setValues({ ...values, [prop]: event.target.value })
   }
 
-  const handleClickShowPassword = (): void => {
-    setShowPassword(!showPassword)
-  }
+  const handleClickShowPassword = (): void => setShowPassword(!showPassword)
 
   const handleSubmit = (): void => {
     console.log('submiited')
-    console.log(values)
+    _authUser(values)
   }
 
   const submitDisabled = !!values.email && !!values.password
 
   return (
     <>
+      {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
+      {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
       <section className="register-wrapper">
         <Container
           sx={{ backgroundColor: 'white', borderRadius: '5px', paddingY: '2.5rem' }}
@@ -107,6 +123,7 @@ const LoginPage = () => {
                   >
                     Sign In
                   </Button>
+                  {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
                 </Grid>
               </Grid>
               {/* {error && (

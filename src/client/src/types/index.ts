@@ -54,4 +54,16 @@ export interface Services {
   iot?: JSX.Element,
 }
 
+export interface RegisterState {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  phoneNumber: string
+}
+
+export interface LoginState {
+  email: string
+  password: string
+}
 

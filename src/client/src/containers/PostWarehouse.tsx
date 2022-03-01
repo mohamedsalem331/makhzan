@@ -17,6 +17,9 @@ import LandingNavbar from '../components/Navbar/NavbarComponent'
 import { formatRentValue } from '../utils/formatNumber'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
+import { services } from '../utils/constants'
+import axios from 'axios'
+
 interface IFormInput {
   title: string
   description: string
@@ -28,20 +31,20 @@ interface IFormInput {
   Services: string
 }
 
-import { services } from '../utils/constants'
-
 const PostWarehouse: React.FC = () => {
+  const [files, setFiles] = useState<Array<string>>([])
   const [images, setImages] = useState<Array<string>>([])
+  const [imageList, setImageList] = useState<Array<string>>([])
 
   const { control, handleSubmit } = useForm<IFormInput>()
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data)
-  }
+  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
+
   const onImageChange = (event: any) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0]
       setImages([...images, URL.createObjectURL(img)])
+      setFiles([...files, img])
     }
 
     // render snacbar componenet with error if images more than 3
@@ -52,6 +55,24 @@ const PostWarehouse: React.FC = () => {
       return img !== remImg
     })
     setImages(newImgs)
+  }
+
+  const uploadImages = async () => {
+    try {
+      const formData = new FormData()
+      files.forEach((file) => formData.append('avatar', file))
+      const response = await axios({
+        method: 'post',
+        url: `http://localhost:5000/uploads`,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: formData,
+      })
+      setImageList(response.data.myImages)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -178,9 +199,10 @@ const PostWarehouse: React.FC = () => {
         style={{ display: 'none' }}
         id="files"
         type="file"
-        name="myImage"
+        name="avatar"
         onChange={onImageChange}
       />
+      <div onClick={uploadImages}>fdsfds</div>
     </>
   )
 }
