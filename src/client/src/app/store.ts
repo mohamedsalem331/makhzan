@@ -1,13 +1,19 @@
-import warehousesListReducer from '../slices/WarehousesListSlice'
-import UserRegisterSlice from '../slices/UserRegisterSlice'
-import UserLoginSlice from '../slices/UserLoginSlice'
+import WarehousesFilterReducer from './../slices/WarehousesFilterSlice';
+import WarehousesListReducer from '../slices/WarehousesListSlice'
+import UserRegisterReducer from '../slices/UserRegisterSlice'
+import UserLoginReducer from '../slices/UserLoginSlice'
+import UserDetailsReducer from '../slices/UserDetailsSlice'
+import UserLogoutReducer from '../slices/UserLogoutSlice'
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   reducer: {
-    warehousesList: warehousesListReducer,
-    userRegister: UserRegisterSlice,
-    userLogin: UserLoginSlice
+    warehousesList: WarehousesListReducer,
+    warehousesFilter: WarehousesFilterReducer,
+    userRegister: UserRegisterReducer,
+    userLogin: UserLoginReducer,
+    userDetails: UserDetailsReducer,
+    userLogout: UserLogoutReducer
   },
 })
 //  devTools: process.env.NODE_ENV !== 'production',

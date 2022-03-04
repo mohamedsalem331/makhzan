@@ -9,13 +9,21 @@ import '../../styles/LandingNavbar.css'
 
 interface NavbarProps {
   Position?: 'absolute' | 'fixed' | 'relative' | 'static'
+  isLoggedIn?: boolean
+  name?: string
+  logoutUser?: () => Promise<void>
 }
 
-const LandingNavbar: React.FC<NavbarProps> = ({ Position = 'absolute' }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+const LandingNavbar: React.FC<NavbarProps> = ({
+  Position = 'absolute',
+  isLoggedIn,
+  name = 'jack nelson',
+  logoutUser,
+}) => {
+  const _logoutUser = logoutUser
 
-  const stringAvatar = (str: string) => {
-    const myArr = str.split(' ')
+  const stringAvatar = (name: string) => {
+    const myArr = name.split(' ')
     let letter = ''
 
     if (myArr[1]) {
@@ -39,7 +47,19 @@ const LandingNavbar: React.FC<NavbarProps> = ({ Position = 'absolute' }) => {
             <Link to="/">
               <Logo />
             </Link>
-            {isLoggedIn ? (
+            {!!isLoggedIn ? (
+              <>
+                <Stack direction="row" spacing={3}>
+                  <Button variant="contained" size="small">
+                    Post Warehouse
+                  </Button>
+                  <Button onClick={_logoutUser} variant="outlined">
+                    Logout
+                  </Button>
+                  <Avatar sx={{ bgcolor: deepOrange[500] }}>{stringAvatar(name)}</Avatar>
+                </Stack>
+              </>
+            ) : (
               <>
                 <Stack direction="row" spacing={2}>
                   <Link to="login">
@@ -50,16 +70,6 @@ const LandingNavbar: React.FC<NavbarProps> = ({ Position = 'absolute' }) => {
                   <Link to="register">
                     <Button variant="contained">Join Now</Button>
                   </Link>
-                </Stack>
-              </>
-            ) : (
-              <>
-                <Stack direction="row" spacing={3}>
-                  <Button variant="contained" size="small">
-                    Post Warehouse
-                  </Button>
-                  <Button variant="outlined">Logout</Button>
-                  <Avatar sx={{ bgcolor: deepOrange[500] }}>{stringAvatar('jack nelson')}</Avatar>
                 </Stack>
               </>
             )}

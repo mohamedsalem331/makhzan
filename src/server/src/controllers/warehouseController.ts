@@ -64,7 +64,7 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
   try {
     const filters = req.body
 
-    if (!filters) throw new Error('error happened with filtering warehouses')
+    if (!filters) throw new Error('error happened -> filtering warehouses')
 
     const maxRent = await Warehouse.max('rent')
     const maxSize = await Warehouse.max('size')
@@ -80,7 +80,9 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
         governorate: {
           [Op.or]: filters.governorate,
         },
-        services: { [Op.contains]: filters.services },
+        location: {
+          [Op.or]: filters.location,
+        },
       },
     })
 

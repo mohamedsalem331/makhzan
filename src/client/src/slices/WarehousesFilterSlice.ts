@@ -1,21 +1,25 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-interface WarehousesFilterState {
+interface FilterWarehouseOptions {
+    governorates: Array<string>
+    locations: Array<string>
+    rent?: Array<number>
+    size?: Array<number>
+}
+
+interface WarehousesFilterState extends FilterWarehouseOptions {
     filteredWarehouses: Array<object>
     error: string
     pending: boolean
 }
 
-interface FilterWarehouseOptions {
-    governorate: Array<string>
-    services: Array<string>
-    rent?: Array<number>
-    size?: Array<number>
-}
 
 const initialState: WarehousesFilterState = {
     filteredWarehouses: [],
+    governorates: [],
+    locations: [],
+
     error: '',
     pending: false,
 }
@@ -31,36 +35,38 @@ const filterWarehouses = createAsyncThunk('warehouses/filter', async (filterOpti
         })
         return response.data
     } catch (err: any) {
-        return thunkAPI.rejectWithValue(err.response.data.error)
+        return thunkAPI.rejectWithValue(err.response.data)
     }
 })
 
 export const warehousesFilterSlice = createSlice({
-    name: 'warehousePosting',
+    name: 'warehouseFilter',
     initialState,
-    reducers: {},
+    reducers: {
+        searchFilter: (state, action: PayloadAction<{ governorate: string, location: string }>) => {
+            state.governorates = [action.payload.governorate]
+            state.locations = [action.payload.location]
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(filterWarehouses.pending, (state) => {
                 state.pending = true
             })
-            .addCase(filterWarehouses.fulfilled, (state, action) => {
-                return (state = {
-                    filteredWarehouses: action.payload.warehouses,
-                    error: '',
-                    pending: false,
-                });
+            .addCase(filterWarehouses.fulfilled, (state, action: PayloadAction<{ warehouses: Array<object> }>) => {
+                state.filteredWarehouses = [...action.payload.warehouses]
+                state.pending = false
+
             })
             .addCase(filterWarehouses.rejected, (state, action: PayloadAction<any>) => {
-                return (state = {
-                    filteredWarehouses: [],
-                    error: action.payload.error,
-                    pending: false,
-                });
+                state.error = action.payload.error
+                state.pending = false
             })
     },
 })
 
-export { filterWarehouses }
+const { searchFilter } = warehousesFilterSlice.actions
+
+export { filterWarehouses, searchFilter }
 
 export default warehousesFilterSlice.reducer

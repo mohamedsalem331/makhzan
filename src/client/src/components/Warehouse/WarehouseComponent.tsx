@@ -27,12 +27,7 @@ const WarehouseComponent = () => {
   return (
     <div>
       <Box sx={{ maxWidth: '90%' }}>
-        <Paper
-          variant="outlined"
-          square
-          sx={{ display: 'flex', flexDirection: 'row' }}
-          elevation={2}
-        >
+        <Paper variant="outlined" square sx={{ display: 'flex', flexDirection: 'row' }}>
           <Swiper
             className="swiper-override-style"
             spaceBetween={0}
@@ -71,13 +66,18 @@ const WarehouseComponent = () => {
             </Typography>
             <Box
               sx={{
-                maxWidth: '30%',
+                maxWidth: '50%',
                 display: 'flex',
                 justifyContent: 'space-between',
               }}
             >
-              <WarehouseOutlinedIcon />
-              <Box sx={{ display: 'flex' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <WarehouseOutlinedIcon />
+                <Typography variant="body2" color="text.secondary">
+                  Warehouse
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <SquareFootSharpIcon />
                 <Typography variant="body2" color="text.secondary">
                   152 sqm

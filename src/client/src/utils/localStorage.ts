@@ -1,5 +1,5 @@
 export const localStorageHandler = () => {
-    const getTokenLocalStorage = (): string | null => {
+    const getTokenLocalStorage = () => {
         const myToken = localStorage.getItem("userData")
             ? localStorage.getItem("userData")
             : "";
@@ -9,7 +9,7 @@ export const localStorageHandler = () => {
 
     const setTokenLocalStorage = (data: object) => JSON.stringify(localStorage.setItem("userData", JSON.stringify(data)));
 
-    const removeTokenLocalStorage = (): void => localStorage.removeItem("userData");
+    const removeTokenLocalStorage = () => JSON.stringify(localStorage.setItem("userData", ''));
 
     return {
         getTokenLocalStorage,

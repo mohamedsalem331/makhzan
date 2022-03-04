@@ -3,10 +3,17 @@ import { Autocomplete, Box, Button, Grid, Stack, TextField } from '@mui/material
 import { GOVERNORATES, LOCATIONS } from '../../utils/constants/index'
 import SearchIcon from '@mui/icons-material/Search'
 
-const SearchComponent: React.FC = () => {
-  const [locationInput, setLocation] = useState<string | null>(null)
-  const [governorateInput, setGovernorate] = useState<string | null>(null)
-  console.log('fds')
+interface SearchWarehousesProps {
+  searchFilter: any
+}
+
+const SearchComponent: React.FC<SearchWarehousesProps> = ({ searchFilter }) => {
+  const [location, setLocation] = useState<string | null>(null)
+  const [governorate, setGovernorate] = useState<string | null>(null)
+
+  const onSubmit = () => {
+    searchFilter({ location, governorate })
+  }
 
   return (
     <div>
@@ -25,16 +32,6 @@ const SearchComponent: React.FC = () => {
         <Stack spacing={3}>
           <Autocomplete
             disablePortal
-            id="location-input"
-            options={LOCATIONS}
-            sx={{ width: 300 }}
-            onChange={(event: React.SyntheticEvent<Element, Event>, newValue: string | null) => {
-              setLocation(newValue)
-            }}
-            renderInput={(params) => <TextField {...params} label="Location" />}
-          />
-          <Autocomplete
-            disablePortal
             id="governorate-input"
             options={GOVERNORATES}
             sx={{ width: 300 }}
@@ -43,7 +40,18 @@ const SearchComponent: React.FC = () => {
             }}
             renderInput={(params) => <TextField {...params} label="Governorate" />}
           />
-          <Button variant="contained" color="primary">
+          <Autocomplete
+            disablePortal
+            id="location-input"
+            options={LOCATIONS}
+            sx={{ width: 300 }}
+            onChange={(event: React.SyntheticEvent<Element, Event>, newValue: string | null) => {
+              setLocation(newValue)
+            }}
+            renderInput={(params) => <TextField {...params} label="Location" />}
+          />
+
+          <Button onClick={onSubmit} variant="contained" color="primary">
             <SearchIcon sx={{ marginRight: '10px' }} /> Search Warehouses
           </Button>
         </Stack>

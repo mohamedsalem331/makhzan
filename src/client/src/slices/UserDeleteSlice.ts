@@ -24,7 +24,7 @@ const deleteUser = createAsyncThunk('users/delete', async (admin: { id: string, 
         })
         return response.data
     } catch (err: any) {
-        return thunkAPI.rejectWithValue(err.response.data.error)
+        return thunkAPI.rejectWithValue(err.response.data)
     }
 })
 

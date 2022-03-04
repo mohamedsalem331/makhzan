@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "idependencies": "cd src && cd server && npm install && cd ../client && npm install",
     "build": "cd src && client && npm run build",
-    "client": "cd src && cd client && npm start"
+    "client": "cd src && cd client && npm start",
+    "server": "cd src && cd server && npm dev"
   },
   "author": "Mohamed Salem",
   "license": "ISC",

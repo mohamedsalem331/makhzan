@@ -11,7 +11,7 @@ const WarehousesList: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const warehousesList = useAppSelector((state: RootState) => state.warehousesList)
+  const { governorates, locations } = useAppSelector((state: RootState) => state.warehousesFilter)
 
   // ===========================================================================
   // Dispatch
@@ -35,7 +35,7 @@ const WarehousesList: React.FC = () => {
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
                 Filter Warehouses
               </Typography>
-              <FilterComponent />
+              <FilterComponent governorates={governorates} locations={locations} />
             </Grid>
             <Grid item xs={9}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>

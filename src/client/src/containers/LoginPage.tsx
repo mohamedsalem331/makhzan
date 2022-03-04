@@ -19,6 +19,9 @@ import React, { useState } from 'react'
 import { authUser } from '../slices/UserLoginSlice'
 import { LoginState } from '../types/index'
 import CustomizedSnackBar from '../components/SnackBarComponent'
+import { localStorageHandler } from './../utils/localStorage'
+
+const { setTokenLocalStorage } = localStorageHandler()
 
 const LoginPage: React.FC = () => {
   // ===========================================================================
@@ -34,17 +37,30 @@ const LoginPage: React.FC = () => {
   // ===========================================================================
 
   const dispatch = useAppDispatch()
-  const _authUser = (data: LoginState) => dispatch(authUser(data))
+  const _authUser = (data: LoginState) =>
+    dispatch(authUser(data))
+      .unwrap()
+      .then((originalPromiseResult) => {
+        setTokenLocalStorage(originalPromiseResult)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
 
   // ===========================================================================
   // Hooks
   // ===========================================================================
+
   const [values, setValues] = useState<LoginState>({
     email: '',
     password: '',
   })
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
+
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

@@ -13,7 +13,7 @@ const initialState: UserLogoutState = {
     pending: false
 }
 
-const logoutUser = createAsyncThunk('users/delete', async (token, thunkAPI) => {
+const logoutUser = createAsyncThunk('users/logout', async (token: string, thunkAPI) => {
     try {
         const response = await axios({
             method: 'post',
@@ -24,7 +24,7 @@ const logoutUser = createAsyncThunk('users/delete', async (token, thunkAPI) => {
         })
         return response.data
     } catch (err: any) {
-        return thunkAPI.rejectWithValue(err.response.data.error)
+        return thunkAPI.rejectWithValue(err.response.data)
     }
 })
 
