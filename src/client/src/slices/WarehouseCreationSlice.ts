@@ -1,5 +1,9 @@
+import { localStorageHandler } from './../utils/localStorage';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
+
+const { getTokenLocalStorage } = localStorageHandler()
+const userData = JSON.parse(getTokenLocalStorage() ?? '')
 
 export interface WarehouseCreationState {
     message: string
@@ -14,18 +18,20 @@ const initialState: WarehouseCreationState = {
 }
 
 
-const postWarehouse = createAsyncThunk('warehouses/create', async (token, thunkAPI) => {
+
+const postWarehouse = createAsyncThunk('warehouses/create', async (data: any, thunkAPI) => {
     try {
         const response = await axios({
             method: 'post',
             url: `http://localhost:5000/warehouses/create`,
             headers: {
-                Authorization: `Bearer ${token}`,
-            }
+                Authorization: `Bearer ${userData.token}`,
+            },
+            data
         })
         return response.data
     } catch (err: any) {
-        return thunkAPI.rejectWithValue(err.response.data.error)
+        return thunkAPI.rejectWithValue(err.response.data)
     }
 })
 

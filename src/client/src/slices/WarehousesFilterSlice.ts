@@ -1,15 +1,13 @@
+import { FilterWarehouseOptions } from './../types/index';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-interface FilterWarehouseOptions {
+
+
+interface WarehousesFilterState {
+    filteredWarehouses: Array<object>
     governorates: Array<string>
     locations: Array<string>
-    rent?: Array<number>
-    size?: Array<number>
-}
-
-interface WarehousesFilterState extends FilterWarehouseOptions {
-    filteredWarehouses: Array<object>
     error: string
     pending: boolean
 }
@@ -19,7 +17,6 @@ const initialState: WarehousesFilterState = {
     filteredWarehouses: [],
     governorates: [],
     locations: [],
-
     error: '',
     pending: false,
 }

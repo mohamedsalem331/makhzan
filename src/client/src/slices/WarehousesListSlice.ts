@@ -18,7 +18,7 @@ const initialState: WarehousesListState = {
   maxSize: 0,
 }
 
-const id = '4354dfgdft543'
+const id = ''
 let headers = {}
 if (!!id) {
   headers = {
@@ -42,11 +42,7 @@ const fetchWarehouses = createAsyncThunk('warehouses/fetch', async (_, thunkAPI)
 export const warehousesListSlice = createSlice({
   name: 'warehouses',
   initialState,
-  reducers: {
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchWarehouses.pending, (state) => {

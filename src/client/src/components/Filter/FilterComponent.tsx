@@ -1,4 +1,4 @@
-import { TextField, Autocomplete, Stack, InputAdornment, Paper } from '@mui/material'
+import { TextField, Autocomplete, Stack, InputAdornment, Paper, Button } from '@mui/material'
 
 import React from 'react'
 import { Box } from '@mui/system'
@@ -8,35 +8,81 @@ import { formatRentValue } from '../../utils/formatNumber'
 interface FilterWarehousesState {
   locations: string[]
   governorates: string[]
+  filterWarehouses: any
 }
 
-const FilterComponent: React.FC<FilterWarehousesState> = ({ governorates, locations }) => {
-  const [expanded, setExpanded] = React.useState<string | false>(false)
+const FilterComponent: React.FC<FilterWarehousesState> = ({
+  governorates,
+  locations,
+  filterWarehouses,
+}) => {
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
 
   const [filteredGovernorates, setGovernorates] = React.useState<string[]>([])
   const [filteredLocations, setLocations] = React.useState<string[]>([])
-  const [value, setValue] = React.useState('')
-  const [rent, setRent] = React.useState([0,50])
-  console.log(filteredGovernorates)
-  console.log(filteredLocations)
+  const [size, setSize] = React.useState({ minSize: 0, maxSize: 0 })
+  const [rent, setRent] = React.useState({ minRent: 0, maxRent: 0 })
+
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const handleFilterChange = (event: any, value: any) => {
-    if (event.target.id.includes('governorates')) {
+    const { id } = event.target
+
+    if (id.includes('governorates')) {
       setGovernorates(value)
-    } else if (event.target.id.includes('locations')) {
+    } else if (id.includes('locations')) {
       setLocations(value)
     }
   }
 
   const handleChangeRent = (event: any) => {
-    console.log(event)
-    const target = event.target
-    if (target.id === 'minRent') {
-      setRent[]
+    const { value, id } = event.target
+
+    if (id === 'minRent') {
+      setRent({
+        minRent: value,
+        maxRent: rent.maxRent,
+      })
+    } else if (id === 'maxRent') {
+      setRent({
+        minRent: rent.minRent,
+        maxRent: value,
+      })
     }
   }
 
-  const myNewLocations = LOCATIONS.slice(0, 10)
+  const handleChangeSize = (event: any) => {
+    const { value, id } = event.target
+
+    if (id === 'minSize') {
+      setSize({
+        minSize: value,
+        maxSize: size.maxSize,
+      })
+    } else if (id === 'maxSize') {
+      setSize({
+        minSize: size.maxSize,
+        maxSize: value,
+      })
+    }
+  }
+
+  const onSubmit = (e: any) => {
+    e.preventDefault()
+
+    const Filters = {
+      governorate: filteredGovernorates,
+      location: filteredLocations,
+      size: [size.minSize, size.maxSize],
+      rent: [rent.minRent, rent.maxRent],
+    }
+
+    filterWarehouses(Filters)
+  }
 
   return (
     <>
@@ -66,34 +112,34 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({ governorates, locati
               <TextField {...params} label="Filter Locations" placeholder="Locations" />
             )}
           />
-          {/* <Box>
+          <Box>
             Size
-            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'row'}>
+            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'column'}>
               <TextField
-                id="outlined-multiline-flexible"
+                id="minSize"
                 label="Min"
                 type="number"
-                onChange={handleChangetext}
+                onChange={handleChangeSize}
                 defaultValue={0}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
                 }}
               />
               <TextField
-                id="outlined-multiline-flexible"
+                id="maxSize"
                 label="Max"
                 type="number"
-                onChange={handleChangetext}
+                onChange={handleChangeSize}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
                 }}
               />
             </Stack>
-          </Box> */}
+          </Box>
 
           <Box>
             Rent
-            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'row'}>
+            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'column'}>
               <TextField
                 id="minRent"
                 label="Min"
@@ -107,7 +153,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({ governorates, locati
               <TextField
                 id="maxRent"
                 label="Max"
-                type="text"
+                type="number"
                 onChange={handleChangeRent}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">E£</InputAdornment>,
@@ -115,6 +161,8 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({ governorates, locati
               />
             </Stack>
           </Box>
+          <Button variant="contained">Apply Filters</Button>
+          <Button variant="outlined">Remove Filters</Button>
         </Stack>
       </Paper>
     </>

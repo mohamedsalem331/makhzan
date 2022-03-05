@@ -38,10 +38,10 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="explore" element={<WarehousesList />} />
-          <Route path="warehouses/:id" element={<Warehouse />} />
+          <Route path="/explore" element={<WarehousesList />} />
+          <Route path="/warehouses/:id" element={<Warehouse />} />
           <Route path="/postwarehouse" element={<PostWarehouse />} />
-          <Route path="*" element={<Warehouse />} /> {/* here is not found route */}
+          <Route path="*" element={<LoginPage />} /> {/* here is not found route */}
         </Routes>
       </Router>
     </div>

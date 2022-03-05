@@ -19,6 +19,9 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
 import { services } from '../utils/constants'
 import axios from 'axios'
+import { postWarehouse } from '../slices/WarehouseCreationSlice'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { RootState } from '../app/store'
 
 interface IFormInput {
   title: string
@@ -28,17 +31,40 @@ interface IFormInput {
   governorate: string
   location: string
   street: string
-  Services: string
+  services: string[]
 }
 
 const PostWarehouse: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
+  const { message, pending, error } = useAppSelector((state: RootState) => state.postWarehouse)
+
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
+  const dispatch = useAppDispatch()
+  const _postWarehouse = (data: any) => dispatch(postWarehouse(data))
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
   const [files, setFiles] = useState<Array<string>>([])
   const [images, setImages] = useState<Array<string>>([])
   const [imageList, setImageList] = useState<Array<string>>([])
 
   const { control, handleSubmit } = useForm<IFormInput>()
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const Myimages = await uploadImages()
+    _postWarehouse({ ...data, images: Myimages })
+  }
 
   const onImageChange = (event: any) => {
     if (event.target.files && event.target.files[0]) {
@@ -70,6 +96,7 @@ const PostWarehouse: React.FC = () => {
         data: formData,
       })
       setImageList(response.data.myImages)
+      return imageList
     } catch (error) {
       console.log(error)
     }
@@ -154,9 +181,8 @@ const PostWarehouse: React.FC = () => {
                 render={({ field }) => <TextField {...field} label="Street" placeholder="Street" />}
               />
               <Controller
-                name="Services"
+                name="services"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <Autocomplete
                     multiple
@@ -172,19 +198,23 @@ const PostWarehouse: React.FC = () => {
                   .fill('')
                   .map((_, indx) =>
                     images[indx] ? (
-                      <Badge
-                        onClick={() => removeImage(images[indx])}
-                        color="secondary"
-                        badgeContent={<CloseIcon />}
-                      >
-                        <img src={images[indx]} width="150" height="150" alt="" />
-                      </Badge>
+                      <div key={indx}>
+                        <Badge
+                          onClick={() => removeImage(images[indx])}
+                          color="secondary"
+                          badgeContent={<CloseIcon />}
+                        >
+                          <img src={images[indx]} width="150" height="150" alt="" />
+                        </Badge>
+                      </div>
                     ) : (
-                      <Fab size="large" color="secondary" aria-label="add">
-                        <label htmlFor="files">
-                          <AddPhotoAlternateIcon fontSize="large" />
-                        </label>
-                      </Fab>
+                      <div key={indx}>
+                        <Fab size="large" color="secondary" aria-label="add">
+                          <label htmlFor="files">
+                            <AddPhotoAlternateIcon fontSize="large" />
+                          </label>
+                        </Fab>
+                      </div>
                     )
                   )}
               </Stack>
@@ -202,7 +232,6 @@ const PostWarehouse: React.FC = () => {
         name="avatar"
         onChange={onImageChange}
       />
-      <div onClick={uploadImages}>fdsfds</div>
     </>
   )
 }

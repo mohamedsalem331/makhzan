@@ -5,19 +5,37 @@ import LandingNavbar from '../components/Navbar/NavbarComponent'
 import WarehouseListComponent from '../components/Warehouse/WarehouseListComponent'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
+import { filterWarehouses } from '../slices/WarehousesFilterSlice'
+import { FilterWarehouseOptions } from '../types/index'
+import { fetchWarehouses } from '../slices/WarehousesListSlice'
 
 const WarehousesList: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
-  const { governorates, locations } = useAppSelector((state: RootState) => state.warehousesFilter)
+  const {
+    governorates,
+    locations,
+    error: errFilters,
+    pending: loadingFilters,
+  } = useAppSelector((state: RootState) => state.warehousesFilter)
+
+  const {
+    warehouses,
+    error: errWarehouses,
+    pending: loadingWarehouses,
+    maxRent,
+    maxSize,
+  } = useAppSelector((state: RootState) => state.warehousesList)
 
   // ===========================================================================
   // Dispatch
   // ===========================================================================
 
   const dispatch = useAppDispatch()
+  const _filterWarehouses = (data: FilterWarehouseOptions) => dispatch(filterWarehouses(data))
+  const _fetchWarehouses = () => dispatch(fetchWarehouses())
 
   // ===========================================================================
   // Hooks
@@ -35,13 +53,22 @@ const WarehousesList: React.FC = () => {
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
                 Filter Warehouses
               </Typography>
-              <FilterComponent governorates={governorates} locations={locations} />
+              <FilterComponent
+                filterWarehouses={_filterWarehouses}
+                governorates={governorates}
+                locations={locations}
+              />
             </Grid>
             <Grid item xs={9}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
-                Warehouses for Renting
+                {warehouses.length + ' Warehouses for Renting'}
               </Typography>
-              <WarehouseListComponent />
+              <WarehouseListComponent
+                fetchWarehouses={_fetchWarehouses}
+                warehouses={warehouses}
+                loading={loadingWarehouses}
+                error={errWarehouses}
+              />
             </Grid>
           </Grid>
         </Box>

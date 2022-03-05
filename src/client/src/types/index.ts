@@ -67,3 +67,10 @@ export interface LoginState {
   password: string
 }
 
+export interface FilterWarehouseOptions {
+  governorates: Array<string>
+  locations: Array<string>
+  rent?: Array<number>
+  size?: Array<number>
+}
+
