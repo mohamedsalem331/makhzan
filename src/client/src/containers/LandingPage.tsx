@@ -6,7 +6,7 @@ import LandingNavbar from '../components/Navbar/NavbarComponent'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { localStorageHandler } from '../utils/localStorage'
 import { logoutUser } from '../slices/UserLogoutSlice'
-import { searchFilter } from '../slices/WarehousesFilterSlice'
+import { addFilters } from '../slices/WarehousesFilterSlice'
 
 const { removeTokenLocalStorage } = localStorageHandler()
 
@@ -34,20 +34,20 @@ const LandingPage: React.FC = () => {
         console.log(err)
       })
 
-  const _searchFilter = (data: { location: string; governorate: string }) =>
-    dispatch(searchFilter(data))
-
-  const isLoggedIn = !!token && !message
+  const _addFilters = (data: {
+    location: string[]
+    governorate: string[]
+    rent?: number[]
+    size?: number[]
+  }) => dispatch(addFilters(data))
 
   return (
     <>
-      <LandingNavbar isLoggedIn={isLoggedIn} name={name} logoutUser={_logoutUser} />
-
       <div className="ImageContainer">
         <div className="overlay"></div>
         <div className="main-image"></div>
       </div>
-      <SearchComponent searchFilter={_searchFilter} />
+      <SearchComponent addFilters={_addFilters} />
     </>
   )
 }

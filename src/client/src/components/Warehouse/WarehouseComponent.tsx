@@ -32,8 +32,6 @@ const WarehouseComponent = () => {
             className="swiper-override-style"
             spaceBetween={0}
             slidesPerView={1}
-            // onSlideChange={() => console.log('slide change')}
-            // onSwiper={(swiper) => console.log(swiper)}
             pagination={true}
             loop
             navigation

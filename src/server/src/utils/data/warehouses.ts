@@ -5,10 +5,10 @@ const Warehouses = [
       'Warehouse for Rent in New Cairo Alf Masnaa Area.Space Area: 1500 SQM.Hangar Height 10.5 M Rent Rate: EGP250,000 Monthly.Newly Renovated Fully finished',
     size: 1500, // sqm
     rent: 150000,
-    governorate: 'cairo',
-    location: '6 october city',
+    governorate: 'Cairo',
+    location: '6 October City',
     street: '112',
-    services: ['wifi', 'iot', 'bathroom', 'thermostat', 'forklift', 'alarm'],
+    services: ['Power', 'RFID', 'Networked', 'Thermostat', 'Alarm', 'Bathroom'],
     images: [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
@@ -22,16 +22,16 @@ const Warehouses = [
     description: 'Warehouse for Rent in New Cairod',
     size: 2000,
     rent: 200000,
-    governorate: 'giza',
-    location: 'dokki',
+    governorate: 'Giza',
+    location: 'Dokki',
     street: '105 street',
-    services: ['wifi', 'iot', 'bathroom', 'thermostat', 'forklift', 'alarm'],
+    services: ['thermostat', 'forklift', 'alarm'],
     images: [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
     ],
-    UserId: '2c023ede-c424-45e6-bae0-0c61b0d2a2d2',
+    UserId: 'cc5f307d-654d-4d60-91eb-5da96990fa29',
   },
 
   {
@@ -39,16 +39,17 @@ const Warehouses = [
     description: 'warehouse awesome awesome awesome',
     size: 999,
     rent: 6150,
-    governorate: 'alexandria',
-    location: 'bawlino',
+    governorate: 'Alexandria',
+    location: 'Bawlino',
     street: 'mohrem beeh',
-    services: ['wifi', 'iot', 'bathroom', 'thermostat', 'forklift', 'alarm'],
+    services: ['Power', 'RFID', 'Alarm', 'Bathroom'],
+
     images: [
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
       'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
     ],
-    UserId: '38c023ede-c424-45e6-bae0-0c61b0d2a2d3',
+    UserId: 'bec4db5c-a52d-4742-ab23-105723777d26',
   },
 ]
 

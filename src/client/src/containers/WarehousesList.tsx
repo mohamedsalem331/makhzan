@@ -1,11 +1,11 @@
 import { Box, Container, Grid, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FilterComponent from '../components/Filter/FilterComponent'
 import LandingNavbar from '../components/Navbar/NavbarComponent'
 import WarehouseListComponent from '../components/Warehouse/WarehouseListComponent'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
-import { filterWarehouses } from '../slices/WarehousesFilterSlice'
+import { addFilters, clearFilters, filterWarehouses } from '../slices/WarehousesFilterSlice'
 import { FilterWarehouseOptions } from '../types/index'
 import { fetchWarehouses } from '../slices/WarehousesListSlice'
 
@@ -15,8 +15,11 @@ const WarehousesList: React.FC = () => {
   // ===========================================================================
 
   const {
+    filteredWarehouses,
     governorates,
     locations,
+    size,
+    rent,
     error: errFilters,
     pending: loadingFilters,
   } = useAppSelector((state: RootState) => state.warehousesFilter)
@@ -36,12 +39,28 @@ const WarehousesList: React.FC = () => {
   const dispatch = useAppDispatch()
   const _filterWarehouses = (data: FilterWarehouseOptions) => dispatch(filterWarehouses(data))
   const _fetchWarehouses = () => dispatch(fetchWarehouses())
+  const _clearFilters = () => dispatch(clearFilters)
+  const _addFilters = (data: any) => dispatch(addFilters(data))
 
   // ===========================================================================
   // Hooks
   // ===========================================================================
+  const mySize = size && size[0] + size[1] > 0
+  const myRent = rent && rent[0] + rent[1] > 0
 
-  const [incrementAmount, setIncrementAmount] = useState('2')
+  const filters = governorates.length > 0 || locations.length > 0 || mySize || myRent
+
+  useEffect(() => {
+    if (filters) {
+      _filterWarehouses({ locations, governorates, size, rent })
+    } else {
+      _fetchWarehouses()
+    }
+  }, [governorates, locations, size, rent])
+
+  const filterApplied = governorates.length > 0 || locations.length > 0
+
+  const warehousesList: any = filters ? filteredWarehouses : warehouses
 
   return (
     <>
@@ -55,17 +74,18 @@ const WarehousesList: React.FC = () => {
               </Typography>
               <FilterComponent
                 filterWarehouses={_filterWarehouses}
+                // clearFilters={_clearFilters}
+                addFilters={_addFilters}
                 governorates={governorates}
                 locations={locations}
               />
             </Grid>
             <Grid item xs={9}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
-                {warehouses.length + ' Warehouses for Renting'}
+                {warehousesList.length + ' Warehouses for Renting'}
               </Typography>
               <WarehouseListComponent
-                fetchWarehouses={_fetchWarehouses}
-                warehouses={warehouses}
+                warehouses={warehousesList}
                 loading={loadingWarehouses}
                 error={errWarehouses}
               />

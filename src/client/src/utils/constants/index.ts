@@ -4,6 +4,8 @@ import WcIcon from '@mui/icons-material/Wc'
 import WifiIcon from '@mui/icons-material/Wifi'
 import AcUnitIcon from '@mui/icons-material/AcUnit'
 import CompassCalibrationIcon from '@mui/icons-material/CompassCalibration'
+import SensorsIcon from '@mui/icons-material/Sensors';
+import UpcomingIcon from '@mui/icons-material/Upcoming';
 
 export const FOOTER_HEIGHT = 30
 export const HEADER_HEIGHT = 60
@@ -171,10 +173,6 @@ type Services<T> = {
 
 export const services: Array<Services<typeof WifiIcon>> = [
     {
-        label: 'Wifi',
-        Icon: WifiIcon,
-    },
-    {
         label: 'Power',
         Icon: PowerIcon,
     },
@@ -187,7 +185,15 @@ export const services: Array<Services<typeof WifiIcon>> = [
         Icon: AcUnitIcon,
     },
     {
-        label: 'IoT',
+        label: 'RFID',
         Icon: CompassCalibrationIcon,
+    },
+    {
+        label: 'Networked',
+        Icon: SensorsIcon,
+    },
+    {
+        label: 'Alarm',
+        Icon: UpcomingIcon,
     },
 ]

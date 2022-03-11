@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Typography, Paper, Button, Skeleton, Stack } from '@mui/material'
 import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined'
 import SquareFootSharpIcon from '@mui/icons-material/SquareFootSharp'
@@ -12,26 +12,17 @@ import { formatRentValue } from '../../utils/formatNumber'
 import '../../styles/WarehouseList.css'
 import 'swiper/css'
 import { Link } from 'react-router-dom'
+import { FilterWarehouseOptions } from '../../types'
 
 const SwiperImageHeight = '180'
 
 export interface IWarehousesListState {
-  fetchWarehouses: any
-  warehouses: Array<object>
+  warehouses: any
   loading: boolean
   error: string
 }
 
-const WarehouseList: React.FC<IWarehousesListState> = ({
-  fetchWarehouses,
-  warehouses,
-  loading,
-  error,
-}) => {
-  useEffect(() => {
-    fetchWarehouses()
-  }, [])
-
+const WarehouseList: React.FC<IWarehousesListState> = ({ warehouses, loading, error }) => {
   if (loading) {
     return (
       <Stack spacing={1}>
@@ -43,13 +34,17 @@ const WarehouseList: React.FC<IWarehousesListState> = ({
     )
   }
 
+  if (warehouses.length === 0) {
+    return <div>No warehouses to Display</div>
+  }
+
   return (
     <>
       <Stack spacing={5}>
         {warehouses.map(({ title, id, governorate, location, rent, size, images, street }: any) => {
           return (
-            <>
-              <Box sx={{ maxWidth: '90%' }} key={id}>
+            <div key={id}>
+              <Box sx={{ maxWidth: '90%' }}>
                 <Paper variant="outlined" square sx={{ display: 'flex', flexDirection: 'row' }}>
                   <Swiper
                     className="swiper-override-style"
@@ -114,7 +109,7 @@ const WarehouseList: React.FC<IWarehousesListState> = ({
                   </Box>
                 </Paper>
               </Box>
-            </>
+            </div>
           )
         })}
       </Stack>
@@ -123,43 +118,3 @@ const WarehouseList: React.FC<IWarehousesListState> = ({
 }
 
 export default WarehouseList
-
-//  <Stack spacing={4}>
-// <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-//   <Card sx={{ display: 'flex', direction: 'row', borderRadius: '1px', maxWidth: '80rem' }}>
-//     <img height={SwiperImageHeight} src={Image1} alt="" />
-// {/* <Swiper
-//   className="swiper-override-style"
-//   spaceBetween={0}
-//   slidesPerView={1}
-//   onSlideChange={() => console.log('slide change')}
-//   onSwiper={(swiper) => console.log(swiper)}
-//   pagination={{ clickable: true }}
-//   loop
-// >
-//   <SwiperSlide>
-//     <img height={SwiperImageHeight} src={Image1} alt="" />
-//   </SwiperSlide>
-//   <SwiperSlide>
-//     <img height={SwiperImageHeight} src={Image2} alt="" />
-//   </SwiperSlide>
-//   <SwiperSlide>
-//     <img height={SwiperImageHeight} src={Image3} alt="" />
-//   </SwiperSlide>
-// </Swiper> */}
-//     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-//       <CardContent>
-// <Typography gutterBottom variant="h5" component="div">
-//   3,150,000
-// </Typography>
-// <Typography variant="body2" color="text.secondary">
-//   hadayek el ahraam, street 105, apartment 15
-// </Typography>
-//       </CardContent>
-
-//       <Button size="small">Share</Button>
-//       <Button size="small">Learn More</Button>
-//     </Box>
-//   </Card>
-// </Box>
-// </Stack>

@@ -9,6 +9,8 @@ export interface UserAttributes {
   password: string
   phoneNumber: number
   isAdmin?: boolean
+  createdAt?: string
+  updatedAt?: string
 }
 
 // Warehouse Model
@@ -16,14 +18,16 @@ export interface WarehouseAttributes {
   id?: number | string
   title: string
   description: string
-  size: number
   rent: number
+  size: number
   governorate: string
   location: string
   street: string
   services: Array<string>
   images: Array<string>
   UserId?: number | string
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface MenuItem {

@@ -60,6 +60,7 @@ const getAllWarehouses = async (req: Request, res: Response) => {
 // @access  Public
 const filterAllWarehouses = async (req: Request, res: Response) => {
   let warehouses
+    ;
 
   try {
     const filters = req.body
@@ -72,16 +73,16 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
     warehouses = await Warehouse.findAll({
       where: {
         rent: {
-          [Op.between]: filters.rent ? filters.rent : [0, maxRent],
+          [Op.between]: filters.rent && filters.rent[0] + filters.rent[1] > 0 ? filters.rent : [0, maxRent],
         },
         size: {
-          [Op.between]: filters.size ? filters.size : [0, maxSize],
+          [Op.between]: filters.size && filters.size[0] + filters.size[1] > 0 ? filters.size : [0, maxSize],
         },
         governorate: {
-          [Op.or]: filters.governorate,
+          [Op.or]: filters.governorates,
         },
         location: {
-          [Op.or]: filters.location,
+          [Op.or]: filters.locations,
         },
       },
     })
@@ -91,11 +92,12 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
     }
     res.status(200).send({ warehouses })
   } catch (e: any) {
+
     let errorMessage = 'Something went wrong, filtering warehouses'
     if (e instanceof Error) {
       errorMessage = e.message
     }
-    res.status(400).send({ error: e.message })
+    res.status(400).send({ error: errorMessage })
   }
 }
 
@@ -134,11 +136,11 @@ const getWarehouse = async (req: Request, res: Response) => {
 
     if (!warehouse || !(warehouse instanceof Warehouse)) throw new Error('Warehouse not found')
 
-    const user = await User.findByPk(warehouse.UserId)
+    const user = await User.findByPk(warehouse.UserId, { attributes: ['name', 'email', 'phoneNumber'] })
 
     if (!user || !(user instanceof User)) throw new Error('Associated User not found')
 
-    res.status(200).send({ warehouse, userName: user.name, userPhone: user.phoneNumber })
+    res.status(200).send({ warehouse, user })
   } catch (e: any) {
     console.log(e)
 

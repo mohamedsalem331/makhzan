@@ -9,11 +9,13 @@ interface FilterWarehousesState {
   locations: string[]
   governorates: string[]
   filterWarehouses: any
+  addFilters: any
 }
 
 const FilterComponent: React.FC<FilterWarehousesState> = ({
   governorates,
   locations,
+  addFilters,
   filterWarehouses,
 }) => {
   // ===========================================================================
@@ -71,8 +73,8 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
     }
   }
 
-  const onSubmit = (e: any) => {
-    e.preventDefault()
+  const onSubmit = () => {
+    console.log('submited')
 
     const Filters = {
       governorate: filteredGovernorates,
@@ -81,7 +83,9 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
       rent: [rent.minRent, rent.maxRent],
     }
 
-    filterWarehouses(Filters)
+    addFilters(Filters)
+
+    // filterWarehouses(Filters)
   }
 
   return (
@@ -94,7 +98,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
             id="governorates-filter"
             options={GOVERNORATES}
             getOptionLabel={(option) => option}
-            defaultValue={governorates.length > 0 ? [governorates[0]] : []}
+            defaultValue={!!governorates[0] ? [governorates[0]] : []}
             filterSelectedOptions
             renderInput={(params) => (
               <TextField {...params} label="Filter Governorates" placeholder="Governorates" />
@@ -106,7 +110,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
             id="locations-filter"
             options={LOCATIONS}
             getOptionLabel={(option) => option}
-            defaultValue={locations.length > 0 ? [locations[0]] : []}
+            defaultValue={!!locations[0] ? [locations[0]] : []}
             filterSelectedOptions
             renderInput={(params) => (
               <TextField {...params} label="Filter Locations" placeholder="Locations" />
@@ -161,7 +165,9 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
               />
             </Stack>
           </Box>
-          <Button variant="contained">Apply Filters</Button>
+          <Button variant="contained" onClick={onSubmit}>
+            Apply Filters
+          </Button>
           <Button variant="outlined">Remove Filters</Button>
         </Stack>
       </Paper>

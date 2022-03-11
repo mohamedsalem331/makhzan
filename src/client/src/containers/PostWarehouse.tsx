@@ -9,6 +9,11 @@ import {
   Fab,
   TextareaAutosize,
   Badge,
+  Select,
+  MenuItem,
+  ListItemText,
+  ListItemIcon,
+  OutlinedInput,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import React, { useRef, useState } from 'react'
@@ -22,6 +27,8 @@ import axios from 'axios'
 import { postWarehouse } from '../slices/WarehouseCreationSlice'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store'
+import { OutlinedFlag } from '@mui/icons-material'
+import CustomizedSnackBar from '../components/SnackBarComponent'
 
 interface IFormInput {
   title: string
@@ -34,6 +41,19 @@ interface IFormInput {
   services: string[]
 }
 
+const initialState = {
+  defaultValues: {
+    title: '',
+    description: '',
+    size: 1000,
+    rent: 100,
+    governorate: 'Cairo',
+    location: '6 October City',
+    street: '112',
+    services: [],
+  },
+}
+
 const PostWarehouse: React.FC = () => {
   // ===========================================================================
   // Selectors
@@ -42,7 +62,7 @@ const PostWarehouse: React.FC = () => {
   const { message, pending, error } = useAppSelector((state: RootState) => state.postWarehouse)
 
   // ===========================================================================
-  // Dispatch
+  // Actions
   // ===========================================================================
 
   const dispatch = useAppDispatch()
@@ -51,11 +71,16 @@ const PostWarehouse: React.FC = () => {
   // ===========================================================================
   // Hooks
   // ===========================================================================
+
   const [files, setFiles] = useState<Array<string>>([])
   const [images, setImages] = useState<Array<string>>([])
-  const [imageList, setImageList] = useState<Array<string>>([])
 
-  const { control, handleSubmit } = useForm<IFormInput>()
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IFormInput>(initialState)
 
   // ===========================================================================
   // Handlers
@@ -68,9 +93,10 @@ const PostWarehouse: React.FC = () => {
 
   const onImageChange = (event: any) => {
     if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0]
-      setImages([...images, URL.createObjectURL(img)])
-      setFiles([...files, img])
+      let imgFile = event.target.files[0]
+
+      setImages([...images, URL.createObjectURL(imgFile)])
+      setFiles([...files, imgFile])
     }
 
     // render snacbar componenet with error if images more than 3
@@ -95,15 +121,20 @@ const PostWarehouse: React.FC = () => {
         },
         data: formData,
       })
-      setImageList(response.data.myImages)
-      return imageList
+      return response.data.myImages
     } catch (error) {
       console.log(error)
     }
   }
 
+  const descLen = watch().description.length
+  console.log(watch())
+
   return (
     <>
+      {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
+      {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
+
       <LandingNavbar Position="relative" />
 
       <Container maxWidth="sm" sx={{ marginY: '3rem' }}>
@@ -113,19 +144,28 @@ const PostWarehouse: React.FC = () => {
               <Controller
                 name="title"
                 control={control}
-                defaultValue=""
-                render={({ field }) => <TextField {...field} label="Title" placeholder="Title" />}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    error={!!errors.title}
+                    helperText={!!errors.title && 'Incorrect entry.'}
+                    label="Title"
+                    placeholder="Title"
+                  />
+                )}
               />
               <Controller
                 name="description"
                 control={control}
-                defaultValue=""
+                rules={{ required: true, maxLength: 300 }}
                 render={({ field }) => (
                   <TextField
-                    rows={8}
-                    helperText="Some important text"
-                    multiline
                     {...field}
+                    rows={8}
+                    error={!!errors.description || descLen >= 300}
+                    helperText={descLen + ' / 300'}
+                    multiline
                     label="Description"
                     placeholder="Description"
                   />
@@ -134,15 +174,27 @@ const PostWarehouse: React.FC = () => {
               <Controller
                 name="size"
                 control={control}
-                defaultValue={0}
+                rules={{ required: true }}
                 render={({ field }) => (
-                  <TextField type="number" {...field} label="Size" placeholder="Size" />
+                  <Tooltip title="This is the size of your warehouse in square meter">
+                    <TextField
+                      type="number"
+                      {...field}
+                      label="Size"
+                      placeholder="Size"
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start">Sqm</InputAdornment>,
+                      }}
+                      error={!!errors.size}
+                      helperText={!!errors.size && 'Incorrect entry.'}
+                    />
+                  </Tooltip>
                 )}
               />
               <Controller
                 name="rent"
                 control={control}
-                defaultValue={0}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <Tooltip title="This is the rent value you desire for your warehouse per month">
                     <TextField
@@ -150,6 +202,8 @@ const PostWarehouse: React.FC = () => {
                       label="Rent"
                       placeholder="Rent"
                       onChange={(e) => field.onChange(formatRentValue(e.target.value))}
+                      error={!!errors.rent}
+                      helperText={!!errors.rent && 'Incorrect entry.'}
                       InputProps={{
                         startAdornment: <InputAdornment position="start">E£</InputAdornment>,
                       }}
@@ -160,37 +214,64 @@ const PostWarehouse: React.FC = () => {
               <Controller
                 name="governorate"
                 control={control}
-                defaultValue=""
+                rules={{ required: true }}
                 render={({ field }) => (
-                  <TextField {...field} label="Governorate" placeholder="Governorate" />
+                  <TextField
+                    {...field}
+                    label="Governorate"
+                    placeholder="Governorate"
+                    error={!!errors.governorate}
+                    helperText={!!errors.governorate && 'Incorrect entry.'}
+                  />
                 )}
               />
               <Controller
                 name="location"
                 control={control}
-                defaultValue=""
+                rules={{ required: true }}
                 render={({ field }) => (
-                  <TextField {...field} label="Location" placeholder="Location" />
+                  <TextField
+                    {...field}
+                    label="Location"
+                    placeholder="Location"
+                    error={!!errors.location}
+                    helperText={!!errors.location && 'Incorrect entry.'}
+                  />
                 )}
               />
               ``
               <Controller
                 name="street"
                 control={control}
-                defaultValue=""
-                render={({ field }) => <TextField {...field} label="Street" placeholder="Street" />}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Street"
+                    placeholder="Street"
+                    error={!!errors.street}
+                    helperText={!!errors.street && 'Incorrect entry.'}
+                  />
+                )}
               />
               <Controller
                 name="services"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
-                  <Autocomplete
+                  <Select
+                    {...field}
+                    input={<OutlinedInput label="Name" />}
                     multiple
-                    id="tags-standard"
-                    options={services}
-                    getOptionLabel={(option) => option.label}
-                    renderInput={(params) => <TextField {...params} {...field} label="Services" />}
-                  />
+                    renderValue={(selected) => selected.join(', ')}
+                  >
+                    {services.map(({ label, Icon }) => (
+                      <MenuItem key={label} value={label}>
+                        <Icon />
+                        <ListItemText primary={label} sx={{ marginLeft: '1rem' }} />
+                      </MenuItem>
+                    ))}
+                  </Select>
                 )}
               />
               <Stack direction="row" spacing={3} justifyContent="center">
@@ -204,7 +285,7 @@ const PostWarehouse: React.FC = () => {
                           color="secondary"
                           badgeContent={<CloseIcon />}
                         >
-                          <img src={images[indx]} width="150" height="150" alt="" />
+                          <img src={images[indx]} width="150" alt="" />
                         </Badge>
                       </div>
                     ) : (
@@ -219,7 +300,13 @@ const PostWarehouse: React.FC = () => {
                   )}
               </Stack>
             </Stack>
-            <Button color="primary" variant="contained" sx={{ marginY: '3rem' }} type="submit">
+            <Button
+              color="primary"
+              variant="contained"
+              sx={{ marginY: '3rem' }}
+              type="submit"
+              disabled={Object.keys(errors).length > 0 || images.length < 1}
+            >
               Create Warehouse
             </Button>
           </form>
@@ -237,11 +324,22 @@ const PostWarehouse: React.FC = () => {
 }
 
 {
-  /* <Button variant="contained" component="label">
-        Upload File
-        <input onChange={onChange} type="file" hidden />
-      </Button>
-      <img width={100} src={img} /> */
+  /* 
+
+        {
+    "title": "this warehouse can bring you happiness in no time",
+    "description": "warehouse awesome awesome awesome",
+    "size": "999",
+    "rent": "6150",
+    "governorate": "alexandria",
+    "location": "bawlino",
+    "street": "mohrem beeh",
+    "services": ["wifi"],
+    "images": [
+      "https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg"
+    ]
+  }
+      */
 }
 
 export default PostWarehouse

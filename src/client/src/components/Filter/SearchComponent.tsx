@@ -2,17 +2,21 @@ import React, { useState } from 'react'
 import { Autocomplete, Box, Button, Grid, Stack, TextField } from '@mui/material'
 import { GOVERNORATES, LOCATIONS } from '../../utils/constants/index'
 import SearchIcon from '@mui/icons-material/Search'
+import { useNavigate } from 'react-router-dom'
 
 interface SearchWarehousesProps {
-  searchFilter: any
+  addFilters: any
 }
 
-const SearchComponent: React.FC<SearchWarehousesProps> = ({ searchFilter }) => {
-  const [location, setLocation] = useState<string | null>(null)
-  const [governorate, setGovernorate] = useState<string | null>(null)
+const SearchComponent: React.FC<SearchWarehousesProps> = ({ addFilters }) => {
+  const [location, setLocation] = useState<string | null>()
+  const [governorate, setGovernorate] = useState<string | null>()
+
+  const history = useNavigate()
 
   const onSubmit = () => {
-    searchFilter({ location, governorate })
+    addFilters({ location: [location], governorate: [governorate] })
+    history('/explore')
   }
 
   return (

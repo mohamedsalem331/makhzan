@@ -8,20 +8,22 @@ const UserMockData = [
     phoneNumber: 412354345,
   },
   {
-    id: '2c023ede-c424-45e6-bae0-0c61b0d2a2d2',
+    id: 'cc5f307d-654d-4d60-91eb-5da96990fa29',
     name: 'Mohamed User',
     email: 'admin2@example.com',
     password: 'f3423423fd3s',
     phoneNumber: 412354347,
   },
   {
-    id: '38c023ede-c424-45e6-bae0-0c61b0d2a2d3',
+    id: 'bec4db5c-a52d-4742-ab23-105723777d26',
     name: 'fds User',
     email: 'admin3@example.com',
     password: 'ffdsfsd5fds4ffd543',
     isAdmin: true,
-    phoneNumber: 412354342,
+    phoneNumber: 4123543442,
   },
 ]
 
 export default UserMockData
+
+

@@ -12,16 +12,18 @@ interface NavbarProps {
   isLoggedIn?: boolean
   name?: string
   logoutUser?: () => Promise<void>
+  error?: string
+  loading?: boolean
 }
 
 const LandingNavbar: React.FC<NavbarProps> = ({
-  Position = 'absolute',
+  Position = 'relative',
   isLoggedIn,
   name = 'jack nelson',
   logoutUser,
+  loading,
+  error,
 }) => {
-  const _logoutUser = logoutUser
-
   const stringAvatar = (name: string) => {
     const myArr = name.split(' ')
     let letter = ''
@@ -50,10 +52,10 @@ const LandingNavbar: React.FC<NavbarProps> = ({
             {!!isLoggedIn ? (
               <>
                 <Stack direction="row" spacing={3}>
-                  <Button variant="contained" size="small">
-                    Post Warehouse
-                  </Button>
-                  <Button onClick={_logoutUser} variant="outlined">
+                  <Link to="/postwarehouse">
+                    <Button variant="contained">Post Warehouse</Button>
+                  </Link>
+                  <Button onClick={logoutUser} variant="outlined">
                     Logout
                   </Button>
                   <Avatar sx={{ bgcolor: deepOrange[500] }}>{stringAvatar(name)}</Avatar>

@@ -1,21 +1,39 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../app/store'
 import axios from 'axios'
+import { WarehouseAttributes, UserAttributes } from '../types'
 
 export interface WarehousesDetailsState {
-    warehouse: object
+    warehouse: WarehouseAttributes
+    user: UserAttributes
     error: string
     pending: boolean
 }
 
 const initialState: WarehousesDetailsState = {
-    warehouse: {},
+    warehouse: {
+        title: '',
+        description: '',
+        size: 0,
+        rent: 0,
+        governorate: '',
+        location: '',
+        street: '',
+        services: [],
+        images: [],
+    },
+    user: {
+        name: '',
+        email: '',
+        password: '',
+        phoneNumber: 0
+    },
     error: '',
     pending: false,
 }
 
 
-const fetchWarehouseDetails = createAsyncThunk('warehouses/details', async (id, thunkAPI) => {
+const fetchWarehouseDetails = createAsyncThunk('warehouses/details', async (id: string, thunkAPI) => {
     try {
         const response = await axios({
             method: 'get',
@@ -23,18 +41,14 @@ const fetchWarehouseDetails = createAsyncThunk('warehouses/details', async (id, 
         })
         return response.data
     } catch (err: any) {
-        return thunkAPI.rejectWithValue(err.response.data.error)
+        return thunkAPI.rejectWithValue(err.response.data)
     }
 })
 
 export const warehouseDetailsSlice = createSlice({
     name: 'warehouseDetails',
     initialState,
-    reducers: {
-        // incrementByAmount: (state, action: PayloadAction<number>) => {
-        //   state.value += action.payload
-        // },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchWarehouseDetails.pending, (state) => {
@@ -43,17 +57,14 @@ export const warehouseDetailsSlice = createSlice({
             .addCase(fetchWarehouseDetails.fulfilled, (state, action) => {
                 return (state = {
                     warehouse: action.payload.warehouse,
+                    user: action.payload.user,
                     error: '',
                     pending: false,
                 });
             })
             .addCase(fetchWarehouseDetails.rejected, (state, action: PayloadAction<any>) => {
-                console.log(action)
-                return (state = {
-                    warehouse: {},
-                    error: action.payload.error,
-                    pending: false,
-                });
+                state.error = action.payload.error
+                state.pending = false
             })
     },
 })

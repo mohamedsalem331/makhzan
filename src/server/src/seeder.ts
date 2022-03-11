@@ -18,8 +18,9 @@ const importData = async (): Promise<void> => {
 
 const destoryData = async () => {
   try {
-    await User.drop()
+    await sequelize.sync()
     await Warehouse.drop()
+    await User.drop()
     console.log('data destroyed')
   } catch (e) {
     console.log(e)
