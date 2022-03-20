@@ -3,9 +3,9 @@ import WarehousesFilterReducer from './../slices/WarehousesFilterSlice';
 import WarehousesListReducer from '../slices/WarehousesListSlice'
 import WarehouseDetailsReducer from '../slices/WarehouseDetailsSlice'
 import UserRegisterReducer from '../slices/UserRegisterSlice'
-import UserLoginReducer from '../slices/UserLoginSlice'
-import UserDetailsReducer from '../slices/UserDetailsSlice'
+import UserLoginReducer, { authMiddleware } from '../slices/UserLoginSlice'
 import UserLogoutReducer from '../slices/UserLogoutSlice'
+
 
 import { configureStore } from '@reduxjs/toolkit'
 
@@ -17,9 +17,9 @@ export const store = configureStore({
     warehouseDetails: WarehouseDetailsReducer,
     userRegister: UserRegisterReducer,
     userLogin: UserLoginReducer,
-    userDetails: UserDetailsReducer,
     userLogout: UserLogoutReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authMiddleware)
 })
 //  devTools: process.env.NODE_ENV !== 'production',
 export type AppDispatch = typeof store.dispatch

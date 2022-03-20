@@ -29,11 +29,11 @@ const SearchComponent: React.FC<SearchWarehousesProps> = ({ addFilters }) => {
           left: '50%',
           transform: ' translate(-50%, -50%)',
           backgroundColor: 'white',
-          borderRadius: '20px',
+          borderRadius: '4px',
           display: 'flex',
         }}
       >
-        <Stack spacing={3}>
+        <Stack spacing={2}>
           <Autocomplete
             disablePortal
             id="governorate-input"

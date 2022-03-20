@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, Container, ImageListItem, Grid } from '@mui/material'
+import { Box, Container, ImageListItem, Grid, useMediaQuery } from '@mui/material'
 import BreadCrumbsLinks from '../components/BreadCrumbsLinks'
 import Image1 from '../Assets/image1.jpeg'
 import Image2 from '../Assets/image2.jpeg'
@@ -7,9 +7,14 @@ import Image3 from '../Assets/image3.jpeg'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
 import { fetchWarehouseDetails } from '../slices/WarehouseDetailsSlice'
-import LandingNavbar from '../components/Navbar/NavbarComponent'
-import WarehouseDescription from '../components/Warehouse/WarehouseDescription'
+import LandingNavbar from './NavbarComponent'
+import WarehouseDescription from '../components/Warehouse/Description'
 import { useParams } from 'react-router-dom'
+import { Pagination } from 'swiper'
+
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 const WarehouseDetailsComponent: React.FC = () => {
   // ===========================================================================
@@ -38,6 +43,9 @@ const WarehouseDetailsComponent: React.FC = () => {
     if (id) _fetchWarehouseDetails(id)
   }, [])
 
+  const matches = useMediaQuery('(min-width:800px)')
+  const { images } = warehouse
+
   if (pending) {
     return <div>Fetching...</div>
   }
@@ -46,37 +54,53 @@ const WarehouseDetailsComponent: React.FC = () => {
     return <div>Couldnt Fetch warehouse details</div>
   }
 
-  const { images } = warehouse
-
   return (
     <>
       <Container maxWidth="xl">
         <BreadCrumbsLinks text="fds" link="/" />
-        <Box sx={{ height: '100vh' }}>
-          <Grid columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
-            <Grid key={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
-              <Grid item xs={8}>
-                <ImageListItem>
-                  <img src={images[0]} srcSet={images[0]} alt={'fdsdsfds'} loading="lazy" />
-                </ImageListItem>
-              </Grid>
-              <Grid item xs={4}>
-                {images.map((img, idx) => {
-                  if (idx > 0) {
-                    return (
-                      <ImageListItem key={idx}>
-                        <img src={img} srcSet={img} alt={'fdsdsfds'} loading="lazy" />
-                      </ImageListItem>
-                    )
-                  }
-                })}
+        <Box>
+          {matches ? (
+            <Grid columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
+              <Grid key={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
+                <Grid item xs={8}>
+                  <ImageListItem>
+                    <img src={images[0]} srcSet={images[0]} alt={'fdsdsfds'} loading="lazy" />
+                  </ImageListItem>
+                </Grid>
+                <Grid item xs={4}>
+                  {images.map((img, idx) => {
+                    if (idx > 0) {
+                      return (
+                        <ImageListItem key={idx}>
+                          <img src={img} srcSet={img} alt={'fdsdsfds'} loading="lazy" />
+                        </ImageListItem>
+                      )
+                    }
+                  })}
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <Box>
+              <Swiper
+                className="swiper-override-style2"
+                modules={[Pagination]}
+                slidesPerView={1}
+                navigation
+                pagination={{ clickable: true }}
+                loop
+              >
+                {images.map((image: string) => (
+                  <SwiperSlide>
+                    <img src={image} alt="" />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </Box>
+          )}
 
           <WarehouseDescription {...warehouse} {...user} />
         </Box>
-        v
       </Container>
     </>
   )

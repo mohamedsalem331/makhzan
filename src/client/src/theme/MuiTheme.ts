@@ -12,6 +12,12 @@ const theme = createTheme({
     //   main: '#98462e',
     // },
   },
+  typography: {
+    fontFamily: [
+      'Open Sans',
+      'sans-serif',
+    ].join(','),
+  },
 })
 
 export default theme

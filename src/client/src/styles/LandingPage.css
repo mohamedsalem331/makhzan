@@ -50,11 +50,3 @@
   opacity: 0.5;
   z-index: 0;
 }
-
-.logo-wrapper {
-  cursor: pointer;
-}
-
-.logo-wrapper img {
-  height: 3.5rem;
-}

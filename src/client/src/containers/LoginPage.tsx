@@ -13,6 +13,7 @@ import {
   Alert,
   AlertTitle,
   CircularProgress,
+  useMediaQuery,
 } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import React, { useState } from 'react'
@@ -32,28 +33,24 @@ const LoginPage: React.FC = () => {
     (state) => state.userLogin
   )
 
+  if (window.location.pathname === '' || window.location.pathname === '/') {
+  }
+
   // ===========================================================================
   // Dispatch
   // ===========================================================================
 
   const dispatch = useAppDispatch()
-  const _authUser = (data: LoginState) =>
-    dispatch(authUser(data))
-      .unwrap()
-      .then((originalPromiseResult) => {
-        setTokenLocalStorage(originalPromiseResult)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+
+  const _authUser = (data: LoginState) => dispatch(authUser(data))
 
   // ===========================================================================
   // Hooks
   // ===========================================================================
 
   const [values, setValues] = useState<LoginState>({
-    email: '',
-    password: '',
+    email: 'admin2@example.com',
+    password: 'f3423423fd3s',
   })
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -77,19 +74,25 @@ const LoginPage: React.FC = () => {
   }
 
   const submitDisabled = !!values.email && !!values.password
+  const matches = useMediaQuery('(min-width:500px)')
 
   return (
     <>
       {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
-      <section className="register-wrapper">
+      <section className="auth-wrapper">
         <Container
-          sx={{ backgroundColor: 'white', borderRadius: '5px', paddingY: '2.5rem' }}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '5px',
+            paddingY: '2.5rem',
+            marginX: '0.5rem',
+          }}
           maxWidth="sm"
         >
           <Box>
             <FormControl variant="outlined">
-              <Grid container rowSpacing={{ sm: 3, md: 5 }} columnSpacing={{ md: 3 }}>
+              <Grid container rowSpacing={{ xs: 3, sm: 5 }} columnSpacing={{ xs: 4 }}>
                 <Grid item xs={12} md={12}>
                   <TextField
                     id="text-email"

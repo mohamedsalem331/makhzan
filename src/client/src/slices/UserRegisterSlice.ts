@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RegisterState } from '../types/index'
-import { localStorageHandler } from '../utils/localStorage'
+
 
 export interface UserRegisterState {
     message: string
@@ -23,7 +23,6 @@ const initialState: UserRegisterState = {
     pending: false
 }
 
-const { setTokenLocalStorage } = localStorageHandler()
 
 const registerUser = createAsyncThunk('users/register', async (data: RegisterState, thunkAPI) => {
     const { firstName, lastName, email, password, phoneNumber } = data
@@ -32,7 +31,7 @@ const registerUser = createAsyncThunk('users/register', async (data: RegisterSta
         const response = await axios({
             method: 'post',
             url: `http://localhost:5000/users/register`,
-            data: { name: firstName + lastName, email, password, phoneNumber }
+            data: { name: `${firstName} ${lastName}`, email, password, phoneNumber }
         })
         return response.data
     } catch (err: any) {
@@ -50,9 +49,6 @@ export const UserRegisterSlice = createSlice({
                 state.pending = true
             })
             .addCase(registerUser.fulfilled, (state, action) => {
-                const userData = action.payload
-                delete userData.message
-                setTokenLocalStorage(userData)
                 return (state = {
                     message: action.payload.message,
                     token: action.payload.token,

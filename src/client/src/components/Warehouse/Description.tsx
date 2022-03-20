@@ -12,6 +12,7 @@ import {
   Stack,
   Tooltip,
   IconButton,
+  Link,
 } from '@mui/material'
 import CallIcon from '@mui/icons-material/Call'
 import EmailIcon from '@mui/icons-material/Email'
@@ -59,24 +60,22 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
     <>
       <Box sx={{ marginTop: '2rem', textAlign: 'left' }}>
         <Grid columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Stack spacing={2}>
-              <Typography variant="h6" color="text.secondary">
-                {`Warehouse for rent in ${governorate}, ${location}, ${street}.`.toUpperCase()}
-              </Typography>
-              <Typography
-                variant="h5"
-                component="div"
-                sx={{ fontWeight: 'semi-bold', letterSpacing: '1px' }}
-              >
+              <Typography variant="h6" component="div" sx={{ letterSpacing: '1px' }}>
                 {title.toUpperCase()}
               </Typography>
-              <Typography variant="subtitle1" component="span">
+
+              <Typography variant="subtitle2" color="text.secondary">
+                {`Warehouse for rent in ${governorate}, ${location}, ${street}.`.toUpperCase()}
+              </Typography>
+
+              <Typography variant="subtitle2" color="text.secondary">
                 {`Warehouse Size: ${size} sqm`}
               </Typography>
             </Stack>
             <DividerComponent>Services</DividerComponent>
-            <Stack direction={'row'} spacing={3}>
+            <Stack spacing={1}>
               {myServices.map((service: any, indx: number) => {
                 return (
                   <Box key={indx} sx={{ display: 'flex' }}>
@@ -103,16 +102,21 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
                 <Avatar sx={{ width: 56, height: 56 }}>
                   <AccountCircleIcon fontSize="large" />
                 </Avatar>
-                {name}
-                <br />
-                {`Created Warehouse on ${myDate}`}
+                <Stack direction="column" sx={{ marginLeft: '20px' }}>
+                  <Typography variant="body1" color="text.primary">
+                    {name}
+                  </Typography>
+
+                  <Typography variant="body1" color="text.primary">
+                    {`Created Warehouse on ${myDate}`}
+                  </Typography>
+                </Stack>
               </Box>
             </Box>
             <DividerComponent>Description</DividerComponent>
-            {/* whiteSpace: 'pre-line' */}
-            {description}
+            <Box sx={{ whiteSpace: 'pre-line' }}>{description}</Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Paper
               variant="outlined"
               square
@@ -129,22 +133,26 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
               </Typography>
               <Stack direction="row" spacing={5} sx={{ justifyContent: 'center' }}>
                 <Tooltip title={phoneNumber}>
-                  <Button variant="contained" onClick={handleClick}>
-                    <CallIcon sx={{ marginRight: '10px' }} /> Call
-                  </Button>
+                  <Link href="tel:+20 1281115712">
+                    <Button variant="contained" onClick={handleClick}>
+                      <CallIcon sx={{ marginRight: '10px' }} /> Call
+                    </Button>
+                  </Link>
                 </Tooltip>
 
                 <Tooltip title={email} arrow>
-                  <Button variant="contained" onClick={handleClick}>
-                    <EmailIcon sx={{ marginRight: '10px' }} /> Email
-                  </Button>
+                  <Link href="mailto:mohamed_salem331@hotmail.com">
+                    <Button variant="contained" onClick={handleClick}>
+                      <EmailIcon sx={{ marginRight: '10px' }} /> Email
+                    </Button>
+                  </Link>
                 </Tooltip>
               </Stack>
             </Paper>
           </Grid>
         </Grid>
       </Box>
-      <Button sx={{ marginY: '5rem' }} variant="contained" size="large">
+      <Button sx={{ marginY: '5rem' }} variant="contained">
         <ArrowBackIcon fontSize="large" sx={{ marginRight: '10px' }} /> Return Back
       </Button>
     </>

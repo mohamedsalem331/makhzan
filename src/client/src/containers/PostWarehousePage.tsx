@@ -18,7 +18,7 @@ import {
 import { Box } from '@mui/system'
 import React, { useRef, useState } from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import LandingNavbar from '../components/Navbar/NavbarComponent'
+import LandingNavbar from './NavbarComponent'
 import { formatRentValue } from '../utils/formatNumber'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
@@ -29,6 +29,8 @@ import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store'
 import { OutlinedFlag } from '@mui/icons-material'
 import CustomizedSnackBar from '../components/SnackBarComponent'
+import { logout } from '../slices/UserLoginSlice'
+import { log } from 'console'
 
 interface IFormInput {
   title: string
@@ -66,7 +68,18 @@ const PostWarehouse: React.FC = () => {
   // ===========================================================================
 
   const dispatch = useAppDispatch()
-  const _postWarehouse = (data: any) => dispatch(postWarehouse(data))
+  const _logout = () => dispatch(logout())
+  const _postWarehouse = (data: any) =>
+    dispatch(postWarehouse(data))
+      .unwrap()
+      .then((originalPromiseResult) => {
+        console.log(originalPromiseResult)
+      })
+      .catch((rejectedValue) => {
+        if (rejectedValue.status === 401 || rejectedValue.status === 403) {
+          _logout()
+        }
+      })
 
   // ===========================================================================
   // Hooks
@@ -81,6 +94,10 @@ const PostWarehouse: React.FC = () => {
     watch,
     formState: { errors },
   } = useForm<IFormInput>(initialState)
+
+  // useEffect(() => {
+
+  // }, [])
 
   // ===========================================================================
   // Handlers
@@ -128,14 +145,11 @@ const PostWarehouse: React.FC = () => {
   }
 
   const descLen = watch().description.length
-  console.log(watch())
 
   return (
     <>
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
-
-      <LandingNavbar Position="relative" />
 
       <Container maxWidth="sm" sx={{ marginY: '3rem' }}>
         <Box sx={{ height: '150vh' }}>

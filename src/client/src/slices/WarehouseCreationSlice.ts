@@ -3,7 +3,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const { getTokenLocalStorage } = localStorageHandler()
-const userData = JSON.parse(getTokenLocalStorage() ?? '')
+
+const data = getTokenLocalStorage()
+
+const userData = data && JSON.parse(data)
+
+
+
 
 export interface WarehouseCreationState {
     message: string
@@ -17,6 +23,7 @@ const initialState: WarehouseCreationState = {
     pending: false,
 }
 
+const { removeTokenLocalStorage } = localStorageHandler()
 
 
 const postWarehouse = createAsyncThunk('warehouses/create', async (data: any, thunkAPI) => {
@@ -25,13 +32,13 @@ const postWarehouse = createAsyncThunk('warehouses/create', async (data: any, th
             method: 'post',
             url: `http://localhost:5000/warehouses/create`,
             headers: {
-                Authorization: `Bearer ${userData.token}`,
+                Authorization: `Bearer ${userData?.token}`,
             },
             data
         })
         return response.data
     } catch (err: any) {
-        return thunkAPI.rejectWithValue(err.response.data)
+        return thunkAPI.rejectWithValue({ error: err.response.data, status: err.response.status })
     }
 })
 
@@ -52,9 +59,12 @@ export const warehouseCreationSlice = createSlice({
                 });
             })
             .addCase(postWarehouse.rejected, (state, action: PayloadAction<any>) => {
+
+                const payload = action.payload
+
                 return (state = {
                     message: '',
-                    error: action.payload.error,
+                    error: payload.error.error,
                     pending: false,
                 });
             })

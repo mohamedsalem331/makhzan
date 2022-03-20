@@ -2,7 +2,7 @@ import React from 'react'
 
 import '../styles/LandingPage.css'
 import SearchComponent from '../components/Filter/SearchComponent'
-import LandingNavbar from '../components/Navbar/NavbarComponent'
+import LandingNavbar from './NavbarComponent'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { localStorageHandler } from '../utils/localStorage'
 import { logoutUser } from '../slices/UserLogoutSlice'
@@ -15,7 +15,7 @@ const LandingPage: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { token, name } = useAppSelector((state) => state.userDetails)
+  const { token, name } = useAppSelector((state) => state.userLogin)
   const { message, pending, error } = useAppSelector((state) => state.userLogout)
 
   // ===========================================================================
@@ -23,16 +23,6 @@ const LandingPage: React.FC = () => {
   // ===========================================================================
 
   const dispatch = useAppDispatch()
-
-  const _logoutUser = () =>
-    dispatch(logoutUser(token))
-      .unwrap()
-      .then(() => {
-        removeTokenLocalStorage()
-      })
-      .catch((err) => {
-        console.log(err)
-      })
 
   const _addFilters = (data: {
     location: string[]
@@ -43,6 +33,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <>
+      <LandingNavbar />
       <div className="ImageContainer">
         <div className="overlay"></div>
         <div className="main-image"></div>

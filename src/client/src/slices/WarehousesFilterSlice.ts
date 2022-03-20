@@ -66,7 +66,7 @@ export const warehousesFilterSlice = createSlice({
             state.rent = action.payload.rent
             state.size = action.payload.size
         },
-        clearFilters: (state, action: any) => {
+        clearFilters: (state) => {
             state.governorates = []
             state.locations = []
             state.rent = [0, 0]

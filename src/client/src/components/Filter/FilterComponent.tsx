@@ -10,12 +10,14 @@ interface FilterWarehousesState {
   governorates: string[]
   filterWarehouses: any
   addFilters: any
+  clearFilters: any
 }
 
 const FilterComponent: React.FC<FilterWarehousesState> = ({
   governorates,
   locations,
   addFilters,
+  clearFilters,
   filterWarehouses,
 }) => {
   // ===========================================================================
@@ -168,7 +170,9 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
           <Button variant="contained" onClick={onSubmit}>
             Apply Filters
           </Button>
-          <Button variant="outlined">Remove Filters</Button>
+          <Button variant="outlined" onClick={clearFilters}>
+            Remove Filters
+          </Button>
         </Stack>
       </Paper>
     </>

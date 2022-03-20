@@ -2,7 +2,7 @@ import { localStorageHandler } from './../utils/localStorage';
 import { createSlice } from '@reduxjs/toolkit'
 
 
-const { getTokenLocalStorage } = localStorageHandler()
+const { getTokenLocalStorage, setTokenLocalStorage } = localStorageHandler()
 
 
 export interface UserDetailsState {
@@ -10,32 +10,45 @@ export interface UserDetailsState {
     email: string
     phoneNumber: string
     token: string
+
 }
 
 // initialState from local storage
-const getlocStorage = getTokenLocalStorage()
-let userData
+// const getlocStorage = getTokenLocalStorage()
+// let userData
 
-if (getlocStorage) {
-    userData = JSON.parse(getlocStorage)
-} else {
-    userData = {}
-}
+// if (getlocStorage) {
+//     userData = JSON.parse(getlocStorage)
+// } else {
+//     userData = {
+//         name: '',
+//         email: '',
+//         phoneNumber: '',
+//         token: ''
+//     }
+// }
 
-const { name, email, phoneNumber, token } = userData
 
 const initialState: UserDetailsState = {
-    name,
-    email,
-    phoneNumber,
-    token,
+    name: '',
+    email: '',
+    phoneNumber: '',
+    token: ''
 }
 
 export const UserDetailsSlice = createSlice({
     name: 'userDetails',
     initialState,
-    reducers: {},
+    reducers: {
+
+        // logout(state) {
+        //     state.isAuthenticated = false;
+        // },
+    },
 })
+
+
+
 
 export default UserDetailsSlice.reducer
 

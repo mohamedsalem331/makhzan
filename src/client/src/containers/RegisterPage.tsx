@@ -21,6 +21,10 @@ import { RegisterState } from '../types/index'
 
 import '../styles/RegisterPage.css'
 import CustomizedSnackBar from '../components/SnackBarComponent'
+import { login } from '../slices/UserLoginSlice'
+import { localStorageHandler } from '../utils/localStorage'
+
+const { setTokenLocalStorage } = localStorageHandler()
 
 const RegisterUserr: React.FC = () => {
   // ===========================================================================
@@ -35,7 +39,16 @@ const RegisterUserr: React.FC = () => {
   // Dispatch
   // ===========================================================================
   const dispatch = useAppDispatch()
-  const _registerUser = (data: RegisterState) => dispatch(registerUser(data))
+  const _login = (data: any) => dispatch(login(data))
+  const _registerUser = (data: RegisterState) =>
+    dispatch(registerUser(data))
+      .unwrap()
+      .then((originalPromiseResult) => {
+        _login(originalPromiseResult)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
 
   // ===========================================================================
   // Hooks
@@ -62,8 +75,6 @@ const RegisterUserr: React.FC = () => {
 
   const handleSubmit = (): void => {
     _registerUser(values)
-    console.log('submiited')
-    console.log(values)
   }
 
   const submitDisabled =
@@ -76,7 +87,7 @@ const RegisterUserr: React.FC = () => {
     <>
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
-      <section className="register-wrapper">
+      <section className="auth-wrapper">
         <Container
           sx={{ backgroundColor: 'white', borderRadius: '5px', paddingY: '2.5rem' }}
           maxWidth="sm"

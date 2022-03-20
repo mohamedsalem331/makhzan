@@ -107,6 +107,7 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
 const createWarehouse = async (req: Request, res: Response) => {
   try {
     const userData = res.locals.user
+    if (!userData) throw new Error("Authentication invalid")
     const NewWarehouse: WarehouseAttributes = req.body
 
     const warehouse = await Warehouse.create({ ...NewWarehouse, UserId: userData.id })

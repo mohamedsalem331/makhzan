@@ -1,8 +1,8 @@
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Container, Grid, Switch, Typography, useMediaQuery } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import FilterComponent from '../components/Filter/FilterComponent'
-import LandingNavbar from '../components/Navbar/NavbarComponent'
-import WarehouseListComponent from '../components/Warehouse/WarehouseListComponent'
+import LandingNavbar from './NavbarComponent'
+import WarehouseList from '../components/Warehouse/WarehouseList'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
 import { addFilters, clearFilters, filterWarehouses } from '../slices/WarehousesFilterSlice'
@@ -39,7 +39,7 @@ const WarehousesList: React.FC = () => {
   const dispatch = useAppDispatch()
   const _filterWarehouses = (data: FilterWarehouseOptions) => dispatch(filterWarehouses(data))
   const _fetchWarehouses = () => dispatch(fetchWarehouses())
-  const _clearFilters = () => dispatch(clearFilters)
+  const _clearFilters = () => dispatch(clearFilters())
   const _addFilters = (data: any) => dispatch(addFilters(data))
 
   // ===========================================================================
@@ -50,6 +50,14 @@ const WarehousesList: React.FC = () => {
 
   const filters = governorates.length > 0 || locations.length > 0 || mySize || myRent
 
+  const [filterOpen, setFilterOpen] = React.useState<boolean>(true)
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.checked)
+
+    setFilterOpen(event.target.checked)
+  }
+
   useEffect(() => {
     if (filters) {
       _filterWarehouses({ locations, governorates, size, rent })
@@ -58,33 +66,39 @@ const WarehousesList: React.FC = () => {
     }
   }, [governorates, locations, size, rent])
 
-  const filterApplied = governorates.length > 0 || locations.length > 0
-
   const warehousesList: any = filters ? filteredWarehouses : warehouses
+  const matches = useMediaQuery('(min-width:950px)')
+  console.log(matches)
 
   return (
     <>
-      <LandingNavbar Position="relative" />
-      <Container sx={{ height: '100vh' }}>
+      <LandingNavbar />
+
+      <Container>
         <Box sx={{ marginY: '3rem', width: '100%' }}>
           <Grid container spacing={3}>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
                 Filter Warehouses
               </Typography>
-              <FilterComponent
-                filterWarehouses={_filterWarehouses}
-                // clearFilters={_clearFilters}
-                addFilters={_addFilters}
-                governorates={governorates}
-                locations={locations}
-              />
+              {!matches && (
+                <Switch color="secondary" checked={filterOpen} onChange={handleChange} />
+              )}
+              {filterOpen && (
+                <FilterComponent
+                  filterWarehouses={_filterWarehouses}
+                  clearFilters={_clearFilters}
+                  addFilters={_addFilters}
+                  governorates={governorates}
+                  locations={locations}
+                />
+              )}
             </Grid>
-            <Grid item xs={9}>
+            <Grid item xs={12} md={9}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
                 {warehousesList.length + ' Warehouses for Renting'}
               </Typography>
-              <WarehouseListComponent
+              <WarehouseList
                 warehouses={warehousesList}
                 loading={loadingWarehouses}
                 error={errWarehouses}

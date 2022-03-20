@@ -1,3 +1,15 @@
 .swiper-override-style {
-  width: 400px;
+  width: 100%;
+}
+
+.swiper-override-style2 {
+  width: 100%;
+}
+
+.swiper-override-style2 img {
+  max-width: 100%;
+}
+
+.swiper-override-style2 .swiper-pagination-bullet {
+  background-color: white;
 }

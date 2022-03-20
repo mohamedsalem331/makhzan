@@ -1,8 +1,22 @@
-
-
+import { localStorageHandler } from './../utils/localStorage'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { LoginState } from '../types/index'
+
+const { getTokenLocalStorage, setTokenLocalStorage, removeTokenLocalStorage } = localStorageHandler()
+
+// initialState from local storage
+const getlocStorage = getTokenLocalStorage()
+let userData = {
+    name: '',
+    email: '',
+    phoneNumber: '',
+    token: ''
+}
+
+if (getlocStorage && !!getlocStorage) {
+    userData = JSON.parse(getlocStorage)
+}
 
 
 
@@ -16,10 +30,7 @@ export interface UserLoginState {
 }
 
 const initialState: UserLoginState = {
-    name: '',
-    email: '',
-    phoneNumber: '',
-    token: '',
+    ...userData,
     error: '',
     pending: false
 }
@@ -40,7 +51,17 @@ const authUser = createAsyncThunk('users/login', async (user: LoginState, thunkA
 export const UserLoginSlice = createSlice({
     name: 'userAuth',
     initialState,
-    reducers: {},
+    reducers: {
+        login(state, action) {
+            state.name = action.payload.name
+            state.email = action.payload.email
+            state.phoneNumber = action.payload.phoneNumber
+            state.token = action.payload.token
+        },
+        logout(state) {
+            state.token = ''
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(authUser.pending, (state) => {
@@ -63,6 +84,25 @@ export const UserLoginSlice = createSlice({
     },
 })
 
-export { authUser }
+const { login, logout } = UserLoginSlice.actions
+
+
+const authMiddleware = (store: any) => (next: any) => (action: any) => {
+    const result = next(action)
+
+    if (login.match(result) || result.type.includes('login/fulfilled')) {
+        setTokenLocalStorage(result.payload)
+    } else if (logout.match(result) || result.type.includes('logout/fulfilled')) {
+        removeTokenLocalStorage()
+    }
+
+    return next(action);
+};
+
+
+export { authMiddleware }
+
+
+export { authUser, login, logout }
 
 export default UserLoginSlice.reducer

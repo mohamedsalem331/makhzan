@@ -8,7 +8,7 @@ html {
 a {
   text-decoration: none !important;
   color: inherit;
-  height: 100%;
+  /* height: 100%; */
 }
 
 .App {

@@ -6,9 +6,9 @@ import jwt from 'jsonwebtoken'
 import { setRedisValue } from '../utils/redisUtils'
 import { UserAttributes } from '../constants/types'
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> { }
 
-interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {}
+interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes { }
 
 const User = sequelize.define<UserInstance>('User', {
   id: {
@@ -65,7 +65,7 @@ export async function generateJWTAuthToken(user: UserAttributes): Promise<string
   if (!user.id) throw new Error('user id invalid')
 
   const token = jwt.sign({ id: user.id.toString() }, 'verysecretjwttokenmsg', {
-    expiresIn: '3d',
+    expiresIn: '6d',
   })
 
   if (!token) throw new Error('Token Creation Failed')

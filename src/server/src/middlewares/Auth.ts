@@ -17,14 +17,13 @@ const verifyUserToken = async (req: Request, res: Response, next: NextFunction) 
     if (!token) throw new Error('Token is Invalid')
 
     const decoded: IDecoded = await jwt.verify(token, 'verysecretjwttokenmsg')
-
     const user = await User.findByPk(decoded.id)
 
     if (!user || !decoded) throw new Error('Authentication Failed')
 
     const data = await getRedisValue('BL_' + decoded.id)
 
-    if (data === token) return res.status(401).send({ message: 'blacklisted token.' })
+    if (data === token) return res.status(401).send({ error: 'blacklisted token.' })
 
     res.locals.user = user
     res.locals.token = token
@@ -46,7 +45,7 @@ const verifyTokenStored = async (req: Request, res: Response, next: NextFunction
     const data = await getRedisValue(userData?.id)
 
     if (data === null) {
-      return res.status(401).send({ message: 'Invalid request. Token is not in store.' })
+      return res.status(401).send({ error: 'Invalid request. Token is not in store.' })
     }
 
     if (JSON.parse(data).token !== token) {
