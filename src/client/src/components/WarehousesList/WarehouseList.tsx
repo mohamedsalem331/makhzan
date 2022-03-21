@@ -48,7 +48,7 @@ const WarehouseList: React.FC<IWarehousesListState> = ({ warehouses = [], loadin
         {warehouses.map((warehouse: any) => {
           return (
             <div key={warehouse?.id}>
-              <Box sx={{ maxWidth: '100%' }}>
+              <Box>
                 <Warehouse {...warehouse} />
               </Box>
             </div>

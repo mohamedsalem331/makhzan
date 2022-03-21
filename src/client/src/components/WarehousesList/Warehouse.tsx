@@ -25,9 +25,9 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
   street,
 }) => {
   const [loading, setLoading] = useState(false)
-  const matches = useMediaQuery('(min-width:550px)')
+  const matches = useMediaQuery('(min-width:700px)')
 
-  const SwiperImageHeight = matches ? '180' : '320'
+  const SwiperImageHeight = matches ? '180' : '450'
 
   return (
     <>
@@ -53,7 +53,7 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
         <Stack
           direction="column"
           spacing={1.5}
-          sx={{ marginX: '1rem', textAlign: 'left', width: '100%' }}
+          sx={{ paddingX: '1rem', textAlign: 'left', width: '100%' }}
         >
           <Typography variant="h5" component="div">
             {formatRentValue(rent)} EGP / Month
@@ -61,11 +61,7 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
           <Typography variant="body2" color="text.secondary">
             {title}
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-            }}
-          >
+          <Box sx={{ display: 'flex' }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <WarehouseOutlinedIcon />
               <Typography variant="body2" color="text.secondary">
@@ -83,7 +79,7 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
             {governorate + ', ' + location + ', ' + street}
           </Typography>
           <Link to={`/explore/${id}`}>
-            <Button sx={{ width: '90%' }} variant="contained">
+            <Button sx={{ width: '100%', marginBottom: '1rem' }} variant="contained">
               More Details
             </Button>
           </Link>

@@ -1,5 +1,6 @@
 .swiper-override-style {
-  width: 100%;
+  width: 25rem;
+  max-width: 100%;
 }
 
 .swiper-override-style2 {
@@ -12,4 +13,10 @@
 
 .swiper-override-style2 .swiper-pagination-bullet {
   background-color: white;
+}
+
+@media screen and (max-width: 700px) {
+  .swiper-override-style {
+    width: 100%;
+  }
 }

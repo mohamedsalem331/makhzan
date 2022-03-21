@@ -16,11 +16,13 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { authUser } from '../slices/UserLoginSlice'
 import { LoginState } from '../types/index'
 import CustomizedSnackBar from '../components/SnackBarComponent'
 import { localStorageHandler } from './../utils/localStorage'
+import { useNavigate } from 'react-router-dom'
+import LandingNavbar from './NavbarComponent'
 
 const { setTokenLocalStorage } = localStorageHandler()
 
@@ -48,9 +50,11 @@ const LoginPage: React.FC = () => {
   // Hooks
   // ===========================================================================
 
+  let navigate = useNavigate()
+
   const [values, setValues] = useState<LoginState>({
-    email: 'admin2@example.com',
-    password: 'f3423423fd3s',
+    email: '',
+    password: '',
   })
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -69,15 +73,25 @@ const LoginPage: React.FC = () => {
   const handleClickShowPassword = (): void => setShowPassword(!showPassword)
 
   const handleSubmit = (): void => {
-    console.log('submiited')
     _authUser(values)
+      .unwrap()
+      .then(() => {
+        navigate('/')
+      })
   }
+
+  useEffect(() => {
+    if (!!token) {
+      navigate('/')
+    }
+  }, [token])
 
   const submitDisabled = !!values.email && !!values.password
   const matches = useMediaQuery('(min-width:500px)')
 
   return (
     <>
+      <LandingNavbar />
       {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
       <section className="auth-wrapper">

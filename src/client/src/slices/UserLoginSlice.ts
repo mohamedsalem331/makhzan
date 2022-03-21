@@ -1,3 +1,4 @@
+import { RootState } from './../app/store';
 import { localStorageHandler } from './../utils/localStorage'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
@@ -87,7 +88,7 @@ export const UserLoginSlice = createSlice({
 const { login, logout } = UserLoginSlice.actions
 
 
-const authMiddleware = (store: any) => (next: any) => (action: any) => {
+const authMiddleware = () => (next: any) => (action: any) => {
     const result = next(action)
 
     if (login.match(result) || result.type.includes('login/fulfilled')) {

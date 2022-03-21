@@ -2,7 +2,7 @@ import { Box, Container, Grid, Switch, Typography, useMediaQuery } from '@mui/ma
 import React, { useEffect, useState } from 'react'
 import FilterComponent from '../components/Filter/FilterComponent'
 import LandingNavbar from './NavbarComponent'
-import WarehouseList from '../components/Warehouse/WarehouseList'
+import WarehouseList from '../components/WarehousesList/WarehouseList'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
 import { addFilters, clearFilters, filterWarehouses } from '../slices/WarehousesFilterSlice'
@@ -67,8 +67,7 @@ const WarehousesList: React.FC = () => {
   }, [governorates, locations, size, rent])
 
   const warehousesList: any = filters ? filteredWarehouses : warehouses
-  const matches = useMediaQuery('(min-width:950px)')
-  console.log(matches)
+  const matches = useMediaQuery('(min-width:1000px)')
 
   return (
     <>
@@ -77,10 +76,11 @@ const WarehousesList: React.FC = () => {
       <Container>
         <Box sx={{ marginY: '3rem', width: '100%' }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} lg={3}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
                 Filter Warehouses
               </Typography>
+
               {!matches && (
                 <Switch color="secondary" checked={filterOpen} onChange={handleChange} />
               )}
@@ -94,10 +94,12 @@ const WarehousesList: React.FC = () => {
                 />
               )}
             </Grid>
-            <Grid item xs={12} md={9}>
+
+            <Grid item xs={12} lg={9}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
                 {warehousesList.length + ' Warehouses for Renting'}
               </Typography>
+
               <WarehouseList
                 warehouses={warehousesList}
                 loading={loadingWarehouses}

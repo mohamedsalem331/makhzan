@@ -26,21 +26,33 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
 
   const [filteredGovernorates, setGovernorates] = React.useState<string[]>([])
   const [filteredLocations, setLocations] = React.useState<string[]>([])
-  const [size, setSize] = React.useState({ minSize: 0, maxSize: 0 })
-  const [rent, setRent] = React.useState({ minRent: 0, maxRent: 0 })
+  const [size, setSize] = React.useState<{ minSize: number; maxSize: number }>({
+    minSize: 0,
+    maxSize: 0,
+  })
+  const [rent, setRent] = React.useState<{ minRent: number; maxRent: number }>({
+    minRent: 0,
+    maxRent: 0,
+  })
 
   // ===========================================================================
   // Handlers
   // ===========================================================================
+  // if (id.includes('governorates')) {     const { id } = event.target
 
-  const handleFilterChange = (event: any, value: any) => {
-    const { id } = event.target
+  //   setGovernorates(value)
+  // } else if (id.includes('locations')) {
+  //   setLocations(value)
+  // } else {
+  //   setGovernorates(value)
+  //   setLocations(value)
+  // }
+  const handleFilterGovernorates = (event: any, value: any) => {
+    setGovernorates(value)
+  }
 
-    if (id.includes('governorates')) {
-      setGovernorates(value)
-    } else if (id.includes('locations')) {
-      setLocations(value)
-    }
+  const handleFilterLocations = (event: any, value: any) => {
+    setLocations(value)
   }
 
   const handleChangeRent = (event: any) => {
@@ -48,36 +60,35 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
 
     if (id === 'minRent') {
       setRent({
-        minRent: value,
-        maxRent: rent.maxRent,
+        minRent: Number(value),
+        maxRent: Number(rent.maxRent),
       })
     } else if (id === 'maxRent') {
       setRent({
-        minRent: rent.minRent,
-        maxRent: value,
+        minRent: Number(rent.minRent),
+        maxRent: Number(value),
       })
     }
   }
+  console.log(size)
 
   const handleChangeSize = (event: any) => {
     const { value, id } = event.target
 
     if (id === 'minSize') {
       setSize({
-        minSize: value,
-        maxSize: size.maxSize,
+        minSize: Number(value),
+        maxSize: Number(size.maxSize),
       })
     } else if (id === 'maxSize') {
       setSize({
-        minSize: size.maxSize,
-        maxSize: value,
+        minSize: Number(size.minSize),
+        maxSize: Number(value),
       })
     }
   }
 
   const onSubmit = () => {
-    console.log('submited')
-
     const Filters = {
       governorate: filteredGovernorates,
       location: filteredLocations,
@@ -96,7 +107,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
         <Stack sx={{ textAlign: 'left' }} spacing={5}>
           <Autocomplete
             multiple
-            onChange={handleFilterChange}
+            onChange={handleFilterGovernorates}
             id="governorates-filter"
             options={GOVERNORATES}
             getOptionLabel={(option) => option}
@@ -108,7 +119,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
           />
           <Autocomplete
             multiple
-            onChange={handleFilterChange}
+            onChange={handleFilterLocations}
             id="locations-filter"
             options={LOCATIONS}
             getOptionLabel={(option) => option}
@@ -126,7 +137,6 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
                 label="Min"
                 type="number"
                 onChange={handleChangeSize}
-                defaultValue={0}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
                 }}
@@ -151,7 +161,6 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
                 label="Min"
                 type="number"
                 onChange={handleChangeRent}
-                defaultValue={0}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">E£</InputAdornment>,
                 }}

@@ -34,9 +34,6 @@ const LandingNavbar: React.FC = () => {
         dispatch(logout())
         removeTokenLocalStorage()
       })
-      .catch((err) => {
-        console.log(err)
-      })
 
   const isLoggedIn = !!token
 
@@ -62,6 +59,7 @@ const LandingNavbar: React.FC = () => {
                 error={error}
                 loading={pending}
                 Position="absolute"
+                message={message}
               />
             ) : (
               <SideMenu />

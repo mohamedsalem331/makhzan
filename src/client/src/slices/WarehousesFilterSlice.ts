@@ -2,8 +2,6 @@ import { FilterWarehouseOptions } from './../types/index';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-
-
 interface WarehousesFilterState {
     filteredWarehouses: Array<object>
     governorates: Array<string>
@@ -13,7 +11,6 @@ interface WarehousesFilterState {
     error: string
     pending: boolean
 }
-
 
 const initialState: WarehousesFilterState = {
     filteredWarehouses: [],
@@ -26,13 +23,13 @@ const initialState: WarehousesFilterState = {
 }
 
 const cleanArr = (arr: Array<string>) => {
-    if (!arr[0]) {
-        return arr.filter(gov => gov)
-    }
+    return arr.filter(gov => gov)
+
 }
 
 const filterWarehouses = createAsyncThunk('warehouses/filter', async (filterOptions: FilterWarehouseOptions, thunkAPI) => {
     const { rent, size, governorates: govs, locations: locs } = filterOptions
+    console.log(size);
 
     const governorates = cleanArr(govs)
     const locations = cleanArr(locs)

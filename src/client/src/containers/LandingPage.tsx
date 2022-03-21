@@ -15,8 +15,8 @@ const LandingPage: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { token, name } = useAppSelector((state) => state.userLogin)
-  const { message, pending, error } = useAppSelector((state) => state.userLogout)
+  // const { token, name } = useAppSelector((state) => state.userLogin)
+  // const { message, pending, error } = useAppSelector((state) => state.userLogout)
 
   // ===========================================================================
   // Dispatch

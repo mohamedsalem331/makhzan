@@ -148,6 +148,7 @@ const PostWarehouse: React.FC = () => {
 
   return (
     <>
+      <LandingNavbar />
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
 

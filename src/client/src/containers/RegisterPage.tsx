@@ -14,7 +14,7 @@ import {
   AlertTitle,
   CircularProgress,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { registerUser } from '../slices/UserRegisterSlice'
 import { RegisterState } from '../types/index'
@@ -23,6 +23,8 @@ import '../styles/RegisterPage.css'
 import CustomizedSnackBar from '../components/SnackBarComponent'
 import { login } from '../slices/UserLoginSlice'
 import { localStorageHandler } from '../utils/localStorage'
+import LandingNavbar from './NavbarComponent'
+import { useNavigate } from 'react-router-dom'
 
 const { setTokenLocalStorage } = localStorageHandler()
 
@@ -40,19 +42,14 @@ const RegisterUserr: React.FC = () => {
   // ===========================================================================
   const dispatch = useAppDispatch()
   const _login = (data: any) => dispatch(login(data))
-  const _registerUser = (data: RegisterState) =>
-    dispatch(registerUser(data))
-      .unwrap()
-      .then((originalPromiseResult) => {
-        _login(originalPromiseResult)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+  const _registerUser = (data: RegisterState) => dispatch(registerUser(data))
 
   // ===========================================================================
   // Hooks
   // ===========================================================================
+
+  let navigate = useNavigate()
+
   const [values, setValues] = useState<RegisterState>({
     firstName: '',
     lastName: '',
@@ -75,7 +72,19 @@ const RegisterUserr: React.FC = () => {
 
   const handleSubmit = (): void => {
     _registerUser(values)
+      .unwrap()
+      .then((originalPromiseResult) => {
+        _login(originalPromiseResult)
+      })
   }
+
+  useEffect(() => {
+    if (!!message) {
+      setTimeout(() => {
+        navigate('/explore')
+      }, 1000)
+    }
+  }, [message])
 
   const submitDisabled =
     !!values.firstName &&
@@ -85,11 +94,17 @@ const RegisterUserr: React.FC = () => {
     !!values.phoneNumber
   return (
     <>
+      <LandingNavbar />
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
       <section className="auth-wrapper">
         <Container
-          sx={{ backgroundColor: 'white', borderRadius: '5px', paddingY: '2.5rem' }}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '5px',
+            paddingY: '2.5rem',
+            marginX: '0.5rem',
+          }}
           maxWidth="sm"
         >
           <Box>
@@ -98,7 +113,7 @@ const RegisterUserr: React.FC = () => {
             </Alert>
 
             <FormControl variant="outlined">
-              <Grid container rowSpacing={{ sm: 3, md: 5 }} columnSpacing={{ md: 3 }}>
+              <Grid container rowSpacing={3.5} columnSpacing={{ md: 3 }}>
                 <Grid item xs={12} md={6}>
                   <TextField
                     id="text-first-name"
@@ -126,7 +141,7 @@ const RegisterUserr: React.FC = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12}>
                   <TextField
                     id="text-email"
                     color="secondary"
@@ -139,7 +154,7 @@ const RegisterUserr: React.FC = () => {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12}>
                   <TextField
                     id="number-phone-number"
                     color="secondary"
@@ -155,7 +170,7 @@ const RegisterUserr: React.FC = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12}>
                   <TextField
                     id="text-password-input"
                     type={showPassword ? 'text' : 'password'}
@@ -182,7 +197,7 @@ const RegisterUserr: React.FC = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12}>
                   <Button
                     onClick={handleSubmit}
                     fullWidth

@@ -60,29 +60,41 @@ const getAllWarehouses = async (req: Request, res: Response) => {
 // @access  Public
 const filterAllWarehouses = async (req: Request, res: Response) => {
   let warehouses
-    ;
 
   try {
-    const filters = req.body
+    const { governorates, locations, rent, size } = req.body
+    console.log(typeof req.body.size[0]);
 
-    if (!filters) throw new Error('error happened -> filtering warehouses')
+    if (!req.body) throw new Error('error happened -> filtering warehouses')
 
     const maxRent = await Warehouse.max('rent')
     const maxSize = await Warehouse.max('size')
 
+    // rent[0] === minRent 
+    // rent[1] === maxRent
+
+    // [0,0]  -> true
+    // [20,0] -> true
+    // [20,10] -> true
+    // [20,20] -> 
+    // [0,20] 
+    // [10,20] 
+
+
+
     warehouses = await Warehouse.findAll({
       where: {
         rent: {
-          [Op.between]: filters.rent && filters.rent[0] + filters.rent[1] > 0 ? filters.rent : [0, maxRent],
+          [Op.between]: rent && rent[0] + rent[1] > 0 && rent[1] > rent[0] ? rent : [rent[0], maxRent]
         },
         size: {
-          [Op.between]: filters.size && filters.size[0] + filters.size[1] > 0 ? filters.size : [0, maxSize],
+          [Op.between]: size && size[0] + size[1] > 0 && size[1] > size[0] ? size : [size[0], maxSize]
         },
         governorate: {
-          [Op.or]: filters.governorates,
+          [Op.or]: governorates,
         },
         location: {
-          [Op.or]: filters.locations,
+          [Op.or]: locations,
         },
       },
     })
