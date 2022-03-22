@@ -1,37 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LandingPage from './LandingPage'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-
+import { useAppDispatch, useAppSelector } from '../app/hooks'
 import WarehousesList from './ExplorePage'
 import WarehouseDetails from './WarehouseDetailsPage'
 import PostWarehouse from './PostWarehousePage'
 import RegisterPage from './RegisterPage'
 import LoginPage from './LoginPage'
-
+import { localStorageHandler } from '../utils/localStorage'
 import '../styles/App.css'
-
-// const routes = [
-//   {
-//     path: '/sandwiches',
-//     component: Sandwiches,
-//   },
-//   {
-//     path: '/tacos',
-//     component: Tacos,
-//     routes: [
-//       {
-//         path: '/tacos/bus',
-//         component: Bus,
-//       },
-//       {
-//         path: '/tacos/cart',
-//         component: Cart,
-//       },
-//     ],
-//   },
-// ]
+import NotFoundPage from '../components/404/NotFoundPage'
+import { logoutUser } from '../slices/UserLogoutSlice'
+import { logout } from '../slices/UserLoginSlice'
 
 function App() {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
+  const { token, name } = useAppSelector((state) => state.userLogin)
+
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
+  const isLoggedIn = !!token
+
+  const ProtectedRoutes = () => <Route path="postwarehouse" element={<PostWarehouse />} />
+
   return (
     <div className="App">
       <Router>
@@ -43,8 +39,8 @@ function App() {
             <Route index element={<WarehousesList />} />
             <Route path=":id" element={<WarehouseDetails />} />
           </Route>
-          <Route path="postwarehouse" element={<PostWarehouse />} />
-          <Route path="*" element={<LoginPage />} /> {/* here is not found route */}
+          {isLoggedIn && ProtectedRoutes}
+          <Route path="*" element={<NotFoundPage />} /> {/* here is not found route */}
         </Routes>
       </Router>
     </div>

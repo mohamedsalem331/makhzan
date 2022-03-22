@@ -1,33 +1,15 @@
-import React, { useState } from 'react'
-import Logo from './Logo'
+import React from 'react'
 import { Box } from '@mui/system'
-import {
-  Avatar,
-  Button,
-  Container,
-  Divider,
-  Drawer,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Stack,
-  Tooltip,
-} from '@mui/material'
-import { deepOrange } from '@mui/material/colors'
+import { IconButton, Menu, MenuItem } from '@mui/material'
 import { Link } from 'react-router-dom'
-
-import '../../styles/LandingNavbar.css'
 import MenuIcon from '@mui/icons-material/Menu'
 
 interface SideMenuProps {
   isLoggedIn?: boolean
-  logoutUser?: () => Promise<void>
-  error?: string
-  loading?: boolean
+  logoutUser: () => void
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ isLoggedIn, logoutUser, loading, error }) => {
+const SideMenu: React.FC<SideMenuProps> = ({ isLoggedIn, logoutUser }) => {
   const [openSideMenu, setSideMenu] = React.useState<boolean>(false)
 
   const handleMenu = () => {
@@ -37,6 +19,30 @@ const SideMenu: React.FC<SideMenuProps> = ({ isLoggedIn, logoutUser, loading, er
   const handleClose = () => {
     setSideMenu(false)
   }
+
+  const handleLogout = () => {
+    logoutUser()
+    setSideMenu(false)
+  }
+
+  const MenuItems = isLoggedIn ? (
+    <div>
+      <MenuItem onClick={handleClose}>
+        <Link to="/postwarehouse">PostWarehouse</Link>
+      </MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+    </div>
+  ) : (
+    <div>
+      <MenuItem onClick={handleClose}>
+        <Link to="/login">Login</Link>
+      </MenuItem>
+      <MenuItem onClick={handleClose}>
+        <Link to="/register">Register</Link>
+      </MenuItem>
+    </div>
+  )
+
   return (
     <>
       <Box>
@@ -51,32 +57,23 @@ const SideMenu: React.FC<SideMenuProps> = ({ isLoggedIn, logoutUser, loading, er
           >
             <MenuIcon color="primary" fontSize="large" />
           </IconButton>
+
           <Menu
             id="menu-appbar"
             anchorEl={null}
+            open={openSideMenu}
+            onClose={handleClose}
+            keepMounted
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'right',
             }}
-            keepMounted
             transformOrigin={{
               vertical: 'top',
               horizontal: 'right',
             }}
-            open={openSideMenu}
-            onClose={handleClose}
           >
-            {!!isLoggedIn ? (
-              <div>
-                <MenuItem onClick={handleClose}>PostWarehouse</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </div>
-            ) : (
-              <div>
-                <MenuItem onClick={handleClose}>Login</MenuItem>
-                <MenuItem onClick={handleClose}>Register</MenuItem>
-              </div>
-            )}
+            {MenuItems}
           </Menu>
         </div>
       </Box>

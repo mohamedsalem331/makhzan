@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   Button,
   Container,
@@ -5,43 +6,29 @@ import {
   Stack,
   TextField,
   Tooltip,
-  Autocomplete,
   Fab,
-  TextareaAutosize,
   Badge,
   Select,
   MenuItem,
   ListItemText,
-  ListItemIcon,
   OutlinedInput,
+  CircularProgress,
 } from '@mui/material'
 import { Box } from '@mui/system'
-import React, { useRef, useState } from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import LandingNavbar from './NavbarComponent'
-import { formatRentValue } from '../utils/formatNumber'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
-import { services } from '../utils/constants'
 import axios from 'axios'
+
+import { logout } from '../slices/UserLoginSlice'
+import { formatRentValue } from '../utils/formatNumber'
+import { services } from '../utils/constants'
 import { postWarehouse } from '../slices/WarehouseCreationSlice'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { IFormInput } from '../types'
 import { RootState } from '../app/store'
-import { OutlinedFlag } from '@mui/icons-material'
+import LandingNavbar from './LandingNavbar'
 import CustomizedSnackBar from '../components/SnackBarComponent'
-import { logout } from '../slices/UserLoginSlice'
-import { log } from 'console'
-
-interface IFormInput {
-  title: string
-  description: string
-  size: number
-  rent: number
-  governorate: string
-  location: string
-  street: string
-  services: string[]
-}
 
 const initialState = {
   defaultValues: {
@@ -68,7 +55,9 @@ const PostWarehouse: React.FC = () => {
   // ===========================================================================
 
   const dispatch = useAppDispatch()
+
   const _logout = () => dispatch(logout())
+
   const _postWarehouse = (data: any) =>
     dispatch(postWarehouse(data))
       .unwrap()
@@ -95,10 +84,6 @@ const PostWarehouse: React.FC = () => {
     formState: { errors },
   } = useForm<IFormInput>(initialState)
 
-  // useEffect(() => {
-
-  // }, [])
-
   // ===========================================================================
   // Handlers
   // ===========================================================================
@@ -115,8 +100,6 @@ const PostWarehouse: React.FC = () => {
       setImages([...images, URL.createObjectURL(imgFile)])
       setFiles([...files, imgFile])
     }
-
-    // render snacbar componenet with error if images more than 3
   }
 
   const removeImage = (remImg: string): void => {
@@ -151,6 +134,7 @@ const PostWarehouse: React.FC = () => {
       <LandingNavbar />
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
+      {pending && <CircularProgress />}
 
       <Container maxWidth="sm" sx={{ marginY: '3rem' }}>
         <Box sx={{ height: '150vh' }}>

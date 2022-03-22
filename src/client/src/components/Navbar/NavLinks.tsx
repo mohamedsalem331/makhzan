@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Avatar, Button, CircularProgress, Container, Stack } from '@mui/material'
+import React from 'react'
+import { Avatar, Button, Stack } from '@mui/material'
 import { deepOrange } from '@mui/material/colors'
 import { Link } from 'react-router-dom'
+
 import { stringAvatar } from '../../utils/avatarInitials'
-import SideMenu from './SideMenu'
-import CustomizedSnackBar from '../SnackBarComponent'
 
 interface NavLinksProps {
   Position?: 'absolute' | 'fixed' | 'relative' | 'static'
   isLoggedIn?: boolean
   userName?: string
   logoutUser?: any
-  error?: string
-  loading?: boolean
-  message?: string
 }
 
 const NavLinks: React.FC<NavLinksProps> = ({
@@ -21,23 +17,12 @@ const NavLinks: React.FC<NavLinksProps> = ({
   isLoggedIn,
   userName = 'jack nelson',
   logoutUser,
-  loading,
-  error,
-  message,
 }) => {
-  const [logoutAlert, setLogoutAlert] = useState(false)
   const logoutHandler = () => {
     logoutUser()
-    setLogoutAlert(true)
   }
   return (
     <>
-      {loading && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
-      {!!message && !isLoggedIn && (
-        <CustomizedSnackBar AlertOn={logoutAlert} Message={message} Severity="success" />
-      )}
-      {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
-
       {!!isLoggedIn ? (
         <>
           <Stack direction="row" spacing={2}>

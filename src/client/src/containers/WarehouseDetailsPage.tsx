@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
 import { fetchWarehouseDetails } from '../slices/WarehouseDetailsSlice'
-import LandingNavbar from './NavbarComponent'
+import LandingNavbar from './Navbar'
 import WarehouseDescription from '../components/WarehouseDetails/Description'
 import { useParams } from 'react-router-dom'
 

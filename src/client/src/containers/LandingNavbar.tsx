@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
-import Logo from '../components/Navbar/Logo'
 import { Box } from '@mui/system'
-import { Avatar, Button, Container, Stack } from '@mui/material'
-import { deepOrange } from '@mui/material/colors'
+import { CircularProgress, Container } from '@mui/material'
 import { Link } from 'react-router-dom'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import { logoutUser } from '../slices/UserLogoutSlice'
-import { localStorageHandler } from '../utils/localStorage'
-import { logout } from '../slices/UserLoginSlice'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import '../styles/LandingNavbar.css'
+
+import Logo from '../components/Navbar/Logo'
+import CustomizedSnackBar from '../components/SnackBarComponent'
 import NavLinks from '../components/Navbar/NavLinks'
 import SideMenu from '../components/Navbar/SideMenu'
+import { logout } from '../slices/UserLoginSlice'
+import { logoutUser } from '../slices/UserLogoutSlice'
+import { localStorageHandler } from '../utils/localStorage'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+
+const { removeTokenLocalStorage } = localStorageHandler()
+
 const LandingNavbar: React.FC = () => {
-  const { removeTokenLocalStorage } = localStorageHandler()
   // ===========================================================================
   // Selectors
   // ===========================================================================
@@ -24,6 +26,7 @@ const LandingNavbar: React.FC = () => {
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+  const [logoutAlert, setLogoutAlert] = useState(false)
 
   const dispatch = useAppDispatch()
 
@@ -33,6 +36,7 @@ const LandingNavbar: React.FC = () => {
       .then(() => {
         dispatch(logout())
         removeTokenLocalStorage()
+        setLogoutAlert(true)
       })
 
   const isLoggedIn = !!token
@@ -43,9 +47,23 @@ const LandingNavbar: React.FC = () => {
   const matches = useMediaQuery('(min-width:750px)')
 
   const ImgSize = matches ? undefined : 2.5
+
   return (
     <>
-      <div className="landingnavbar-container" style={{ position: Position }}>
+      {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
+      {!!message && !isLoggedIn && (
+        <CustomizedSnackBar AlertOn={logoutAlert} Message={message} Severity="success" />
+      )}
+      {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
+      <Box
+        sx={{
+          position: Position,
+          backgroundColor: '#0000002c',
+          zIndex: 1,
+          width: '100%',
+          p: '20px',
+        }}
+      >
         <Container maxWidth="xl">
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Link to="/">
@@ -56,17 +74,14 @@ const LandingNavbar: React.FC = () => {
                 isLoggedIn={isLoggedIn}
                 userName={name}
                 logoutUser={_logoutUser}
-                error={error}
-                loading={pending}
                 Position="absolute"
-                message={message}
               />
             ) : (
-              <SideMenu />
+              <SideMenu isLoggedIn={isLoggedIn} logoutUser={_logoutUser} />
             )}
           </Box>
         </Container>
-      </div>
+      </Box>
     </>
   )
 }

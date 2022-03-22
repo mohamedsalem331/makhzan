@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Box,
@@ -11,37 +12,35 @@ import {
   Divider,
   Link,
   Alert,
-  AlertTitle,
   CircularProgress,
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { registerUser } from '../slices/UserRegisterSlice'
-import { RegisterState } from '../types/index'
-
-import '../styles/RegisterPage.css'
-import CustomizedSnackBar from '../components/SnackBarComponent'
-import { login } from '../slices/UserLoginSlice'
-import { localStorageHandler } from '../utils/localStorage'
-import LandingNavbar from './NavbarComponent'
 import { useNavigate } from 'react-router-dom'
 
-const { setTokenLocalStorage } = localStorageHandler()
+import { registerUser } from '../slices/UserRegisterSlice'
+import { login } from '../slices/UserLoginSlice'
+import { LoginState, RegisterState } from '../types/index'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import LandingNavbar from './LandingNavbar'
+import CustomizedSnackBar from '../components/SnackBarComponent'
+
+import '../styles/RegisterPage.css'
 
 const RegisterUserr: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
-  const { message, token, name, email, phoneNumber, error, pending } = useAppSelector(
-    (state) => state.userRegister
-  )
+  const { message, error, pending } = useAppSelector((state) => state.userRegister)
+
+  const { token } = useAppSelector((state) => state.userLogin)
 
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const dispatch = useAppDispatch()
-  const _login = (data: any) => dispatch(login(data))
+
+  const _login = (data: LoginState) => dispatch(login(data))
   const _registerUser = (data: RegisterState) => dispatch(registerUser(data))
 
   // ===========================================================================
@@ -66,9 +65,7 @@ const RegisterUserr: React.FC = () => {
     setValues({ ...values, [prop]: event.target.value })
   }
 
-  const handleClickShowPassword = (): void => {
-    setShowPassword(!showPassword)
-  }
+  const handleClickShowPassword = (): void => setShowPassword(!showPassword)
 
   const handleSubmit = (): void => {
     _registerUser(values)
@@ -79,12 +76,12 @@ const RegisterUserr: React.FC = () => {
   }
 
   useEffect(() => {
-    if (!!message) {
+    if (!!token) {
       setTimeout(() => {
         navigate('/explore')
       }, 1000)
     }
-  }, [message])
+  }, [token])
 
   const submitDisabled =
     !!values.firstName &&
@@ -92,11 +89,14 @@ const RegisterUserr: React.FC = () => {
     !!values.email &&
     !!values.password &&
     !!values.phoneNumber
+
   return (
     <>
       <LandingNavbar />
+
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
+
       <section className="auth-wrapper">
         <Container
           sx={{
@@ -210,11 +210,6 @@ const RegisterUserr: React.FC = () => {
                   {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
                 </Grid>
               </Grid>
-              {/* {error && (
-                <Alert sx={{ marginY: '1rem' }} severity="error">
-                  This is an error alert — check it out!
-                </Alert>
-              )} */}
               <Divider sx={{ marginY: '1.5rem' }} color="red" />
               <span>
                 Already have an Account? <Link href="/login">Sign In</Link>

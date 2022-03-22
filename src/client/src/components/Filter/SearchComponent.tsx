@@ -1,26 +1,28 @@
 import React, { useState } from 'react'
-import { Autocomplete, Box, Button, Grid, Stack, TextField } from '@mui/material'
-import { GOVERNORATES, LOCATIONS } from '../../utils/constants/index'
+import { Autocomplete, Box, Button, Stack, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useNavigate } from 'react-router-dom'
 
-interface SearchWarehousesProps {
-  addFilters: any
+import { GOVERNORATES, LOCATIONS } from '../../utils/constants/index'
+import { FilterWarehouseOptions } from '../../types'
+
+interface ISearchWarehousesProps {
+  addFilters: (filters: FilterWarehouseOptions) => void
 }
 
-const SearchComponent: React.FC<SearchWarehousesProps> = ({ addFilters }) => {
+const SearchComponent: React.FC<ISearchWarehousesProps> = ({ addFilters }) => {
   const [location, setLocation] = useState<string | null>()
   const [governorate, setGovernorate] = useState<string | null>()
 
   const history = useNavigate()
 
   const onSubmit = () => {
-    addFilters({ location: [location], governorate: [governorate] })
+    addFilters({ locations: [location ?? ''], governorates: [governorate ?? ''] })
     history('/explore')
   }
 
   return (
-    <div>
+    <>
       <Box
         sx={{
           p: 2,
@@ -60,7 +62,7 @@ const SearchComponent: React.FC<SearchWarehousesProps> = ({ addFilters }) => {
           </Button>
         </Stack>
       </Box>
-    </div>
+    </>
   )
 }
 

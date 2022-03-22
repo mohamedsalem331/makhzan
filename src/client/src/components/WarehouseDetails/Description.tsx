@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Box,
-  Container,
-  ImageListItem,
   Avatar,
   Grid,
   Typography,
@@ -11,12 +9,10 @@ import {
   Button,
   Stack,
   Tooltip,
-  IconButton,
   Link,
 } from '@mui/material'
 import CallIcon from '@mui/icons-material/Call'
 import EmailIcon from '@mui/icons-material/Email'
-
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
@@ -24,10 +20,14 @@ import { useFilteredServices } from '../../app/hooks'
 import { UserAttributes, WarehouseAttributes } from '../../types'
 import { formatRentValue } from '../../utils/formatNumber'
 
-const DividerComponent: React.FC = (props) => (
+interface IDividerComponentProps {
+  children?: string
+}
+
+const DividerComponent: React.FC<IDividerComponentProps> = ({ children }) => (
   <Divider sx={{ marginY: '22px' }}>
     <Typography variant="h6" component="div">
-      {props.children}
+      {children}
     </Typography>
   </Divider>
 )
@@ -43,19 +43,20 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
   location,
   street,
   services,
-  createdAt = '1/1/2021',
+  createdAt = new Date(),
   name,
   email,
   phoneNumber,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget)
-  }
 
   const myServices = useFilteredServices(services)
+
   const myDate = new Date(createdAt).toUTCString()
+
   return (
     <>
       <Box sx={{ marginTop: '2rem', textAlign: 'left' }}>
@@ -74,7 +75,9 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
                 {`Warehouse Size: ${size} sqm`}
               </Typography>
             </Stack>
+
             <DividerComponent>Services</DividerComponent>
+
             <Stack spacing={1}>
               {myServices.map((service: any, indx: number) => {
                 return (
@@ -91,6 +94,7 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
                 )
               })}
             </Stack>
+
             <DividerComponent>Agent Information</DividerComponent>
             <Box sx={{ display: 'flex', flexBasis: 'start' }}>
               <Box

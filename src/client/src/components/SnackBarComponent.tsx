@@ -22,7 +22,7 @@ const CustomizedSnackBar: React.FC<ISnackBarProps> = ({
 
   useEffect(() => {
     setOpen(AlertOn)
-  }, [AlertOn])
+  }, [AlertOn, Message])
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -34,7 +34,7 @@ const CustomizedSnackBar: React.FC<ISnackBarProps> = ({
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={8000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={Severity} sx={{ width: '100%' }}>
           {Message}
         </Alert>

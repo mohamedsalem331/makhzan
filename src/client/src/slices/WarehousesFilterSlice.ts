@@ -22,14 +22,13 @@ const initialState: WarehousesFilterState = {
     pending: false,
 }
 
+// -> clear array from any null values or empty strings
 const cleanArr = (arr: Array<string>) => {
     return arr.filter(gov => gov)
-
 }
 
 const filterWarehouses = createAsyncThunk('warehouses/filter', async (filterOptions: FilterWarehouseOptions, thunkAPI) => {
     const { rent, size, governorates: govs, locations: locs } = filterOptions
-    console.log(size);
 
     const governorates = cleanArr(govs)
     const locations = cleanArr(locs)
@@ -57,9 +56,9 @@ export const warehousesFilterSlice = createSlice({
     name: 'warehouseFilter',
     initialState,
     reducers: {
-        addFilters: (state, action: PayloadAction<{ governorate: string[], location: string[], rent?: number[], size?: number[] }>) => {
-            state.governorates = action.payload.governorate
-            state.locations = action.payload.location
+        addFilters: (state, action: PayloadAction<FilterWarehouseOptions>) => {
+            state.governorates = action.payload.governorates
+            state.locations = action.payload.locations
             state.rent = action.payload.rent
             state.size = action.payload.size
         },

@@ -4,8 +4,7 @@ import { Skeleton, Stack } from '@mui/material'
 import { Box } from '@mui/system'
 
 import '../../styles/WarehouseList.css'
-import 'swiper/css'
-import { WarehouseAttributes } from '../../types'
+// import 'swiper/css'
 import Warehouse from './Warehouse'
 
 export interface IWarehousesListState {

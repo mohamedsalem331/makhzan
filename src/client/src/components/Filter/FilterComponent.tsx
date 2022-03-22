@@ -1,24 +1,22 @@
-import { TextField, Autocomplete, Stack, InputAdornment, Paper, Button } from '@mui/material'
-
 import React from 'react'
+import { TextField, Autocomplete, Stack, InputAdornment, Paper, Button } from '@mui/material'
 import { Box } from '@mui/system'
-import { GOVERNORATES, LOCATIONS } from '../../utils/constants'
-import { formatRentValue } from '../../utils/formatNumber'
 
-interface FilterWarehousesState {
+import { GOVERNORATES, LOCATIONS } from '../../utils/constants'
+import { FilterWarehouseOptions } from '../../types'
+
+interface IFilterWarehousesState {
   locations: string[]
   governorates: string[]
-  filterWarehouses: any
-  addFilters: any
-  clearFilters: any
+  addFilters: (filters: FilterWarehouseOptions) => void
+  clearFilters: () => void
 }
 
-const FilterComponent: React.FC<FilterWarehousesState> = ({
+const FilterComponent: React.FC<IFilterWarehousesState> = ({
   governorates,
   locations,
   addFilters,
   clearFilters,
-  filterWarehouses,
 }) => {
   // ===========================================================================
   // Hooks
@@ -38,22 +36,12 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
   // ===========================================================================
   // Handlers
   // ===========================================================================
-  // if (id.includes('governorates')) {     const { id } = event.target
 
-  //   setGovernorates(value)
-  // } else if (id.includes('locations')) {
-  //   setLocations(value)
-  // } else {
-  //   setGovernorates(value)
-  //   setLocations(value)
-  // }
-  const handleFilterGovernorates = (event: any, value: any) => {
+  const handleFilterGovernorates = (event: React.SyntheticEvent<Element, Event>, value: string[]) =>
     setGovernorates(value)
-  }
 
-  const handleFilterLocations = (event: any, value: any) => {
+  const handleFilterLocations = (event: React.SyntheticEvent<Element, Event>, value: string[]) =>
     setLocations(value)
-  }
 
   const handleChangeRent = (event: any) => {
     const { value, id } = event.target
@@ -70,7 +58,6 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
       })
     }
   }
-  console.log(size)
 
   const handleChangeSize = (event: any) => {
     const { value, id } = event.target
@@ -88,17 +75,24 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
     }
   }
 
-  const onSubmit = () => {
+  const handleApplyFilters = () => {
     const Filters = {
-      governorate: filteredGovernorates,
-      location: filteredLocations,
+      governorates: filteredGovernorates,
+      locations: filteredLocations,
       size: [size.minSize, size.maxSize],
       rent: [rent.minRent, rent.maxRent],
     }
 
     addFilters(Filters)
+  }
 
-    // filterWarehouses(Filters)
+  const handleClearFilters = () => {
+    setGovernorates([])
+    setLocations([])
+    setSize({ minSize: 0, maxSize: 0 })
+    setRent({ minRent: 0, maxRent: 0 })
+
+    clearFilters()
   }
 
   return (
@@ -107,6 +101,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
         <Stack sx={{ textAlign: 'left' }} spacing={5}>
           <Autocomplete
             multiple
+            value={filteredGovernorates}
             onChange={handleFilterGovernorates}
             id="governorates-filter"
             options={GOVERNORATES}
@@ -119,6 +114,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
           />
           <Autocomplete
             multiple
+            value={filteredLocations}
             onChange={handleFilterLocations}
             id="locations-filter"
             options={LOCATIONS}
@@ -129,9 +125,10 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
               <TextField {...params} label="Filter Locations" placeholder="Locations" />
             )}
           />
+
           <Box>
             Size
-            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'column'}>
+            <Stack sx={{ marginTop: '2rem' }} spacing={2} direction={'column'}>
               <TextField
                 id="minSize"
                 label="Min"
@@ -155,7 +152,7 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
 
           <Box>
             Rent
-            <Stack sx={{ marginTop: '2rem' }} spacing={1} direction={'column'}>
+            <Stack sx={{ marginTop: '2rem' }} spacing={2} direction={'column'}>
               <TextField
                 id="minRent"
                 label="Min"
@@ -176,10 +173,12 @@ const FilterComponent: React.FC<FilterWarehousesState> = ({
               />
             </Stack>
           </Box>
-          <Button variant="contained" onClick={onSubmit}>
+        </Stack>
+        <Stack spacing={1} sx={{ marginTop: '3rem' }}>
+          <Button variant="contained" fullWidth onClick={handleApplyFilters}>
             Apply Filters
           </Button>
-          <Button variant="outlined" onClick={clearFilters}>
+          <Button variant="outlined" fullWidth onClick={handleClearFilters}>
             Remove Filters
           </Button>
         </Stack>

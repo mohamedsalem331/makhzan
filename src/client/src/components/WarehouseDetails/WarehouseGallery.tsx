@@ -19,7 +19,7 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
           <Grid key={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
             <Grid item xs={8}>
               <ImageListItem>
-                <img src={Images[0]} srcSet={Images[0]} alt={'fdsdsfds'} loading="lazy" />
+                <img src={Images[0]} srcSet={Images[0]} alt={`image`} loading="lazy" />
               </ImageListItem>
             </Grid>
             <Grid item xs={4}>
@@ -27,7 +27,7 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
                 if (idx > 0) {
                   return (
                     <ImageListItem key={idx}>
-                      <img src={img} srcSet={img} alt={'fdsdsfds'} loading="lazy" />
+                      <img src={img} srcSet={img} alt={`image`} loading="lazy" />
                     </ImageListItem>
                   )
                 }
@@ -47,7 +47,7 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
           >
             {Images.map((image: string) => (
               <SwiperSlide>
-                <img src={image} alt="" />
+                <img src={image} alt={`image`} />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Switch, Typography, useMediaQuery } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import FilterComponent from '../components/Filter/FilterComponent'
-import LandingNavbar from './NavbarComponent'
+import LandingNavbar from './LandingNavbar'
 import WarehouseList from '../components/WarehousesList/WarehouseList'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
@@ -14,15 +14,9 @@ const WarehousesList: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const {
-    filteredWarehouses,
-    governorates,
-    locations,
-    size,
-    rent,
-    error: errFilters,
-    pending: loadingFilters,
-  } = useAppSelector((state: RootState) => state.warehousesFilter)
+  const { filteredWarehouses, governorates, locations, size, rent } = useAppSelector(
+    (state: RootState) => state.warehousesFilter
+  )
 
   const {
     warehouses,
@@ -52,11 +46,8 @@ const WarehousesList: React.FC = () => {
 
   const [filterOpen, setFilterOpen] = React.useState<boolean>(true)
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.checked)
-
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setFilterOpen(event.target.checked)
-  }
 
   useEffect(() => {
     if (filters) {
@@ -86,7 +77,6 @@ const WarehousesList: React.FC = () => {
               )}
               {filterOpen && (
                 <FilterComponent
-                  filterWarehouses={_filterWarehouses}
                   clearFilters={_clearFilters}
                   addFilters={_addFilters}
                   governorates={governorates}

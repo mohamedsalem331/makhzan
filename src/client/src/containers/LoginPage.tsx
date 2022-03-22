@@ -22,7 +22,7 @@ import { LoginState } from '../types/index'
 import CustomizedSnackBar from '../components/SnackBarComponent'
 import { localStorageHandler } from './../utils/localStorage'
 import { useNavigate } from 'react-router-dom'
-import LandingNavbar from './NavbarComponent'
+import LandingNavbar from './Navbar'
 
 const { setTokenLocalStorage } = localStorageHandler()
 

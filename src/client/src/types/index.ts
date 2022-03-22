@@ -1,5 +1,4 @@
 // User Model
-import { ComponentType, FC } from 'react'
 
 
 export interface UserAttributes {
@@ -37,19 +36,6 @@ export interface MenuItem {
   active: boolean
 }
 
-// export interface Route {
-//   key: string
-//   title: string
-//   description?: string
-//   path?: string
-//   component?: FC<{}>
-//   isEnabled: boolean
-//   icon?: ComponentType
-//   subRoutes?: Route[]
-//   appendDivider?: boolean
-//   expanded?: boolean
-// }
-
 export interface Services {
   wifi?: JSX.Element,
   power?: JSX.Element,
@@ -78,3 +64,13 @@ export interface FilterWarehouseOptions {
   size?: Array<number>
 }
 
+export interface IFormInput {
+  title: string
+  description: string
+  size: number
+  rent: number
+  governorate: string
+  location: string
+  street: string
+  services: string[]
+}

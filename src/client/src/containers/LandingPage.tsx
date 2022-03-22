@@ -1,12 +1,12 @@
 import React from 'react'
 
-import '../styles/LandingPage.css'
 import SearchComponent from '../components/Filter/SearchComponent'
-import LandingNavbar from './NavbarComponent'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
+import LandingNavbar from './Navbar'
+import { useAppDispatch } from '../app/hooks'
 import { localStorageHandler } from '../utils/localStorage'
-import { logoutUser } from '../slices/UserLogoutSlice'
 import { addFilters } from '../slices/WarehousesFilterSlice'
+
+import '../styles/LandingPage.css'
 
 const { removeTokenLocalStorage } = localStorageHandler()
 
@@ -25,8 +25,8 @@ const LandingPage: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const _addFilters = (data: {
-    location: string[]
-    governorate: string[]
+    locations: string[]
+    governorates: string[]
     rent?: number[]
     size?: number[]
   }) => dispatch(addFilters(data))
