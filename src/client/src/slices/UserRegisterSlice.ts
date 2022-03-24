@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RegisterState } from '../types/index'
 
-
 export interface UserRegisterState {
     message: string
     token: string

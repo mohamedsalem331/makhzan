@@ -8,9 +8,6 @@ const data = getTokenLocalStorage()
 
 const userData = data && JSON.parse(data)
 
-
-
-
 export interface WarehouseCreationState {
     message: string
     error: string
@@ -22,9 +19,6 @@ const initialState: WarehouseCreationState = {
     error: '',
     pending: false,
 }
-
-const { removeTokenLocalStorage } = localStorageHandler()
-
 
 const postWarehouse = createAsyncThunk('warehouses/create', async (data: any, thunkAPI) => {
     try {

@@ -1,4 +1,3 @@
-import { RootState } from './../app/store';
 import { localStorageHandler } from './../utils/localStorage'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
@@ -8,6 +7,7 @@ const { getTokenLocalStorage, setTokenLocalStorage, removeTokenLocalStorage } = 
 
 // initialState from local storage
 const getlocStorage = getTokenLocalStorage()
+
 let userData = {
     name: '',
     email: '',
@@ -18,8 +18,6 @@ let userData = {
 if (getlocStorage && !!getlocStorage) {
     userData = JSON.parse(getlocStorage)
 }
-
-
 
 export interface UserLoginState {
     name: string
@@ -88,7 +86,7 @@ export const UserLoginSlice = createSlice({
 const { login, logout } = UserLoginSlice.actions
 
 
-const authMiddleware = () => (next: any) => (action: any) => {
+const authMiddleware = () => (next: any) => (action: PayloadAction) => {
     const result = next(action)
 
     if (login.match(result) || result.type.includes('login/fulfilled')) {
@@ -102,7 +100,6 @@ const authMiddleware = () => (next: any) => (action: any) => {
 
 
 export { authMiddleware }
-
 
 export { authUser, login, logout }
 

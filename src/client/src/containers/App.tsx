@@ -7,11 +7,8 @@ import WarehouseDetails from './WarehouseDetailsPage'
 import PostWarehouse from './PostWarehousePage'
 import RegisterPage from './RegisterPage'
 import LoginPage from './LoginPage'
-import { localStorageHandler } from '../utils/localStorage'
 import '../styles/App.css'
 import NotFoundPage from '../components/404/NotFoundPage'
-import { logoutUser } from '../slices/UserLogoutSlice'
-import { logout } from '../slices/UserLoginSlice'
 
 function App() {
   // ===========================================================================

@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Box,
@@ -10,30 +11,22 @@ import {
   Grid,
   Divider,
   Link,
-  Alert,
-  AlertTitle,
   CircularProgress,
-  useMediaQuery,
 } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import React, { useEffect, useState } from 'react'
 import { authUser } from '../slices/UserLoginSlice'
 import { LoginState } from '../types/index'
 import CustomizedSnackBar from '../components/SnackBarComponent'
-import { localStorageHandler } from './../utils/localStorage'
-import { useNavigate } from 'react-router-dom'
-import LandingNavbar from './Navbar'
-
-const { setTokenLocalStorage } = localStorageHandler()
+import LandingNavbar from './LandingNavbar'
 
 const LoginPage: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
-  const { token, name, email, phoneNumber, error, pending } = useAppSelector(
-    (state) => state.userLogin
-  )
+  const { token, error, pending, name } = useAppSelector((state) => state.userLogin)
 
   if (window.location.pathname === '' || window.location.pathname === '/') {
   }
@@ -53,8 +46,8 @@ const LoginPage: React.FC = () => {
   let navigate = useNavigate()
 
   const [values, setValues] = useState<LoginState>({
-    email: '',
-    password: '',
+    email: 'admin1@example.com',
+    password: 'ffdsfsd545431',
   })
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -84,10 +77,10 @@ const LoginPage: React.FC = () => {
     if (!!token) {
       navigate('/')
     }
-  }, [token])
+  }, [token, navigate])
 
   const submitDisabled = !!values.email && !!values.password
-  const matches = useMediaQuery('(min-width:500px)')
+  // const matches = useMediaQuery('(min-width:500px)')
 
   return (
     <>
@@ -159,11 +152,6 @@ const LoginPage: React.FC = () => {
                   {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
                 </Grid>
               </Grid>
-              {/* {error && (
-                <Alert sx={{ marginY: '1rem' }} severity="error">
-                  This is an error alert — check it out!
-                </Alert>
-              )} */}
               <Divider sx={{ marginY: '1.5rem' }} color="red" />
               <span>
                 Dont have an Account? <Link href="/register">Sign Up</Link>

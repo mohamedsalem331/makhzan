@@ -81,7 +81,7 @@ const RegisterUserr: React.FC = () => {
         navigate('/explore')
       }, 1000)
     }
-  }, [token])
+  }, [token, navigate])
 
   const submitDisabled =
     !!values.firstName &&

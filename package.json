@@ -12,6 +12,7 @@
   "author": "Mohamed Salem",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.26.1",
     "concurrently": "^7.0.0"
   }
 }

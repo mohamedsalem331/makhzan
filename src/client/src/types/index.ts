@@ -53,8 +53,8 @@ export interface RegisterState {
 }
 
 export interface LoginState {
-  email: string
-  password: string
+  email?: string
+  password?: string
 }
 
 export interface FilterWarehouseOptions {

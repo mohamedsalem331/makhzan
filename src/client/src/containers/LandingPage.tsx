@@ -1,21 +1,22 @@
 import React from 'react'
 
 import SearchComponent from '../components/Filter/SearchComponent'
-import LandingNavbar from './Navbar'
-import { useAppDispatch } from '../app/hooks'
-import { localStorageHandler } from '../utils/localStorage'
+import LandingNavbar from './LandingNavbar'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+// import { localStorageHandler } from '../utils/localStorage'
 import { addFilters } from '../slices/WarehousesFilterSlice'
 
 import '../styles/LandingPage.css'
+import { authUser } from '../slices/UserLoginSlice'
 
-const { removeTokenLocalStorage } = localStorageHandler()
+// const { removeTokenLocalStorage } = localStorageHandler()
 
 const LandingPage: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
-  // const { token, name } = useAppSelector((state) => state.userLogin)
+  const { token, name } = useAppSelector((state) => state.userLogin)
   // const { message, pending, error } = useAppSelector((state) => state.userLogout)
 
   // ===========================================================================

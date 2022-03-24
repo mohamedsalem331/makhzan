@@ -1,7 +1,7 @@
 import React from 'react'
 import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Box, Container, ImageListItem, Grid, useMediaQuery } from '@mui/material'
+import { Box, ImageListItem, Grid, useMediaQuery } from '@mui/material'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -19,20 +19,20 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
           <Grid key={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
             <Grid item xs={8}>
               <ImageListItem>
-                <img src={Images[0]} srcSet={Images[0]} alt={`image`} loading="lazy" />
+                <img src={Images[0]} srcSet={Images[0]} loading="lazy" alt="" />
               </ImageListItem>
             </Grid>
-            <Grid item xs={4}>
-              {Images.map((img, idx) => {
-                if (idx > 0) {
+            {Images.length > 1 && (
+              <Grid item xs={4}>
+                {Images.slice(1)?.map((img, idx) => {
                   return (
                     <ImageListItem key={idx}>
-                      <img src={img} srcSet={img} alt={`image`} loading="lazy" />
+                      <img src={img} srcSet={img} loading="lazy" alt="" />
                     </ImageListItem>
                   )
-                }
-              })}
-            </Grid>
+                })}
+              </Grid>
+            )}
           </Grid>
         </Grid>
       ) : (
@@ -47,7 +47,7 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
           >
             {Images.map((image: string) => (
               <SwiperSlide>
-                <img src={image} alt={`image`} />
+                <img src={image} alt="" />
               </SwiperSlide>
             ))}
           </Swiper>

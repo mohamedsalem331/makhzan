@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Switch, Typography, useMediaQuery } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import FilterComponent from '../components/Filter/FilterComponent'
 import LandingNavbar from './LandingNavbar'
 import WarehouseList from '../components/WarehousesList/WarehouseList'
@@ -22,8 +22,6 @@ const WarehousesList: React.FC = () => {
     warehouses,
     error: errWarehouses,
     pending: loadingWarehouses,
-    maxRent,
-    maxSize,
   } = useAppSelector((state: RootState) => state.warehousesList)
 
   // ===========================================================================
@@ -33,6 +31,7 @@ const WarehousesList: React.FC = () => {
   const dispatch = useAppDispatch()
   const _filterWarehouses = (data: FilterWarehouseOptions) => dispatch(filterWarehouses(data))
   const _fetchWarehouses = () => dispatch(fetchWarehouses())
+
   const _clearFilters = () => dispatch(clearFilters())
   const _addFilters = (data: any) => dispatch(addFilters(data))
 
@@ -55,10 +54,12 @@ const WarehousesList: React.FC = () => {
     } else {
       _fetchWarehouses()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [governorates, locations, size, rent])
 
   const warehousesList: any = filters ? filteredWarehouses : warehouses
   const matches = useMediaQuery('(min-width:1000px)')
+  console.log('fdd')
 
   return (
     <>

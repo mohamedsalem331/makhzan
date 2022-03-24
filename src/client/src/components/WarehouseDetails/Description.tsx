@@ -48,10 +48,10 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
   email,
   phoneNumber,
 }) => {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+  // const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
-    setAnchorEl(event.currentTarget)
+  // const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
+  //   setAnchorEl(event.currentTarget)
 
   const myServices = useFilteredServices(services)
 
@@ -138,7 +138,7 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
               <Stack direction="row" spacing={5} sx={{ justifyContent: 'center' }}>
                 <Tooltip title={phoneNumber}>
                   <Link href="tel:+20 1281115712">
-                    <Button variant="contained" onClick={handleClick}>
+                    <Button variant="contained">
                       <CallIcon sx={{ marginRight: '10px' }} /> Call
                     </Button>
                   </Link>
@@ -146,7 +146,7 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
 
                 <Tooltip title={email} arrow>
                   <Link href="mailto:mohamed_salem331@hotmail.com">
-                    <Button variant="contained" onClick={handleClick}>
+                    <Button variant="contained">
                       <EmailIcon sx={{ marginRight: '10px' }} /> Email
                     </Button>
                   </Link>

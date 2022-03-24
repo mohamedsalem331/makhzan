@@ -9,16 +9,18 @@ import UserLogoutReducer from '../slices/UserLogoutSlice'
 
 import { configureStore } from '@reduxjs/toolkit'
 
+export const rootReducer = {
+  warehousesList: WarehousesListReducer,
+  warehousesFilter: WarehousesFilterReducer,
+  postWarehouse: warehouseCreationReducer, // warehouseCreation
+  warehouseDetails: WarehouseDetailsReducer,
+  userRegister: UserRegisterReducer,
+  userLogin: UserLoginReducer,
+  userLogout: UserLogoutReducer,
+}
+
 export const store = configureStore({
-  reducer: {
-    warehousesList: WarehousesListReducer,
-    warehousesFilter: WarehousesFilterReducer,
-    postWarehouse: warehouseCreationReducer, // warehouseCreation
-    warehouseDetails: WarehouseDetailsReducer,
-    userRegister: UserRegisterReducer,
-    userLogin: UserLoginReducer,
-    userLogout: UserLogoutReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authMiddleware)
 })
 //  devTools: process.env.NODE_ENV !== 'production',

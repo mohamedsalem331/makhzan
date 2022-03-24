@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
 import { fetchWarehouseDetails } from '../slices/WarehouseDetailsSlice'
-import LandingNavbar from './Navbar'
+import LandingNavbar from './LandingNavbar'
 import WarehouseDescription from '../components/WarehouseDetails/Description'
 import { useParams } from 'react-router-dom'
 
@@ -34,7 +34,8 @@ const WarehouseDetailsComponent: React.FC = () => {
 
   useEffect(() => {
     if (id) _fetchWarehouseDetails(id)
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
 
   const { images } = warehouse
 

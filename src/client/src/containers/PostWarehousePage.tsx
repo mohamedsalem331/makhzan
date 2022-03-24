@@ -322,23 +322,4 @@ const PostWarehouse: React.FC = () => {
   )
 }
 
-{
-  /* 
-
-        {
-    "title": "this warehouse can bring you happiness in no time",
-    "description": "warehouse awesome awesome awesome",
-    "size": "999",
-    "rent": "6150",
-    "governorate": "alexandria",
-    "location": "bawlino",
-    "street": "mohrem beeh",
-    "services": ["wifi"],
-    "images": [
-      "https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg"
-    ]
-  }
-      */
-}
-
 export default PostWarehouse
