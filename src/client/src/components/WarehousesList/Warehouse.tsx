@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
-import { Typography, Paper, Button, Skeleton, Stack, useMediaQuery } from '@mui/material'
+import React from 'react'
+import { Typography, Paper, Button, Stack, useMediaQuery } from '@mui/material'
 import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined'
 import SquareFootSharpIcon from '@mui/icons-material/SquareFootSharp'
 import { Swiper, SwiperSlide } from 'swiper/react'
+
 import { Box } from '@mui/system'
-import Image1 from '../../Assets/image1.jpeg'
-import Image2 from '../../Assets/image2.jpeg'
-import Image3 from '../../Assets/image3.jpeg'
 import { formatRentValue } from '../../utils/formatNumber'
 import { Link } from 'react-router-dom'
 
-import { WarehouseAttributes, FilterWarehouseOptions } from '../../types'
+import { WarehouseAttributes } from '../../types'
 
 interface IWarehouseComponentProps extends WarehouseAttributes {}
 
@@ -24,7 +22,6 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
   images,
   street,
 }) => {
-  const [loading, setLoading] = useState(false)
   const matches = useMediaQuery('(min-width:700px)')
 
   const SwiperImageHeight = matches ? '180' : '450'
@@ -42,7 +39,6 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
           slidesPerView={1}
           pagination={true}
           loop
-          navigation
         >
           {images.map((image: string, idx: number) => (
             <SwiperSlide key={idx}>

@@ -7,16 +7,10 @@ import { createMemoryHistory, MemoryHistory } from 'history'
 
 import { rootReducer } from '../app/store'
 
-// const render = (
-//   component: React.ReactElement,
-//   { initialState = {}, store = configureStore({ reducer: rootReducer }), ...renderOptions } = {}
-// ) => {
-//   return rtlRender(<Provider store={store}>{component}</Provider>)
-// }
-
 interface RenderWithRouterOptions {
   route: string
-  history: MemoryHistory
+  history?: MemoryHistory
+  preloadedState?: any
 }
 
 const render = (
@@ -24,16 +18,18 @@ const render = (
   {
     route = '/',
     history = createMemoryHistory({ initialEntries: [route] }),
+    preloadedState,
   }: RenderWithRouterOptions = {} as RenderWithRouterOptions
 ) => {
   const store = configureStore({
     reducer: rootReducer,
+    preloadedState,
   })
 
   return {
     ...rtlRender(
       <Provider store={store}>
-        <MemoryRouter>{ui}</MemoryRouter>
+        <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
       </Provider>
     ),
     history,

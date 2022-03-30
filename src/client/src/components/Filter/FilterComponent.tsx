@@ -22,8 +22,8 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
   // Hooks
   // ===========================================================================
 
-  const [filteredGovernorates, setGovernorates] = React.useState<string[]>([])
-  const [filteredLocations, setLocations] = React.useState<string[]>([])
+  const [filteredGovernorates, setGovernorates] = React.useState<string[]>([...governorates])
+  const [filteredLocations, setLocations] = React.useState<string[]>([...locations])
   const [size, setSize] = React.useState<{ minSize: number; maxSize: number }>({
     minSize: 0,
     maxSize: 0,
@@ -106,7 +106,6 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
             id="governorates-filter"
             options={GOVERNORATES}
             getOptionLabel={(option) => option}
-            defaultValue={!!governorates[0] ? [governorates[0]] : []}
             filterSelectedOptions
             renderInput={(params) => (
               <TextField {...params} label="Filter Governorates" placeholder="Governorates" />
@@ -134,8 +133,12 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
                 label="Min"
                 type="number"
                 onChange={handleChangeSize}
+                value={size.minSize}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
+                }}
+                inputProps={{
+                  'data-testid': 'min-size-input',
                 }}
               />
               <TextField
@@ -143,8 +146,12 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
                 label="Max"
                 type="number"
                 onChange={handleChangeSize}
+                value={size.maxSize}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">sqm</InputAdornment>,
+                }}
+                inputProps={{
+                  'data-testid': 'max-size-input',
                 }}
               />
             </Stack>
@@ -158,6 +165,7 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
                 label="Min"
                 type="number"
                 onChange={handleChangeRent}
+                value={rent.minRent}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">E£</InputAdornment>,
                 }}
@@ -167,6 +175,7 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
                 label="Max"
                 type="number"
                 onChange={handleChangeRent}
+                value={rent.maxRent}
                 InputProps={{
                   startAdornment: <InputAdornment position="start">E£</InputAdornment>,
                 }}

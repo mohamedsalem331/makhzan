@@ -29,6 +29,7 @@ const cleanArr = (arr: Array<string>) => {
 
 const filterWarehouses = createAsyncThunk('warehouses/filter', async (filterOptions: FilterWarehouseOptions, thunkAPI) => {
     const { rent, size, governorates: govs, locations: locs } = filterOptions
+    console.log(filterOptions);
 
     const governorates = cleanArr(govs)
     const locations = cleanArr(locs)

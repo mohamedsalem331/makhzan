@@ -2,7 +2,7 @@ import { Button, Container, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import React from 'react'
 
-const NotFoundPage: React.FC = () => {
+const NotFound: React.FC = () => {
   return (
     <>
       <Container maxWidth="md" sx={{ height: '100vh' }}>
@@ -28,4 +28,4 @@ const NotFoundPage: React.FC = () => {
   )
 }
 
-export default NotFoundPage
+export default NotFound

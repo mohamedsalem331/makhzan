@@ -2,14 +2,14 @@ import { Box, Container, Grid, Switch, Typography, useMediaQuery } from '@mui/ma
 import React, { useEffect } from 'react'
 import FilterComponent from '../components/Filter/FilterComponent'
 import LandingNavbar from './LandingNavbar'
-import WarehouseList from '../components/WarehousesList/WarehouseList'
+import WarehouseList from '../components/WarehousesList/WarehousesList'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { RootState } from '../app/store'
 import { addFilters, clearFilters, filterWarehouses } from '../slices/WarehousesFilterSlice'
 import { FilterWarehouseOptions } from '../types/index'
 import { fetchWarehouses } from '../slices/WarehousesListSlice'
 
-const WarehousesList: React.FC = () => {
+const ExplorePage: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
@@ -59,12 +59,10 @@ const WarehousesList: React.FC = () => {
 
   const warehousesList: any = filters ? filteredWarehouses : warehouses
   const matches = useMediaQuery('(min-width:1000px)')
-  console.log('fdd')
 
   return (
     <>
       <LandingNavbar />
-
       <Container>
         <Box sx={{ marginY: '3rem', width: '100%' }}>
           <Grid container spacing={3}>
@@ -85,7 +83,6 @@ const WarehousesList: React.FC = () => {
                 />
               )}
             </Grid>
-
             <Grid item xs={12} lg={9}>
               <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
                 {warehousesList.length + ' Warehouses for Renting'}
@@ -104,4 +101,4 @@ const WarehousesList: React.FC = () => {
   )
 }
 
-export default WarehousesList
+export default ExplorePage

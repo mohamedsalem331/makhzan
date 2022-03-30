@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import LandingPage from './LandingPage'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import WarehousesList from './ExplorePage'
+import { useAppSelector } from '../app/hooks'
+import ExplorePage from './ExplorePage'
 import WarehouseDetails from './WarehouseDetailsPage'
 import PostWarehouse from './PostWarehousePage'
 import RegisterPage from './RegisterPage'
 import LoginPage from './LoginPage'
 import '../styles/App.css'
-import NotFoundPage from '../components/404/NotFoundPage'
+import NotFound from '../components/404/NotFoundRoute'
 
-function App() {
+const App: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
-  const { token, name } = useAppSelector((state) => state.userLogin)
+  const { token } = useAppSelector((state) => state.userLogin)
 
   // ===========================================================================
   // Dispatch
@@ -33,11 +33,11 @@ function App() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="explore">
-            <Route index element={<WarehousesList />} />
+            <Route index element={<ExplorePage />} />
             <Route path=":id" element={<WarehouseDetails />} />
           </Route>
           {isLoggedIn && ProtectedRoutes}
-          <Route path="*" element={<NotFoundPage />} /> {/* here is not found route */}
+          <Route path="*" element={<NotFound />} /> {/* here is not found route */}
         </Routes>
       </Router>
     </div>

@@ -28,7 +28,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isLoggedIn, logoutUser }) => {
   const MenuItems = isLoggedIn ? (
     <div>
       <MenuItem onClick={handleClose}>
-        <Link to="/postwarehouse">PostWarehouse</Link>
+        <Link to="/postwarehouse">Post Warehouse</Link>
       </MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </div>

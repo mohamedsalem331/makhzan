@@ -1,39 +1,27 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { createMemoryHistory } from 'history'
 
-import { render, fireEvent, screen } from '../redux-util'
+import { render, fireEvent, screen } from '../redux-router-util'
 import LoginPage from '../../containers/LoginPage'
 
-export const handlers = [
-  rest.post('http://localhost:5000/users/login', (req, res, ctx) => {
-    return res(
-      ctx.json({
-        token: 'fddd',
-        name: 'John Peter',
-        email: 'fdds',
-        phoneNumber: '432423',
-      }),
-      ctx.delay(150)
-    )
-  }),
-]
+describe('Login User', () => {
+  test('should authenticate user with successfull login', async () => {
+    render(<LoginPage />)
+    const inputEmail = screen.getByTestId('email-inputElement')
+    const inputPassword = screen.getByTestId('password-inputElement')
+    const signinButton = screen.getByRole('button', { name: /Sign In/i })
 
-const server = setupServer(...handlers)
+    expect(signinButton).toBeDisabled()
+    expect(screen.queryByText('Login Successful')).not.toBeInTheDocument()
 
-beforeAll(() => server.listen())
+    fireEvent.change(inputEmail, { target: { value: 'test@example.com' } })
+    fireEvent.change(inputPassword, { target: { value: '123456' } })
 
-afterEach(() => server.resetHandlers())
+    expect(signinButton).not.toBeDisabled()
 
-afterAll(() => server.close())
+    fireEvent.click(signinButton)
 
-test('fetches & receives a user after clicking the fetch user button', async () => {
-  const history = createMemoryHistory()
-  render(<LoginPage />, { route: '/login', history })
-
-  expect(screen.queryByText('Login Successful')).not.toBeInTheDocument()
-
-  fireEvent.click(screen.getByRole('button', { name: /Sign In/i }))
-
-  await expect(await screen.findByText('Login Successful')).toBeInTheDocument()
+    expect(await screen.findByText(/Login Successful/i)).toBeInTheDocument()
+    expect(await screen.findByText(/JP/i)).toBeInTheDocument()
+  })
 })

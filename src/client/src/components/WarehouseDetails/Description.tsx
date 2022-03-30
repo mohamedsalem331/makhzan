@@ -43,7 +43,7 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
   location,
   street,
   services,
-  createdAt = new Date(),
+  createdAt = '1/2/2021',
   name,
   email,
   phoneNumber,
@@ -81,7 +81,7 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
             <Stack spacing={1}>
               {myServices.map((service: any, indx: number) => {
                 return (
-                  <Box key={indx} sx={{ display: 'flex' }}>
+                  <Box data-testid="warehouse-services" key={indx} sx={{ display: 'flex' }}>
                     {<service.Icon />}
                     <Typography
                       sx={{ marginLeft: '10px', marginBottom: '15px' }}
@@ -122,7 +122,6 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <Paper
-              variant="outlined"
               square
               sx={{
                 display: 'flex',

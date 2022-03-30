@@ -1,4 +1,3 @@
-import { Services } from './../types/index';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import type { RootState, AppDispatch } from './store'
 import { services } from '../utils/constants'
@@ -11,6 +10,9 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 // Hook for filtering warehouse provided services  
 export const useFilteredServices = (myArr: string[]) => {
     return services.filter((service) => {
-        if (myArr.indexOf(service.label) !== -1) return service.Icon
+        if (myArr.indexOf(service.label) !== -1) {
+            return service.Icon
+        }
+        return ''
     })
 }

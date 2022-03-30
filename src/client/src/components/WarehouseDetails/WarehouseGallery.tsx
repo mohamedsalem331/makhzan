@@ -1,9 +1,6 @@
 import React from 'react'
-import { Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Box, ImageListItem, Grid, useMediaQuery } from '@mui/material'
-import 'swiper/css'
-import 'swiper/css/pagination'
 
 interface IWarehouseGalleryProps {
   Images: Array<string>
@@ -39,14 +36,12 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
         <Box>
           <Swiper
             className="swiper-override-style2"
-            modules={[Pagination]}
             slidesPerView={1}
-            navigation
             pagination={{ clickable: true }}
             loop
           >
-            {Images.map((image: string) => (
-              <SwiperSlide>
+            {Images.map((image: string, idx) => (
+              <SwiperSlide key={idx}>
                 <img src={image} alt="" />
               </SwiperSlide>
             ))}

@@ -17,7 +17,12 @@ const SearchComponent: React.FC<ISearchWarehousesProps> = ({ addFilters }) => {
   const history = useNavigate()
 
   const onSubmit = () => {
-    addFilters({ locations: [location ?? ''], governorates: [governorate ?? ''] })
+    addFilters({
+      locations: location ? [location] : [],
+      governorates: governorate ? [governorate] : [],
+      size: [0, 0],
+      rent: [0, 0],
+    })
     history('/explore')
   }
 

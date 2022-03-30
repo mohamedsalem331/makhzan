@@ -5,8 +5,8 @@ export interface UserAttributes {
   id?: number | string
   name: string
   email: string
-  password: string
-  phoneNumber: number
+  password?: string
+  phoneNumber: string
   isAdmin?: boolean
   createdAt?: string
   updatedAt?: string

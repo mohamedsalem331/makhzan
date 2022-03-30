@@ -34,7 +34,7 @@ const fetchWarehouses = createAsyncThunk('warehouses/fetch', async (_, thunkAPI)
     })
     return response.data
   } catch (err: any) {
-    return thunkAPI.rejectWithValue(err.response.data.error)
+    return thunkAPI.rejectWithValue(err.response.data)
   }
 })
 
@@ -57,7 +57,6 @@ export const warehousesListSlice = createSlice({
         });
       })
       .addCase(fetchWarehouses.rejected, (state, action: PayloadAction<any>) => {
-        console.log(action)
         return (state = {
           warehouses: [],
           error: action.payload.error,

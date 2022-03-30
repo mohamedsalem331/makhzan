@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { token, error, pending, name } = useAppSelector((state) => state.userLogin)
+  const { token, error, pending } = useAppSelector((state) => state.userLogin)
 
   if (window.location.pathname === '' || window.location.pathname === '/') {
   }
@@ -46,8 +46,8 @@ const LoginPage: React.FC = () => {
   let navigate = useNavigate()
 
   const [values, setValues] = useState<LoginState>({
-    email: 'admin1@example.com',
-    password: 'ffdsfsd545431',
+    email: '',
+    password: '',
   })
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -84,6 +84,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
+      {error}
       <LandingNavbar />
       {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
@@ -106,6 +107,9 @@ const LoginPage: React.FC = () => {
                     color="secondary"
                     label="Email"
                     type="email"
+                    inputProps={{
+                      'data-testid': 'email-inputElement',
+                    }}
                     error={!values.email}
                     required
                     onChange={(e) => handleChange(e, 'email')}
@@ -124,6 +128,9 @@ const LoginPage: React.FC = () => {
                     onChange={(e) => handleChange(e, 'password')}
                     value={values.password}
                     fullWidth
+                    inputProps={{
+                      'data-testid': 'password-inputElement',
+                    }}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

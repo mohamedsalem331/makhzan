@@ -25,7 +25,7 @@ const initialState: WarehousesDetailsState = {
         name: '',
         email: '',
         password: '',
-        phoneNumber: 0
+        phoneNumber: ''
     },
     error: '',
     pending: false,
@@ -54,6 +54,7 @@ export const warehouseDetailsSlice = createSlice({
                 state.pending = true
             })
             .addCase(fetchWarehouseDetails.fulfilled, (state, action) => {
+
                 return (state = {
                     warehouse: action.payload.warehouse,
                     user: action.payload.user,
