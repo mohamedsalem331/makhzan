@@ -23,7 +23,7 @@ const App: React.FC = () => {
 
   const isLoggedIn = !!token
 
-  const ProtectedRoutes = () => <Route path="postwarehouse" element={<PostWarehouse />} />
+  const ProtectedRoutes = <Route path="postwarehouse" element={<PostWarehouse />} />
 
   return (
     <div className="App">
@@ -32,11 +32,11 @@ const App: React.FC = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
+          {isLoggedIn && ProtectedRoutes}
           <Route path="explore">
             <Route index element={<ExplorePage />} />
             <Route path=":id" element={<WarehouseDetails />} />
           </Route>
-          {isLoggedIn && ProtectedRoutes}
           <Route path="*" element={<NotFound />} /> {/* here is not found route */}
         </Routes>
       </Router>

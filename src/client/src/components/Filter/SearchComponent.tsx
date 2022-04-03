@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Autocomplete, Box, Button, Stack, TextField } from '@mui/material'
+import { Autocomplete, Box, Button, Divider, Stack, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useNavigate } from 'react-router-dom'
 
@@ -40,18 +40,29 @@ const SearchComponent: React.FC<ISearchWarehousesProps> = ({ addFilters }) => {
           display: 'flex',
         }}
       >
-        <Stack spacing={2}>
+        <Stack
+          divider={
+            <Divider
+              orientation="horizontal"
+              sx={{ marginY: '0.8rem', visibility: 'hidden' }}
+              flexItem
+            />
+          }
+        >
           <Autocomplete
+            value={governorate}
             disablePortal
             id="governorate-input"
             options={GOVERNORATES}
             sx={{ width: 300 }}
+            data-testid="governorate-input-testid"
             onChange={(event: React.SyntheticEvent<Element, Event>, newValue: string | null) => {
               setGovernorate(newValue)
             }}
             renderInput={(params) => <TextField {...params} label="Governorate" />}
           />
           <Autocomplete
+            value={location}
             disablePortal
             id="location-input"
             options={LOCATIONS}
@@ -61,7 +72,6 @@ const SearchComponent: React.FC<ISearchWarehousesProps> = ({ addFilters }) => {
             }}
             renderInput={(params) => <TextField {...params} label="Location" />}
           />
-
           <Button onClick={onSubmit} variant="contained" color="primary">
             <SearchIcon sx={{ marginRight: '10px' }} /> Search Warehouses
           </Button>

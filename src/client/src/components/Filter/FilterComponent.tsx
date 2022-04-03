@@ -105,6 +105,7 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
             onChange={handleFilterGovernorates}
             id="governorates-filter"
             options={GOVERNORATES}
+            autoHighlight
             getOptionLabel={(option) => option}
             filterSelectedOptions
             renderInput={(params) => (

@@ -1,10 +1,13 @@
-import { warehouseDetailsHandlerException, warehousesHandlerException } from '../utils/handlers'
+import {
+  warehouseDetailsHandlerException,
+  warehousesHandlerException,
+} from '../TestHelpers/handlers'
 import WarehouseDetailsComponent from '../../containers/WarehouseDetailsPage'
-import { render, screen } from '../redux-router-util'
+import { render, screen } from '../TestHelpers/redux-router-util'
 import { Route, Routes } from 'react-router-dom'
-import { mswServer } from '../utils/msw-server'
+import { mswServer } from '../TestHelpers/msw-server'
 
-describe('WarehouseDetails', () => {
+describe('WarehouseDetails Reduxified Container', () => {
   test('should display warehouse and user details', async () => {
     render(
       <Routes>
@@ -19,7 +22,7 @@ describe('WarehouseDetails', () => {
     expect(await screen.findByText(/Admin User/i)).toBeInTheDocument()
   })
 
-  test('should display error message', async () => {
+  test('should fail fetching warehouse details with error message', async () => {
     mswServer.use(warehouseDetailsHandlerException)
     render(
       <Routes>

@@ -32,8 +32,8 @@ import CustomizedSnackBar from '../components/SnackBarComponent'
 
 const initialState = {
   defaultValues: {
-    title: '',
-    description: '',
+    title: 'Catchy title',
+    description: 'more info about the warehouse',
     size: 1000,
     rent: 100,
     governorate: 'Cairo',
@@ -62,12 +62,12 @@ const PostWarehouse: React.FC = () => {
     dispatch(postWarehouse(data))
       .unwrap()
       .then((originalPromiseResult) => {
-        console.log(originalPromiseResult)
+        console.log('promise success', originalPromiseResult)
       })
       .catch((rejectedValue) => {
-        if (rejectedValue.status === 401 || rejectedValue.status === 403) {
-          _logout()
-        }
+        console.log('promise failed', rejectedValue)
+
+        _logout()
       })
 
   // ===========================================================================
@@ -134,8 +134,6 @@ const PostWarehouse: React.FC = () => {
       <LandingNavbar />
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
-      {pending && <CircularProgress />}
-
       <Container maxWidth="sm" sx={{ marginY: '3rem' }}>
         <Box sx={{ height: '150vh' }}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -256,11 +254,17 @@ const PostWarehouse: React.FC = () => {
               <Controller
                 name="services"
                 control={control}
-                rules={{ required: true }}
                 render={({ field }) => (
                   <Select
                     {...field}
-                    input={<OutlinedInput label="Name" />}
+                    input={
+                      <OutlinedInput
+                        label="Name"
+                        inputProps={{
+                          'data-testid': 'services-input-testid',
+                        }}
+                      />
+                    }
                     multiple
                     renderValue={(selected) => selected.join(', ')}
                   >
@@ -273,7 +277,7 @@ const PostWarehouse: React.FC = () => {
                   </Select>
                 )}
               />
-              <Stack direction="row" spacing={3} justifyContent="center">
+              <Stack direction="row" spacing={4} justifyContent="center">
                 {Array(3)
                   .fill('')
                   .map((_, indx) =>
@@ -304,9 +308,11 @@ const PostWarehouse: React.FC = () => {
               variant="contained"
               sx={{ marginY: '3rem' }}
               type="submit"
-              disabled={Object.keys(errors).length > 0 || images.length < 1}
+              disabled={Object.keys(errors).length > 0}
             >
-              Create Warehouse
+              {pending && <CircularProgress />}
+
+              {pending ? 'Loading' : 'Create Warehouse'}
             </Button>
           </form>
         </Box>

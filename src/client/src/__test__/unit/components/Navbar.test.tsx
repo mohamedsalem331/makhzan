@@ -2,7 +2,7 @@ import NavLinks from '../../../components/Navbar/NavLinks'
 import SideMenu from '../../../components/Navbar/SideMenu'
 import LandingNavbar from '../../../containers/LandingNavbar'
 import { createMatchMedia } from '../../../__mocks__/MatchMedia'
-import { render, screen, fireEvent } from '../../redux-router-util'
+import { render, screen, fireEvent } from '../../TestHelpers/redux-router-util'
 
 const logoutUser = jest.fn()
 
@@ -11,7 +11,7 @@ describe('Navbar Component', () => {
     // for overriding the setuptests default and rendering side menu instead of navlinks
     window.matchMedia = createMatchMedia(300)
   })
-  test('navlinks render with user authenticated', async () => {
+  test('navlinks render with protected routes', async () => {
     render(<NavLinks isLoggedIn={true} userName={'Amanda Smith'} logoutUser={logoutUser} />)
 
     expect(await screen.findByText(/AS/i)).toBeInTheDocument()

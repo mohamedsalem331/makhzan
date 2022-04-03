@@ -15,7 +15,7 @@ export const warehouses = [
         location: '6 October City',
         street: '112',
         services: ['Power', 'RFID', 'Networked', 'Thermostat', 'Alarm', 'Bathroom'],
-        images: ['https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg'],
+        images: ['https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg', 'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg'],
         UserId: '1c023ede-c424-45e6-bae0-0c61b0d2a2d1',
         createdAt: '2022-03-10T15:47:20.559Z',
         updatedAt: '2022-03-10T15:47:20.559Z',

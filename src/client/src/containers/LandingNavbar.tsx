@@ -26,6 +26,7 @@ const LandingNavbar: React.FC = () => {
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const [logoutAlert, setLogoutAlert] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -50,7 +51,6 @@ const LandingNavbar: React.FC = () => {
 
   return (
     <>
-      {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
       {!!message && !isLoggedIn && (
         <CustomizedSnackBar AlertOn={logoutAlert} Message={message} Severity="success" />
       )}
@@ -64,6 +64,7 @@ const LandingNavbar: React.FC = () => {
           p: '20px',
         }}
       >
+        {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
         <Container maxWidth="xl">
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Link to="/">

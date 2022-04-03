@@ -1,9 +1,7 @@
 import { logout, UserLoginState } from '../../../slices/UserLoginSlice'
-import { render, screen } from '../../redux-router-util'
 import UserLoginReducer, { login } from '../../../slices/UserLoginSlice'
-import { UserAttributes } from '../../../types'
 
-describe('Testing Login Slice Redux', () => {
+describe('Login Slice Reduxified', () => {
   const authUser: UserLoginState = {
     name: 'Mohamed',
     email: 'mohamed@gmail.com',
@@ -22,7 +20,7 @@ describe('Testing Login Slice Redux', () => {
     pending: false,
   }
 
-  test('should return the initial login reducer state', () => {
+  test('should return the initial state', () => {
     expect(UserLoginReducer(undefined, { type: '' })).toEqual(previousState)
   })
 

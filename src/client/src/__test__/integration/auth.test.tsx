@@ -1,17 +1,30 @@
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
-
-import { render, fireEvent, screen } from '../redux-router-util'
+import { render, fireEvent, screen } from '../TestHelpers/redux-router-util'
 import LoginPage from '../../containers/LoginPage'
+import { authHandlerException } from '../TestHelpers/handlers'
+import { mswServer } from '../TestHelpers/msw-server'
 
-describe('Login User', () => {
-  test('should authenticate user with successfull login', async () => {
+describe('Auth Reduxified Container', () => {
+  test('should render login page', async () => {
+    render(<LoginPage />)
+
+    expect(await screen.findByAltText(/my logo/i)).toBeInTheDocument()
+
+    const signinButton = screen.getByRole('button', { name: /Sign In/i })
+
+    expect(signinButton).toBeTruthy()
+  })
+
+  test('should authenticate user with successfull login message', async () => {
     render(<LoginPage />)
     const inputEmail = screen.getByTestId('email-inputElement')
     const inputPassword = screen.getByTestId('password-inputElement')
     const signinButton = screen.getByRole('button', { name: /Sign In/i })
 
+    fireEvent.change(inputEmail, { target: { value: '' } })
+    fireEvent.change(inputPassword, { target: { value: '' } })
+
     expect(signinButton).toBeDisabled()
+
     expect(screen.queryByText('Login Successful')).not.toBeInTheDocument()
 
     fireEvent.change(inputEmail, { target: { value: 'test@example.com' } })

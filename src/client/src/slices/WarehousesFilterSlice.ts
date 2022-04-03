@@ -2,7 +2,7 @@ import { FilterWarehouseOptions } from './../types/index';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-interface WarehousesFilterState {
+export interface WarehousesFilterState {
     filteredWarehouses: Array<object>
     governorates: Array<string>
     locations: Array<string>
@@ -29,7 +29,6 @@ const cleanArr = (arr: Array<string>) => {
 
 const filterWarehouses = createAsyncThunk('warehouses/filter', async (filterOptions: FilterWarehouseOptions, thunkAPI) => {
     const { rent, size, governorates: govs, locations: locs } = filterOptions
-    console.log(filterOptions);
 
     const governorates = cleanArr(govs)
     const locations = cleanArr(locs)
@@ -46,6 +45,7 @@ const filterWarehouses = createAsyncThunk('warehouses/filter', async (filterOpti
 
             }
         })
+        console.log(response);
         return response.data
     } catch (err: any) {
 
@@ -76,14 +76,21 @@ export const warehousesFilterSlice = createSlice({
                 state.pending = true
             })
             .addCase(filterWarehouses.fulfilled, (state, action: PayloadAction<any>) => {
-                state.filteredWarehouses = [...action.payload.warehouses]
-                state.pending = false
+
+                return (state = {
+                    filteredWarehouses: [...action.payload.warehouses],
+                    error: '',
+                    pending: false,
+                    governorates: [],
+                    locations: [],
+                    rent: [0, 0],
+                    size: [0, 0],
+                });
 
             })
             .addCase(filterWarehouses.rejected, (state, action: PayloadAction<any>) => {
-                console.log(action);
 
-                state.error = 'error'
+                state.error = action.payload.error
                 state.pending = false
             })
     },

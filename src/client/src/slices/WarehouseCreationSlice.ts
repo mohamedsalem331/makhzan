@@ -32,7 +32,7 @@ const postWarehouse = createAsyncThunk('warehouses/create', async (data: any, th
         })
         return response.data
     } catch (err: any) {
-        return thunkAPI.rejectWithValue({ error: err.response.data, status: err.response.status })
+        return thunkAPI.rejectWithValue(err.response.data)
     }
 })
 
@@ -54,11 +54,9 @@ export const warehouseCreationSlice = createSlice({
             })
             .addCase(postWarehouse.rejected, (state, action: PayloadAction<any>) => {
 
-                const payload = action.payload
-
                 return (state = {
                     message: '',
-                    error: payload.error.error,
+                    error: action.payload.error,
                     pending: false,
                 });
             })

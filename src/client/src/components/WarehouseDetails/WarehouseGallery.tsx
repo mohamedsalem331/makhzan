@@ -41,7 +41,7 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
             loop
           >
             {Images.map((image: string, idx) => (
-              <SwiperSlide key={idx}>
+              <SwiperSlide data-testid="Image-Item-Gallery" key={idx}>
                 <img src={image} alt="" />
               </SwiperSlide>
             ))}

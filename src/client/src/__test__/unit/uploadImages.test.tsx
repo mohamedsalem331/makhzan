@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { fetchImages, BASE_URL } from '../fetchImages'
+import { fetchImages, BASE_URL } from './fetchImages'
 jest.mock('axios')
 
 const mockedAxios = axios as jest.Mocked<typeof axios>

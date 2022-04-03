@@ -32,6 +32,7 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
         variant="outlined"
         square
         sx={{ display: 'flex', flexDirection: matches ? 'row' : 'column' }}
+        data-testid="warehouse-node"
       >
         <Swiper
           className="swiper-override-style"

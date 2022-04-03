@@ -1,6 +1,6 @@
 import WarehouseDescription from '../../../components/WarehouseDetails/Description'
-import { render, screen, fireEvent } from '../../redux-router-util'
-import { users, warehouses } from '../../utils/data'
+import { render, screen, fireEvent } from '../../TestHelpers/redux-router-util'
+import { users, warehouses } from '../../TestHelpers/fixtures'
 
 const warehouse = warehouses[0]
 const user = users[0]

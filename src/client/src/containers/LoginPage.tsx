@@ -46,8 +46,8 @@ const LoginPage: React.FC = () => {
   let navigate = useNavigate()
 
   const [values, setValues] = useState<LoginState>({
-    email: '',
-    password: '',
+    email: 'admin1@example.com',
+    password: 'ffdsfsd545431',
   })
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -84,7 +84,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      {error}
       <LandingNavbar />
       {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
