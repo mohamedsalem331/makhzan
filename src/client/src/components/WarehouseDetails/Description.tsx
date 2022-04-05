@@ -18,7 +18,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 import { useFilteredServices } from '../../app/hooks'
 import { UserAttributes, WarehouseAttributes } from '../../types'
-import { formatRentValue } from '../../utils/formatNumber'
+import { formatRentValue } from '../../utils/format-number'
+import { useNavigate } from 'react-router-dom'
 
 interface IDividerComponentProps {
   children?: string
@@ -56,6 +57,8 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
   const myServices = useFilteredServices(services)
 
   const myDate = new Date(createdAt).toUTCString()
+
+  let navigate = useNavigate()
 
   return (
     <>
@@ -155,7 +158,7 @@ const WarehouseDescription: React.FC<WarehouseDetailsProps> = ({
           </Grid>
         </Grid>
       </Box>
-      <Button sx={{ marginY: '5rem' }} variant="contained">
+      <Button sx={{ marginY: '5rem' }} variant="contained" onClick={() => navigate('/explore')}>
         <ArrowBackIcon fontSize="large" sx={{ marginRight: '10px' }} /> Return Back
       </Button>
     </>

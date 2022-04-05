@@ -1,6 +1,8 @@
 import supertest from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 require('dotenv').config()
+import UserMockData from '../src/utils/data/users'
+import WarehouseMockData from '../src/utils/data/warehouses'
 
 import initializeServer from '../src/initializeServer'
 import sequelize from '../src/config/pgsql'
@@ -19,55 +21,30 @@ const UserTwoID: string = uuidv4()
 const UserThreeID: string = uuidv4()
 
 const warehouseOne: WarehouseAttributes = {
+  ...WarehouseMockData[0],
   id: WarehouseOneID,
-  title: 'Warehouse 1500 SQM licensed Food & Beverage',
-  description: 'Warehouse for Rent in New Cairo Alf Masnaa Area.Spa',
-  size: 1500,
-  rent: 150000,
-  governorate: 'cairo',
-  location: '6 october city',
-  street: '112',
-  services: ['wifi', 'iot', 'bathroom'],
-  images: ['https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg'],
   UserId: UserOneID,
 }
 
 const warehouseTwo: WarehouseAttributes = {
+  ...WarehouseMockData[1],
   id: WarehouseTwoID,
-  title: 'Warehouse 1500 SQM licensed Food & Beveragerew',
-  description: 'Warehouse for Rent in New Cairo Alf Masnaa Arearwerwe.Spa',
-  size: 1500,
-  rent: 200000,
-  governorate: 'cairo',
-  location: '6 october city',
-  street: '112',
-  services: ['wifi', 'iot', 'bathroom'],
-  images: ['https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg'],
+  UserId: UserTwoID,
 }
 
 const userOne: UserAttributes = {
+  ...UserMockData[0],
   id: UserOneID,
-  name: 'Admin User',
-  email: 'admin1@example.com',
-  password: 'hello123',
-  isAdmin: true,
-  phoneNumber: 1234567,
 }
 
 const userTwo: UserAttributes = {
+  ...UserMockData[1],
   id: UserTwoID,
-  name: 'Jack Smith',
-  email: 'user@example.com',
-  password: 'hello123',
-  phoneNumber: 7654321,
 }
 
 const userThree: UserAttributes = {
+  ...UserMockData[2],
   id: UserThreeID,
-  name: 'William Edward',
-  email: 'user2@example.com',
-  password: 'hello1234',
-  phoneNumber: 76543215,
 }
 
 describe('testing random routes', () => {
@@ -105,9 +82,10 @@ describe('testing random routes', () => {
       const response = await supertest(app)
         .post('/warehouses')
         .send({
-          rent: [0, 170000],
-          governorate: ['cairo'],
-          services: [],
+          rent: [0, 0],
+          size: [0, 0],
+          governorates: ['Cairo'],
+          locations: [],
         })
         .expect(200)
 

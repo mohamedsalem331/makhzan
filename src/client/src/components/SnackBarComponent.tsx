@@ -34,7 +34,7 @@ const CustomizedSnackBar: React.FC<ISnackBarProps> = ({
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={open} autoHideDuration={8000} onClose={handleClose}>
+      <Snackbar open={open} onClose={handleClose}>
         <Alert onClose={handleClose} severity={Severity} sx={{ width: '100%' }}>
           {Message}
         </Alert>

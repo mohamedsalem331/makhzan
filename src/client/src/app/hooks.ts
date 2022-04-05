@@ -6,13 +6,12 @@ import { services } from '../utils/constants'
 export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
-
-// Hook for filtering warehouse provided services  
+// Hook for filtering warehouse provided services
 export const useFilteredServices = (myArr: string[]) => {
-    return services.filter((service) => {
-        if (myArr.indexOf(service.label) !== -1) {
-            return service.Icon
-        }
-        return ''
-    })
+  return services.filter((service) => {
+    if (myArr.indexOf(service.label) !== -1) {
+      return service.Icon
+    }
+    return ''
+  })
 }

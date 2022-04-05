@@ -52,7 +52,7 @@ const WarehouseDetailsComponent: React.FC = () => {
   return (
     <>
       <LandingNavbar />
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ marginTop: '5rem' }}>
         <Box>
           <WarehouseGallery Images={images} />
           <WarehouseDescription {...warehouse} {...user} />

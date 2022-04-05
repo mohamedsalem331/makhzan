@@ -1,11 +1,14 @@
 import { Sequelize } from 'sequelize'
 require('dotenv').config()
 const env = process.env.NODE_ENV || 'development'
-const config = require(__dirname + '/config.json')[env]
+const config = require(__dirname + '/config.ts')['config'][env]
 
-const sequelize = new Sequelize(config.database, config.username, config.password, {
-  host: config.host,
-  dialect: config.dialect,
+const { username, password, database, host } = config
+const pass = password ?? ''
+
+const sequelize = new Sequelize(database, username, pass, {
+  host,
+  dialect: 'postgres',
   port: 5432,
   logging: false,
 })

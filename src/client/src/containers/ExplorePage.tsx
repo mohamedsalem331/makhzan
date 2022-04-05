@@ -8,6 +8,7 @@ import { RootState } from '../app/store'
 import { addFilters, clearFilters, filterWarehouses } from '../slices/WarehousesFilterSlice'
 import { FilterWarehouseOptions } from '../types/index'
 import { fetchWarehouses } from '../slices/WarehousesListSlice'
+import CustomizedSnackBar from '../components/SnackBarComponent'
 
 const ExplorePage: React.FC = () => {
   // ===========================================================================
@@ -17,6 +18,8 @@ const ExplorePage: React.FC = () => {
   const { filteredWarehouses, governorates, locations, size, rent } = useAppSelector(
     (state: RootState) => state.warehousesFilter
   )
+
+  const { token } = useAppSelector((state) => state.userLogin)
 
   const {
     warehouses,
@@ -63,6 +66,7 @@ const ExplorePage: React.FC = () => {
   return (
     <>
       <LandingNavbar />
+      {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
       <Container>
         <Box sx={{ marginY: '3rem', width: '100%' }}>
           <Grid container spacing={3}>
@@ -84,7 +88,7 @@ const ExplorePage: React.FC = () => {
               )}
             </Grid>
             <Grid item xs={12} lg={9}>
-              <Typography gutterBottom variant="h5" component="div" sx={{ marginY: '1rem' }}>
+              <Typography gutterBottom variant="h5" sx={{ marginY: '1rem' }}>
                 {warehousesList.length + ' Warehouses for Renting'}
               </Typography>
 

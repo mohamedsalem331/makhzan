@@ -2,10 +2,9 @@ import React from 'react'
 import { Typography, Paper, Button, Stack, useMediaQuery } from '@mui/material'
 import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined'
 import SquareFootSharpIcon from '@mui/icons-material/SquareFootSharp'
-import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { Box } from '@mui/system'
-import { formatRentValue } from '../../utils/formatNumber'
+import { formatRentValue } from '../../utils/format-number'
 import { Link } from 'react-router-dom'
 
 import { WarehouseAttributes } from '../../types'
@@ -22,9 +21,7 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
   images,
   street,
 }) => {
-  const matches = useMediaQuery('(min-width:700px)')
-
-  const SwiperImageHeight = matches ? '180' : '450'
+  const matches = useMediaQuery('(min-width:800px)')
 
   return (
     <>
@@ -34,47 +31,32 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
         sx={{ display: 'flex', flexDirection: matches ? 'row' : 'column' }}
         data-testid="warehouse-node"
       >
-        <Swiper
-          className="swiper-override-style"
-          spaceBetween={0}
-          slidesPerView={1}
-          pagination={true}
-          loop
-        >
-          {images.map((image: string, idx: number) => (
-            <SwiperSlide key={idx}>
-              <img height={SwiperImageHeight} src={image} alt="" />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <Box className="warehouse-img-wrapper">
+          <img style={{ maxWidth: matches ? '27rem' : '100%' }} src={images[0]} alt="" />
+        </Box>
+
         <Stack
           direction="column"
           spacing={1.5}
-          sx={{ paddingX: '1rem', textAlign: 'left', width: '100%' }}
+          sx={{ paddingX: '1.5rem', paddingY: '0.5rem', textAlign: 'left', width: '100%' }}
         >
-          <Typography variant="h5" component="div">
-            {formatRentValue(rent)} EGP / Month
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {title}
-          </Typography>
-          <Box sx={{ display: 'flex' }}>
+          <Typography variant="h5">{formatRentValue(rent)} EGP / Month</Typography>
+
+          <Typography variant="body2">{title}</Typography>
+
+          <Stack direction={'row'} spacing={2}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <WarehouseOutlinedIcon />
-              <Typography variant="body2" color="text.secondary">
-                Warehouse
-              </Typography>
+              <Typography variant="body2">Warehouse</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <SquareFootSharpIcon />
-              <Typography variant="body2" color="text.secondary">
-                {size} sqm
-              </Typography>
+              <Typography variant="body2">{size} sqm</Typography>
             </Box>
-          </Box>
-          <Typography variant="body2" color="text.secondary">
-            {governorate + ', ' + location + ', ' + street}
-          </Typography>
+          </Stack>
+
+          <Typography variant="body2">{`${governorate} , ${location} , ${street}`}</Typography>
+
           <Link to={`/explore/${id}`}>
             <Button sx={{ width: '100%', marginBottom: '1rem' }} variant="contained">
               More Details

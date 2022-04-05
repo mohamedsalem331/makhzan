@@ -18,10 +18,9 @@ import { Box } from '@mui/system'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
-import axios from 'axios'
 
 import { logout } from '../slices/UserLoginSlice'
-import { formatRentValue } from '../utils/formatNumber'
+import { formatRentValue } from '../utils/format-number'
 import { services } from '../utils/constants'
 import { postWarehouse } from '../slices/WarehouseCreationSlice'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
@@ -29,6 +28,7 @@ import { IFormInput } from '../types'
 import { RootState } from '../app/store'
 import LandingNavbar from './LandingNavbar'
 import CustomizedSnackBar from '../components/SnackBarComponent'
+import { uploadImages } from '../utils/upload-images'
 
 const initialState = {
   defaultValues: {
@@ -48,7 +48,11 @@ const PostWarehouse: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { message, pending, error } = useAppSelector((state: RootState) => state.postWarehouse)
+  const {
+    message,
+    pending: uploadingWarehouse,
+    error,
+  } = useAppSelector((state: RootState) => state.postWarehouse)
 
   // ===========================================================================
   // Actions
@@ -76,6 +80,7 @@ const PostWarehouse: React.FC = () => {
 
   const [files, setFiles] = useState<Array<string>>([])
   const [images, setImages] = useState<Array<string>>([])
+  const [uploadingImages, setUploadingImages] = useState(false)
 
   const {
     control,
@@ -89,8 +94,10 @@ const PostWarehouse: React.FC = () => {
   // ===========================================================================
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    const Myimages = await uploadImages()
+    setUploadingImages(true)
+    const Myimages = await uploadImages(files)
     _postWarehouse({ ...data, images: Myimages })
+    setUploadingImages(false)
   }
 
   const onImageChange = (event: any) => {
@@ -109,24 +116,6 @@ const PostWarehouse: React.FC = () => {
     setImages(newImgs)
   }
 
-  const uploadImages = async () => {
-    try {
-      const formData = new FormData()
-      files.forEach((file) => formData.append('avatar', file))
-      const response = await axios({
-        method: 'post',
-        url: `http://localhost:5000/uploads`,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        data: formData,
-      })
-      return response.data.myImages
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const descLen = watch().description.length
 
   return (
@@ -134,6 +123,7 @@ const PostWarehouse: React.FC = () => {
       <LandingNavbar />
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
+
       <Container maxWidth="sm" sx={{ marginY: '3rem' }}>
         <Box sx={{ height: '150vh' }}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -310,11 +300,10 @@ const PostWarehouse: React.FC = () => {
               type="submit"
               disabled={Object.keys(errors).length > 0}
             >
-              {pending && <CircularProgress />}
-
-              {pending ? 'Loading' : 'Create Warehouse'}
+              {uploadingWarehouse || uploadingImages ? 'Loading' : 'Create Warehouse'}
             </Button>
           </form>
+          {uploadingWarehouse || (uploadingImages && <CircularProgress />)}
         </Box>
       </Container>
       <input

@@ -28,9 +28,6 @@ const LoginPage: React.FC = () => {
 
   const { token, error, pending } = useAppSelector((state) => state.userLogin)
 
-  if (window.location.pathname === '' || window.location.pathname === '/') {
-  }
-
   // ===========================================================================
   // Dispatch
   // ===========================================================================
@@ -69,7 +66,7 @@ const LoginPage: React.FC = () => {
     _authUser(values)
       .unwrap()
       .then(() => {
-        navigate('/')
+        navigate('/explore')
       })
   }
 
@@ -85,7 +82,6 @@ const LoginPage: React.FC = () => {
   return (
     <>
       <LandingNavbar />
-      {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
       <section className="auth-wrapper">
         <Container
@@ -153,7 +149,7 @@ const LoginPage: React.FC = () => {
                     color="primary"
                     disabled={!submitDisabled}
                   >
-                    Sign In
+                    {token ? 'Login Successful' : 'Sign In'}
                   </Button>
                   {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
                 </Grid>

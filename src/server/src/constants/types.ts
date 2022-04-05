@@ -4,7 +4,7 @@ interface UserAttributes {
   name: string
   email: string
   password: string
-  phoneNumber: number
+  phoneNumber: string
   isAdmin?: boolean
 }
 

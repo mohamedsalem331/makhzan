@@ -1,17 +1,9 @@
-import express, { Request } from 'express'
-import upload, { uploadImagesCloud } from '../multer/multer'
+import { uploadImages } from '../controllers/uploadController'
+import express from 'express'
+import upload from '../multer/multer'
 
 const router = express.Router()
 
-router.post('/', upload.array('avatar', 3), async (req: Request, res) => {
-  try {
-    const files = JSON.parse(JSON.stringify(req.files))
-    const myImages = await uploadImagesCloud(files)
-
-    res.send({ myImages })
-  } catch (e) {
-    res.status(404).send({ message: 'error Image upload' })
-  }
-})
+router.post('/', upload.array('avatar', 3), uploadImages)
 
 export default router

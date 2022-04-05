@@ -10,7 +10,7 @@ import NavLinks from '../components/Navbar/NavLinks'
 import SideMenu from '../components/Navbar/SideMenu'
 import { logout } from '../slices/UserLoginSlice'
 import { logoutUser } from '../slices/UserLogoutSlice'
-import { localStorageHandler } from '../utils/localStorage'
+import { localStorageHandler } from '../utils/local-storage-handlers'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 
 const { removeTokenLocalStorage } = localStorageHandler()

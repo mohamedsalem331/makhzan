@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { BasedApiUrl } from '../api/BaseUrl'
 
 export interface UserLogoutState {
     message: string
@@ -17,7 +18,7 @@ const logoutUser = createAsyncThunk('users/logout', async (token: string, thunkA
     try {
         const response = await axios({
             method: 'post',
-            url: `http://localhost:5000/users/logout`,
+            url: `${BasedApiUrl}/users/logout`,
             headers: {
                 Authorization: `Bearer ${token}`,
             }

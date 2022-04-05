@@ -70,17 +70,7 @@ const filterAllWarehouses = async (req: Request, res: Response) => {
     const maxRent = await Warehouse.max('rent')
     const maxSize = await Warehouse.max('size')
 
-    // rent[0] === minRent 
-    // rent[1] === maxRent
-
-    // [0,0]  -> true
-    // [20,0] -> true
-    // [20,10] -> true
-    // [20,20] -> 
-    // [0,20] 
-    // [10,20] 
-
-
+    // using sequalize queries we filter warehouses based on filter req.body
 
     warehouses = await Warehouse.findAll({
       where: {

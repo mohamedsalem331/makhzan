@@ -1,3 +1,4 @@
+import { BasedApiUrl } from './../api/BaseUrl';
 import { FilterWarehouseOptions } from './../types/index';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
@@ -36,7 +37,7 @@ const filterWarehouses = createAsyncThunk('warehouses/filter', async (filterOpti
     try {
         const response = await axios({
             method: 'post',
-            url: `http://localhost:5000/warehouses`,
+            url: `${BasedApiUrl}/warehouses`,
             data: {
                 governorates,
                 locations,

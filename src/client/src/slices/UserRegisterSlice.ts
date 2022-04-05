@@ -1,3 +1,4 @@
+import { BasedApiUrl } from './../api/BaseUrl';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { RegisterState } from '../types/index'
@@ -29,7 +30,7 @@ const registerUser = createAsyncThunk('users/register', async (data: RegisterSta
     try {
         const response = await axios({
             method: 'post',
-            url: `http://localhost:5000/users/register`,
+            url: `${BasedApiUrl}/users/register`,
             data: { name: `${firstName} ${lastName}`, email, password, phoneNumber }
         })
         return response.data

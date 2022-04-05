@@ -10,9 +10,9 @@ const Warehouses = [
     street: '112',
     services: ['Power', 'RFID', 'Networked', 'Thermostat', 'Alarm', 'Bathroom'],
     images: [
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046826/image2_obppey.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046826/image3_jtbf8b.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046829/image1_coeq1e.jpg',
     ],
     UserId: '1c023ede-c424-45e6-bae0-0c61b0d2a2d1',
   },
@@ -27,9 +27,9 @@ const Warehouses = [
     street: '105 street',
     services: ['thermostat', 'forklift', 'alarm'],
     images: [
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046826/image3_jtbf8b.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046826/image2_obppey.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046829/image1_coeq1e.jpg',
     ],
     UserId: 'cc5f307d-654d-4d60-91eb-5da96990fa29',
   },
@@ -45,9 +45,9 @@ const Warehouses = [
     services: ['Power', 'RFID', 'Alarm', 'Bathroom'],
 
     images: [
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
-      'https://res.cloudinary.com/makhzan/image/upload/v1643349711/cld-sample.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046829/image1_coeq1e.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046826/image2_obppey.jpg',
+      'https://res.cloudinary.com/makhzan/image/upload/v1649046826/image3_jtbf8b.jpg',
     ],
     UserId: 'bec4db5c-a52d-4742-ab23-105723777d26',
   },

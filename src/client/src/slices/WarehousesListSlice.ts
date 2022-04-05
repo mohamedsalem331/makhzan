@@ -1,3 +1,4 @@
+import { BasedApiUrl } from './../api/BaseUrl';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
@@ -29,7 +30,7 @@ const fetchWarehouses = createAsyncThunk('warehouses/fetch', async (_, thunkAPI)
   try {
     const response = await axios({
       method: 'get',
-      url: `http://localhost:5000/warehouses`,
+      url: `${BasedApiUrl}/warehouses`,
       headers
     })
     return response.data

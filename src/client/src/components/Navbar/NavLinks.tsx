@@ -3,7 +3,7 @@ import { Avatar, Button, Stack } from '@mui/material'
 import { deepOrange } from '@mui/material/colors'
 import { Link } from 'react-router-dom'
 
-import { stringAvatar } from '../../utils/avatarInitials'
+import { stringAvatar } from '../../utils/avatar-initials'
 
 interface NavLinksProps {
   Position?: 'absolute' | 'fixed' | 'relative' | 'static'

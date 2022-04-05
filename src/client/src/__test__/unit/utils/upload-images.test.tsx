@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { fetchImages, BASE_URL } from './fetchImages'
+
+export const fetchImages = async () => {
+  return await axios.get(`api/images`)
+}
+
 jest.mock('axios')
 
 const mockedAxios = axios as jest.Mocked<typeof axios>
@@ -13,6 +17,6 @@ test('uploading images to backend then receiving link, mocking axios', async () 
 
   const res: any = await fetchImages()
 
-  expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/images`)
+  expect(axios.get).toHaveBeenCalledWith(`api/images`)
   expect(res.data).toHaveLength(3)
 })

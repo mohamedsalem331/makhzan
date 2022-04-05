@@ -13,9 +13,7 @@ export default function initializeServer() {
   const isProduction = process.env.NODE_ENV === 'production'
   const origin = { origin: isProduction ? false : '*' }
 
-  if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
-  }
+  if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
   app.use(express.urlencoded({ extended: true }))
   app.use(express.json())
@@ -24,7 +22,6 @@ export default function initializeServer() {
 
   app.use(express.static(__dirname + '/uploads'))
 
-  // express routers
   app.use('/users', userRouter)
   app.use('/warehouses', warehouseRouter)
   app.use('/uploads', uploadRouter)

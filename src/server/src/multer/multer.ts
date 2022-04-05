@@ -1,4 +1,3 @@
-import { Request } from 'express'
 import multer, { FileFilterCallback } from 'multer'
 import path from 'path'
 import fs from 'fs'
@@ -9,18 +8,10 @@ interface IFileFilterCallback extends FileFilterCallback {
 }
 
 const storage = multer.diskStorage({
-  destination(
-    req: Request,
-    file: Express.Multer.File,
-    cb: (error: Error | null, destination: string) => void
-  ) {
+  destination(req, file, cb: (error: Error | null, destination: string) => void) {
     cb(null, 'src/uploads/images/')
   },
-  filename(
-    req: Request,
-    file: Express.Multer.File,
-    cb: (error: Error | null, destination: string) => void
-  ) {
+  filename(req, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) {
     cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`)
   },
 })
@@ -36,7 +27,7 @@ function checkFileType(
   if (extname && mimetype) {
     return cb(null, true)
   } else {
-    cb(null, 'Images format is only acceptable')
+    cb(null, 'Images format not acceptable')
   }
 }
 
@@ -49,6 +40,15 @@ const upload = multer({
 
 const uploadImagesCloud = async (myFiles: any): Promise<string[]> => {
   let myImages: any = []
+
+  // 1- store file in uploades/images through multer
+  // 2- loop through each File
+  // 3- ensure file path is true
+  // 4- we call uploadCloudinary and pass file path to it to be uploaded on cloudinary
+  // 5- we call async uploadCloudinary and pass file path and wait to be uploaded on cloudinary
+  // 6- we call unlink func sync to ensure we remove the file stored on the file system
+  // 7- we add the image url returned from cloudinary func and push it to the images
+  // 8- return the images to the controller to resolve the route and return the images arr to client
 
   myImages = await Promise.all(
     myFiles.map(async (file: any) => {

@@ -1,14 +1,13 @@
 import cloudinary from 'cloudinary'
+require('dotenv').config()
+
+//process.ev
 
 cloudinary.v2.config({
   cloud_name: 'makhzan',
-  api_key: '357748952369953',
-  api_secret: '1vAO5NL1ZZL_CuvQr58qoK_9zz4',
+  api_key: process.env.API_CLOUD_KEY,
+  api_secret: process.env.API_SECRET_KEY,
 })
-
-type promiseObjectResolve = {
-  secure_url: string
-}
 
 export const uploadCloudinary = (
   file_path: string

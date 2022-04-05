@@ -1,6 +1,7 @@
 import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Box, ImageListItem, Grid, useMediaQuery } from '@mui/material'
+import { Box, useMediaQuery } from '@mui/material'
+import { Splide, SplideSlide } from '@splidejs/react-splide'
+import '@splidejs/splide/dist/css/splide.min.css'
 
 interface IWarehouseGalleryProps {
   Images: Array<string>
@@ -9,43 +10,45 @@ interface IWarehouseGalleryProps {
 const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
   const matches = useMediaQuery('(min-width:800px)')
 
+  const imageStyle = { width: '900px', maxWidth: '950px', height: 'auto' }
+
   return (
     <>
       {matches ? (
-        <Grid columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
-          <Grid key={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} container>
-            <Grid item xs={8}>
-              <ImageListItem>
-                <img src={Images[0]} srcSet={Images[0]} loading="lazy" alt="" />
-              </ImageListItem>
-            </Grid>
-            {Images.length > 1 && (
-              <Grid item xs={4}>
-                {Images.slice(1)?.map((img, idx) => {
-                  return (
-                    <ImageListItem key={idx}>
-                      <img src={img} srcSet={img} loading="lazy" alt="" />
-                    </ImageListItem>
-                  )
-                })}
-              </Grid>
-            )}
-          </Grid>
-        </Grid>
-      ) : (
         <Box>
-          <Swiper
-            className="swiper-override-style2"
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-            loop
+          <Splide
+            options={{
+              rewind: true,
+              autoplay: true,
+              speed: 800,
+              interval: 2000,
+              pauseOnFocus: true,
+            }}
           >
             {Images.map((image: string, idx) => (
-              <SwiperSlide data-testid="Image-Item-Gallery" key={idx}>
-                <img src={image} alt="" />
-              </SwiperSlide>
+              <SplideSlide key={idx}>
+                <img style={imageStyle} src={image} alt="" />
+              </SplideSlide>
             ))}
-          </Swiper>
+          </Splide>
+        </Box>
+      ) : (
+        <Box>
+          <Splide
+            options={{
+              rewind: true,
+              autoplay: true,
+              speed: 800,
+              interval: 2000,
+              pauseOnFocus: true,
+            }}
+          >
+            {Images.map((image: string, idx) => (
+              <SplideSlide key={idx}>
+                <img src={image} alt="" />
+              </SplideSlide>
+            ))}
+          </Splide>
         </Box>
       )}
     </>
