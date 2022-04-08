@@ -6,8 +6,10 @@ on:
   push:
     branches: [ main ]
     
-  workflow_dispatch:
-
+env:
+  REACT_APP_DEV_API_URL: ${{secrets.REACT_APP_DEV_API_URL}}
+  REACT_APP_PROD_API_URL: ${{secrets.REACT_APP_PROD_API_URL}}
+  
 jobs:
   build:
     runs-on: ubuntu-latest
