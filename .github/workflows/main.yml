@@ -22,6 +22,6 @@ jobs:
           node-version: 16.x
 
       # Runs a set of commands using the runners shell
-      - run: npm idependencies
+      - run: npm run idependencies
       - run: npm test
       - run: npm build
