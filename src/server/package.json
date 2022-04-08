@@ -54,7 +54,7 @@
   "scripts": {
     "test": "jest --watch --detectOpenHandles",
     "dev": "nodemon --config nodemon.json src/index.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "start": "ts-node src/index.ts",
     "pm2": "tsc && pm2 start pm2.config.js",
     "data:populate": "ts-node src/seeder.ts -populate",

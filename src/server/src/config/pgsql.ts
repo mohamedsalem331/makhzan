@@ -1,7 +1,8 @@
 import { Sequelize } from 'sequelize'
 require('dotenv').config()
 const env = process.env.NODE_ENV || 'development'
-const config = require(__dirname + '/config.ts')['config'][env]
+
+const config = require(__dirname + '/config.js')['config'][env]
 
 const { username, password, database, host } = config
 const pass = password ?? ''
