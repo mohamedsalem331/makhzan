@@ -1,6 +1,6 @@
 import React from 'react'
 import LandingPage from './LandingPage'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
 import { useAppSelector } from '../app/hooks'
 import ExplorePage from './ExplorePage'
 import WarehouseDetails from './WarehouseDetailsPage'
@@ -23,8 +23,6 @@ const App: React.FC = () => {
 
   const isLoggedIn = !!token
 
-  const ProtectedRoutes = <Route path="postwarehouse" element={<PostWarehouse />} />
-
   return (
     <div className="App">
       <Router>
@@ -32,7 +30,10 @@ const App: React.FC = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
-          {isLoggedIn && ProtectedRoutes}
+          <Route
+            path="postwarehouse"
+            element={isLoggedIn ? <PostWarehouse /> : <Navigate to="/login" replace />}
+          />
           <Route path="explore">
             <Route index element={<ExplorePage />} />
             <Route path=":id" element={<WarehouseDetails />} />

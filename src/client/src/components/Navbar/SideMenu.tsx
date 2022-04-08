@@ -1,23 +1,33 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import { IconButton, Menu, MenuItem } from '@mui/material'
+import { Avatar, IconButton, Menu, MenuItem } from '@mui/material'
 import { Link } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu'
+import { deepOrange } from '@mui/material/colors'
+import { stringAvatar } from '../../utils/avatar-initials'
 
 interface SideMenuProps {
   isLoggedIn?: boolean
   logoutUser: () => void
+  userName?: string
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ isLoggedIn, logoutUser }) => {
+const SideMenu: React.FC<SideMenuProps> = ({
+  isLoggedIn,
+  logoutUser,
+  userName = 'jack nelson',
+}) => {
   const [openSideMenu, setSideMenu] = React.useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
-  const handleMenu = () => {
+  const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
     setSideMenu(true)
+    setAnchorEl(e.currentTarget)
   }
 
   const handleClose = () => {
     setSideMenu(false)
+    setAnchorEl(null)
   }
 
   const handleLogout = () => {
@@ -55,13 +65,17 @@ const SideMenu: React.FC<SideMenuProps> = ({ isLoggedIn, logoutUser }) => {
             onClick={handleMenu}
             color="inherit"
           >
-            <MenuIcon color="primary" fontSize="large" />
+            {isLoggedIn ? (
+              <Avatar sx={{ bgcolor: deepOrange[500] }}>{stringAvatar(userName)}</Avatar>
+            ) : (
+              <MenuIcon color="primary" fontSize="large" />
+            )}
           </IconButton>
 
           <Menu
             id="menu-appbar"
-            anchorEl={null}
             open={openSideMenu}
+            anchorEl={anchorEl}
             onClose={handleClose}
             keepMounted
             anchorOrigin={{

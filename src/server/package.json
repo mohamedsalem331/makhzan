@@ -1,5 +1,5 @@
 {
-  "name": "makzhan",
+  "name": "makhzan-server",
   "version": "1.0.0",
   "description": "A web-based app for finding warehouses and storage for B2C",
   "main": "index.js",

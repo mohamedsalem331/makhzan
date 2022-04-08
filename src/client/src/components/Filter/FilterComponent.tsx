@@ -184,6 +184,7 @@ const FilterComponent: React.FC<IFilterWarehousesState> = ({
             </Stack>
           </Box>
         </Stack>
+
         <Stack spacing={1} sx={{ marginTop: '3rem' }}>
           <Button variant="contained" fullWidth onClick={handleApplyFilters}>
             Apply Filters

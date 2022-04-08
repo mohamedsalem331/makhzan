@@ -3,12 +3,9 @@ import React from 'react'
 import SearchComponent from '../components/Filter/SearchComponent'
 import LandingNavbar from './LandingNavbar'
 import { useAppDispatch } from '../app/hooks'
-// import { localStorageHandler } from '../utils/localStorage'
 import { addFilters } from '../slices/WarehousesFilterSlice'
 
 import '../styles/LandingPage.css'
-
-// const { removeTokenLocalStorage } = localStorageHandler()
 
 const LandingPage: React.FC = () => {
   // ===========================================================================

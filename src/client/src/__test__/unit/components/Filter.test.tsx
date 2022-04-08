@@ -1,6 +1,6 @@
 import FilterComponent from '../../../components/Filter/FilterComponent'
 import { FilterWarehouseOptions } from '../../../types'
-import { render, screen, fireEvent } from '../../TestHelpers/redux-router-util'
+import { render, screen, fireEvent } from '../../test-helpers/redux-router-util'
 
 const addFilters = jest.fn((filters: FilterWarehouseOptions): void => {})
 const clearFilters = jest.fn()

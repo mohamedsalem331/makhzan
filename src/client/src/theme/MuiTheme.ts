@@ -13,26 +13,8 @@ const theme = createTheme({
     // },
   },
   typography: {
-    fontFamily: [
-      'Open Sans',
-      'sans-serif',
-    ].join(','),
+    fontFamily: ['Open Sans', 'sans-serif'].join(','),
   },
 })
 
 export default theme
-
-// export const themeOptions: ThemeOptions = {
-// palette: {
-//   type: 'light',
-//   primary: {
-//     main: '#FF5722',
-//   },
-//   secondary: {
-//     main: '#f50057',
-//   },
-//   error: {
-//     main: '#98462e',
-//   },
-// },
-// }

@@ -1,6 +1,6 @@
 import { UserRegisterState } from '../../../slices/UserRegisterSlice'
 import WarehouseListReducer, { WarehousesListState } from '../../../slices/WarehousesListSlice'
-import { warehouses } from '../../TestHelpers/fixtures'
+import { warehouses } from '../../test-helpers/fixtures'
 
 describe('WarehouseList Slice Reduxified', () => {
   const previousState: WarehousesListState = {

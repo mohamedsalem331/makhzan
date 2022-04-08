@@ -1,6 +1,9 @@
 import React from 'react'
 import { Box, useMediaQuery } from '@mui/material'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
+
+import DefaultImage from '../../assets/empty.jpg'
+
 import '@splidejs/splide/dist/css/splide.min.css'
 
 interface IWarehouseGalleryProps {
@@ -8,6 +11,8 @@ interface IWarehouseGalleryProps {
 }
 
 const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
+  const Gallery = Images.length === 0 ? [DefaultImage] : Images
+
   const matches = useMediaQuery('(min-width:800px)')
 
   const imageStyle = { width: '900px', maxWidth: '950px', height: 'auto' }
@@ -25,7 +30,7 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
               pauseOnFocus: true,
             }}
           >
-            {Images.map((image: string, idx) => (
+            {Gallery.map((image: string, idx) => (
               <SplideSlide key={idx}>
                 <img style={imageStyle} src={image} alt="" />
               </SplideSlide>
@@ -43,7 +48,7 @@ const WarehouseGallery: React.FC<IWarehouseGalleryProps> = ({ Images }) => {
               pauseOnFocus: true,
             }}
           >
-            {Images.map((image: string, idx) => (
+            {Gallery.map((image: string, idx) => (
               <SplideSlide key={idx}>
                 <img src={image} alt="" />
               </SplideSlide>

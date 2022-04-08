@@ -1,6 +1,5 @@
 // User Model
 
-
 export interface UserAttributes {
   id?: number | string
   name: string
@@ -37,11 +36,16 @@ export interface MenuItem {
 }
 
 export interface Services {
-  wifi?: JSX.Element,
-  power?: JSX.Element,
-  bathroom?: JSX.Element,
-  thermostat?: JSX.Element,
-  iot?: JSX.Element,
+  wifi?: JSX.Element
+  power?: JSX.Element
+  bathroom?: JSX.Element
+  thermostat?: JSX.Element
+  iot?: JSX.Element
+}
+
+export interface IServices<T> {
+  label: string
+  Icon: T
 }
 
 export interface RegisterState {

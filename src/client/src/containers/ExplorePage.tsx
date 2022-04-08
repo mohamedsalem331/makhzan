@@ -8,18 +8,11 @@ import { RootState } from '../app/store'
 import { addFilters, clearFilters, filterWarehouses } from '../slices/WarehousesFilterSlice'
 import { FilterWarehouseOptions } from '../types/index'
 import { fetchWarehouses } from '../slices/WarehousesListSlice'
-import CustomizedSnackBar from '../components/SnackBarComponent'
 
 const ExplorePage: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
-
-  const { filteredWarehouses, governorates, locations, size, rent } = useAppSelector(
-    (state: RootState) => state.warehousesFilter
-  )
-
-  const { token } = useAppSelector((state) => state.userLogin)
 
   const {
     warehouses,
@@ -27,26 +20,33 @@ const ExplorePage: React.FC = () => {
     pending: loadingWarehouses,
   } = useAppSelector((state: RootState) => state.warehousesList)
 
+  const { filteredWarehouses, governorates, locations, size, rent } = useAppSelector(
+    (state: RootState) => state.warehousesFilter
+  )
+
   // ===========================================================================
   // Dispatch
   // ===========================================================================
 
   const dispatch = useAppDispatch()
+
   const _filterWarehouses = (data: FilterWarehouseOptions) => dispatch(filterWarehouses(data))
+
   const _fetchWarehouses = () => dispatch(fetchWarehouses())
 
   const _clearFilters = () => dispatch(clearFilters())
+
   const _addFilters = (data: any) => dispatch(addFilters(data))
 
   // ===========================================================================
   // Hooks
   // ===========================================================================
-  const mySize = size && size[0] + size[1] > 0
-  const myRent = rent && rent[0] + rent[1] > 0
-
-  const filters = governorates.length > 0 || locations.length > 0 || mySize || myRent
 
   const [filterOpen, setFilterOpen] = React.useState<boolean>(true)
+
+  const mySize = size && size[0] + size[1] > 0
+  const myRent = rent && rent[0] + rent[1] > 0
+  const filters = governorates.length > 0 || locations.length > 0 || mySize || myRent
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setFilterOpen(event.target.checked)
@@ -66,7 +66,6 @@ const ExplorePage: React.FC = () => {
   return (
     <>
       <LandingNavbar />
-      {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful" />}
       <Container>
         <Box sx={{ marginY: '3rem', width: '100%' }}>
           <Grid container spacing={3}>

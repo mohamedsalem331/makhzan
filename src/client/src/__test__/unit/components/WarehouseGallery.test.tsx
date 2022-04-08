@@ -1,7 +1,7 @@
 import WarehouseGallery from '../../../components/WarehouseDetails/WarehouseGallery'
-import { createMatchMedia } from '../../../__mocks__/MatchMedia'
-import { render, screen, fireEvent } from '../../TestHelpers/redux-router-util'
-import { users, warehouses } from '../../TestHelpers/fixtures'
+import { createMatchMedia } from '../../__mocks__/MatchMedia'
+import { render, screen, fireEvent } from '../../test-helpers/redux-router-util'
+import { users, warehouses } from '../../test-helpers/fixtures'
 
 const warehouse = warehouses[0]
 

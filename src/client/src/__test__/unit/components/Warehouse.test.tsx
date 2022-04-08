@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '../../TestHelpers/redux-router-util'
+import { render, screen, fireEvent } from '../../test-helpers/redux-router-util'
 import Warehouse from '../../../components/WarehousesList/Warehouse'
 
-import { warehouses } from '../../TestHelpers/fixtures'
+import { warehouses } from '../../test-helpers/fixtures'
 
 describe('Warehouse Component', () => {
   const { size } = warehouses[0]

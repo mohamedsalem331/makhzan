@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Box,
@@ -66,22 +66,19 @@ const LoginPage: React.FC = () => {
     _authUser(values)
       .unwrap()
       .then(() => {
-        navigate('/explore')
+        setTimeout(() => {
+          navigate('/explore')
+        }, 1500)
       })
   }
 
-  useEffect(() => {
-    if (!!token) {
-      navigate('/')
-    }
-  }, [token, navigate])
-
   const submitDisabled = !!values.email && !!values.password
-  // const matches = useMediaQuery('(min-width:500px)')
 
   return (
     <>
       <LandingNavbar />
+
+      {!!token && <CustomizedSnackBar AlertOn={true} Message="Login Successful, Redirecting..." />}
       {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
       <section className="auth-wrapper">
         <Container

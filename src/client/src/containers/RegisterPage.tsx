@@ -102,8 +102,9 @@ const RegisterUserr: React.FC = () => {
           sx={{
             backgroundColor: 'white',
             borderRadius: '5px',
-            paddingY: '2.5rem',
-            marginX: '0.5rem',
+            paddingY: '2rem',
+            marginX: '0.35rem',
+            marginTop: '4.5rem',
           }}
           maxWidth="sm"
         >
@@ -134,7 +135,6 @@ const RegisterUserr: React.FC = () => {
                     label="Last Name"
                     type="text"
                     error={!values.lastName}
-                    // helperText={showPassword && 'Incorrect entry.'}
                     required
                     onChange={(e) => handleChange(e, 'lastName')}
                     value={values.lastName}
@@ -207,10 +207,10 @@ const RegisterUserr: React.FC = () => {
                   >
                     Sign Up
                   </Button>
-                  {pending && <CircularProgress color="primary" sx={{ marginY: '0.5rem' }} />}
+                  {pending && <CircularProgress color="primary" sx={{ marginY: '0.3rem' }} />}
                 </Grid>
               </Grid>
-              <Divider sx={{ marginY: '1.5rem' }} color="red" />
+              <Divider sx={{ marginY: '1rem' }} color="red" />
               <span>
                 Already have an Account? <Link href="/login">Sign In</Link>
               </span>

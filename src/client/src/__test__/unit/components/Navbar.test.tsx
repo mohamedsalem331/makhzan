@@ -1,8 +1,8 @@
 import NavLinks from '../../../components/Navbar/NavLinks'
 import SideMenu from '../../../components/Navbar/SideMenu'
 import LandingNavbar from '../../../containers/LandingNavbar'
-import { createMatchMedia } from '../../../__mocks__/MatchMedia'
-import { render, screen, fireEvent } from '../../TestHelpers/redux-router-util'
+import { createMatchMedia } from '../../__mocks__/MatchMedia'
+import { render, screen, fireEvent } from '../../test-helpers/redux-router-util'
 
 const logoutUser = jest.fn()
 

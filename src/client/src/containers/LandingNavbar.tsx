@@ -71,14 +71,9 @@ const LandingNavbar: React.FC = () => {
               <Logo ImgSize={ImgSize} />
             </Link>
             {matches ? (
-              <NavLinks
-                isLoggedIn={isLoggedIn}
-                userName={name}
-                logoutUser={_logoutUser}
-                Position="absolute"
-              />
+              <NavLinks isLoggedIn={isLoggedIn} userName={name} logoutUser={_logoutUser} />
             ) : (
-              <SideMenu isLoggedIn={isLoggedIn} logoutUser={_logoutUser} />
+              <SideMenu isLoggedIn={isLoggedIn} logoutUser={_logoutUser} userName={name} />
             )}
           </Box>
         </Container>

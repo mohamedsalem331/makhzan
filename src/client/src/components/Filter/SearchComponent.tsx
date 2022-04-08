@@ -50,7 +50,6 @@ const SearchComponent: React.FC<ISearchWarehousesProps> = ({ addFilters }) => {
           }
         >
           <Autocomplete
-            value={governorate}
             disablePortal
             id="governorate-input"
             options={GOVERNORATES}
@@ -62,7 +61,6 @@ const SearchComponent: React.FC<ISearchWarehousesProps> = ({ addFilters }) => {
             renderInput={(params) => <TextField {...params} label="Governorate" />}
           />
           <Autocomplete
-            value={location}
             disablePortal
             id="location-input"
             options={LOCATIONS}
@@ -72,6 +70,7 @@ const SearchComponent: React.FC<ISearchWarehousesProps> = ({ addFilters }) => {
             }}
             renderInput={(params) => <TextField {...params} label="Location" />}
           />
+
           <Button onClick={onSubmit} variant="contained" color="primary">
             <SearchIcon sx={{ marginRight: '10px' }} /> Search Warehouses
           </Button>

@@ -1,7 +1,7 @@
-import { render, fireEvent, screen } from '../TestHelpers/redux-router-util'
+import { render, fireEvent, screen } from '../test-helpers/redux-router-util'
 import ExplorePage from '../../containers/ExplorePage'
-import { mswServer } from '../TestHelpers/msw-server'
-import { warehousesHandlerException } from '../TestHelpers/handlers'
+import { mswServer } from '../test-helpers/msw-server'
+import { warehousesHandlerException } from '../test-helpers/handlers'
 
 describe('WarehousesList Reduxified Container', () => {
   test('should display all warehouses', async () => {

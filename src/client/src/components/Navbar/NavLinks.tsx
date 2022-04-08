@@ -6,20 +6,18 @@ import { Link } from 'react-router-dom'
 import { stringAvatar } from '../../utils/avatar-initials'
 
 interface NavLinksProps {
-  Position?: 'absolute' | 'fixed' | 'relative' | 'static'
   isLoggedIn?: boolean
   userName?: string
-  logoutUser?: any
+  logoutUser?: () => void
 }
 
 const NavLinks: React.FC<NavLinksProps> = ({
-  Position = 'relative',
   isLoggedIn,
   userName = 'jack nelson',
   logoutUser,
 }) => {
   const logoutHandler = () => {
-    logoutUser()
+    if (logoutUser) logoutUser()
   }
   return (
     <>

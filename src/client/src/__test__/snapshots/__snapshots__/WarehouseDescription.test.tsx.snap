@@ -1,0 +1,405 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WarehouseDescription component snapshot renders correctly 1`] = `
+Array [
+  <div
+    className="MuiBox-root css-h14eup"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-container css-wci3db-MuiGrid-root"
+    >
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-9drkqd-MuiGrid-root"
+      >
+        <div
+          className="css-1p5q5e5-MuiStack-root"
+        >
+          <div
+            className="MuiTypography-root MuiTypography-h6 css-5npsui-MuiTypography-root"
+          >
+            WAREHOUSE 1500 SQM LICENSED FOOD & BEVERAGE
+          </div>
+          <h6
+            className="MuiTypography-root MuiTypography-subtitle2 css-hav9kw-MuiTypography-root"
+          >
+            WAREHOUSE FOR RENT IN CAIRO, 6 OCTOBER CITY, 112.
+          </h6>
+          <h6
+            className="MuiTypography-root MuiTypography-subtitle2 css-hav9kw-MuiTypography-root"
+          >
+            Warehouse Size: 1500 sqm
+          </h6>
+        </div>
+        <div
+          className="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-161wqb2-MuiDivider-root"
+          role="separator"
+        >
+          <span
+            className="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+          >
+            <div
+              className="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+            >
+              Services
+            </div>
+          </span>
+        </div>
+        <div
+          className="css-1okj3ks-MuiStack-root"
+        >
+          <div
+            className="MuiBox-root css-k008qs"
+            data-testid="warehouse-services"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="PowerIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16.01 7 16 3h-2v4h-4V3H8v4h-.01C7 6.99 6 7.99 6 8.99v5.49L9.5 18v3h5v-3l3.5-3.51v-5.5c0-1-1-2-1.99-1.99z"
+              />
+            </svg>
+            <div
+              className="MuiTypography-root MuiTypography-body1 css-45cl61-MuiTypography-root"
+            >
+              POWER
+            </div>
+          </div>
+          <div
+            className="MuiBox-root css-k008qs"
+            data-testid="warehouse-services"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="WcIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M5.5 22v-7.5H4V9c0-1.1.9-2 2-2h3c1.1 0 2 .9 2 2v5.5H9.5V22h-4zM18 22v-6h3l-2.54-7.63C18.18 7.55 17.42 7 16.56 7h-.12c-.86 0-1.63.55-1.9 1.37L12 16h3v6h3zM7.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm9 0c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2z"
+              />
+            </svg>
+            <div
+              className="MuiTypography-root MuiTypography-body1 css-45cl61-MuiTypography-root"
+            >
+              BATHROOM
+            </div>
+          </div>
+          <div
+            className="MuiBox-root css-k008qs"
+            data-testid="warehouse-services"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="AcUnitIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M22 11h-4.17l3.24-3.24-1.41-1.42L15 11h-2V9l4.66-4.66-1.42-1.41L13 6.17V2h-2v4.17L7.76 2.93 6.34 4.34 11 9v2H9L4.34 6.34 2.93 7.76 6.17 11H2v2h4.17l-3.24 3.24 1.41 1.42L9 13h2v2l-4.66 4.66 1.42 1.41L11 17.83V22h2v-4.17l3.24 3.24 1.42-1.41L13 15v-2h2l4.66 4.66 1.41-1.42L17.83 13H22z"
+              />
+            </svg>
+            <div
+              className="MuiTypography-root MuiTypography-body1 css-45cl61-MuiTypography-root"
+            >
+              THERMOSTAT
+            </div>
+          </div>
+          <div
+            className="MuiBox-root css-k008qs"
+            data-testid="warehouse-services"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="CompassCalibrationIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                cx="12"
+                cy="17"
+                r="4"
+              />
+              <path
+                d="M12 10.07c1.95 0 3.72.79 5 2.07l5-5C19.44 4.59 15.9 3 12 3S4.56 4.59 2 7.15l5 5c1.28-1.28 3.05-2.08 5-2.08z"
+              />
+            </svg>
+            <div
+              className="MuiTypography-root MuiTypography-body1 css-45cl61-MuiTypography-root"
+            >
+              RFID
+            </div>
+          </div>
+          <div
+            className="MuiBox-root css-k008qs"
+            data-testid="warehouse-services"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="SensorsIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7.76 16.24C6.67 15.16 6 13.66 6 12s.67-3.16 1.76-4.24l1.42 1.42C8.45 9.9 8 10.9 8 12c0 1.1.45 2.1 1.17 2.83l-1.41 1.41zm8.48 0C17.33 15.16 18 13.66 18 12s-.67-3.16-1.76-4.24l-1.42 1.42C15.55 9.9 16 10.9 16 12c0 1.1-.45 2.1-1.17 2.83l1.41 1.41zM12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm8 2c0 2.21-.9 4.21-2.35 5.65l1.42 1.42C20.88 17.26 22 14.76 22 12s-1.12-5.26-2.93-7.07l-1.42 1.42C19.1 7.79 20 9.79 20 12zM6.35 6.35 4.93 4.93C3.12 6.74 2 9.24 2 12s1.12 5.26 2.93 7.07l1.42-1.42C4.9 16.21 4 14.21 4 12s.9-4.21 2.35-5.65z"
+              />
+            </svg>
+            <div
+              className="MuiTypography-root MuiTypography-body1 css-45cl61-MuiTypography-root"
+            >
+              NETWORKED
+            </div>
+          </div>
+          <div
+            className="MuiBox-root css-k008qs"
+            data-testid="warehouse-services"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="UpcomingIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="m21.16 7.26-1.41-1.41-3.56 3.55 1.41 1.41s3.45-3.52 3.56-3.55zM11 3h2v5h-2zm-4.6 7.81L7.81 9.4 4.26 5.84 2.84 7.26c.11.03 3.56 3.55 3.56 3.55zM20 12h-5c0 1.66-1.34 3-3 3s-3-1.34-3-3H4c-1.1 0-2 .9-2 2v5c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-5c0-1.1-.9-2-2-2z"
+              />
+            </svg>
+            <div
+              className="MuiTypography-root MuiTypography-body1 css-45cl61-MuiTypography-root"
+            >
+              ALARM
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-161wqb2-MuiDivider-root"
+          role="separator"
+        >
+          <span
+            className="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+          >
+            <div
+              className="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+            >
+              Agent Information
+            </div>
+          </span>
+        </div>
+        <div
+          className="MuiBox-root css-6daks5"
+        >
+          <div
+            className="MuiBox-root css-70qvj9"
+          >
+            <div
+              className="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-8h65ya-MuiAvatar-root"
+            >
+              <svg
+                aria-hidden={true}
+                className="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+                data-testid="AccountCircleIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                />
+              </svg>
+            </div>
+            <div
+              className="css-114fv15-MuiStack-root"
+            >
+              <p
+                className="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+              >
+                Mohamed
+              </p>
+              <p
+                className="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+              >
+                Created Warehouse on Thu, 10 Mar 2022 15:47:20 GMT
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-161wqb2-MuiDivider-root"
+          role="separator"
+        >
+          <span
+            className="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+          >
+            <div
+              className="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+            >
+              Description
+            </div>
+          </span>
+        </div>
+        <div
+          className="MuiBox-root css-w00cnv"
+        >
+          Warehouse for Rent in New Cairo Alf Masnaa Area.Space Area: 1500 SQM.Hangar Height 10.5 M Rent Rate: EGP250,000 Monthly.Newly Renovated Fully finished
+        </div>
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-1lj5egr-MuiGrid-root"
+      >
+        <div
+          className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation2 css-1tqxk8p-MuiPaper-root"
+        >
+          <div
+            className="MuiTypography-root MuiTypography-h5 css-ph2xsj-MuiTypography-root"
+          >
+            150,000
+             EGP / Month
+          </div>
+          <div
+            className="css-qh76hj-MuiStack-root"
+          >
+            <a
+              aria-label="54354363"
+              aria-labelledby={null}
+              className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1iwtne7-MuiTypography-root-MuiLink-root"
+              data-mui-internal-clone-element={true}
+              href="tel:+20 1281115712"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+            >
+              <button
+                className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
+                disabled={false}
+                onBlur={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pdpm1l-MuiSvgIcon-root"
+                  data-testid="CallIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
+                  />
+                </svg>
+                 Call
+                <span
+                  className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+            <a
+              aria-label="mohamed@gmail.com"
+              aria-labelledby={null}
+              className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1iwtne7-MuiTypography-root-MuiLink-root"
+              data-mui-internal-clone-element={true}
+              href="mailto:mohamed_salem331@hotmail.com"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+            >
+              <button
+                className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
+                disabled={false}
+                onBlur={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1pdpm1l-MuiSvgIcon-root"
+                  data-testid="EmailIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
+                  />
+                </svg>
+                 Email
+                <span
+                  className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <button
+    className="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1es61h4-MuiButtonBase-root-MuiButton-root"
+    disabled={false}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onContextMenu={[Function]}
+    onDragLeave={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex={0}
+    type="button"
+  >
+    <svg
+      aria-hidden={true}
+      className="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-16yjcgn-MuiSvgIcon-root"
+      data-testid="ArrowBackIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+      />
+    </svg>
+     Return Back
+    <span
+      className="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+    />
+  </button>,
+]
+`;

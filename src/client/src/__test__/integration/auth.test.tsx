@@ -1,7 +1,5 @@
-import { render, fireEvent, screen } from '../TestHelpers/redux-router-util'
+import { render, fireEvent, screen } from '../test-helpers/redux-router-util'
 import LoginPage from '../../containers/LoginPage'
-import { authHandlerException } from '../TestHelpers/handlers'
-import { mswServer } from '../TestHelpers/msw-server'
 
 describe('Auth Reduxified Container', () => {
   test('should render login page', async () => {

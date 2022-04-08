@@ -2,6 +2,7 @@ import React from 'react'
 import { Typography, Paper, Button, Stack, useMediaQuery } from '@mui/material'
 import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined'
 import SquareFootSharpIcon from '@mui/icons-material/SquareFootSharp'
+import DefaultImage from '../../assets/empty.jpg'
 
 import { Box } from '@mui/system'
 import { formatRentValue } from '../../utils/format-number'
@@ -22,7 +23,7 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
   street,
 }) => {
   const matches = useMediaQuery('(min-width:800px)')
-
+  const Images = images.length === 0 ? [DefaultImage] : images
   return (
     <>
       <Paper
@@ -32,7 +33,7 @@ const Warehouse: React.FC<IWarehouseComponentProps> = ({
         data-testid="warehouse-node"
       >
         <Box className="warehouse-img-wrapper">
-          <img style={{ maxWidth: matches ? '27rem' : '100%' }} src={images[0]} alt="" />
+          <img style={{ maxWidth: matches ? '27rem' : '100%' }} src={Images[0]} alt="" />
         </Box>
 
         <Stack

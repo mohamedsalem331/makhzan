@@ -11,15 +11,14 @@ import {
   Select,
   MenuItem,
   ListItemText,
-  OutlinedInput,
   CircularProgress,
+  Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { logout } from '../slices/UserLoginSlice'
 import { formatRentValue } from '../utils/format-number'
 import { services } from '../utils/constants'
 import { postWarehouse } from '../slices/WarehouseCreationSlice'
@@ -32,7 +31,7 @@ import { uploadImages } from '../utils/upload-images'
 
 const initialState = {
   defaultValues: {
-    title: 'Catchy title',
+    title: 'a catchy title for your warehouse',
     description: 'more info about the warehouse',
     size: 1000,
     rent: 100,
@@ -60,19 +59,7 @@ const PostWarehouse: React.FC = () => {
 
   const dispatch = useAppDispatch()
 
-  const _logout = () => dispatch(logout())
-
-  const _postWarehouse = (data: any) =>
-    dispatch(postWarehouse(data))
-      .unwrap()
-      .then((originalPromiseResult) => {
-        console.log('promise success', originalPromiseResult)
-      })
-      .catch((rejectedValue) => {
-        console.log('promise failed', rejectedValue)
-
-        _logout()
-      })
+  const _postWarehouse = (data: any) => dispatch(postWarehouse(data))
 
   // ===========================================================================
   // Hooks
@@ -94,10 +81,12 @@ const PostWarehouse: React.FC = () => {
   // ===========================================================================
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    setUploadingImages(true)
-    const Myimages = await uploadImages(files)
-    _postWarehouse({ ...data, images: Myimages })
-    setUploadingImages(false)
+    try {
+      setUploadingImages(true)
+      const Myimages = await uploadImages(files)
+      await _postWarehouse({ ...data, images: Myimages })
+      setUploadingImages(false)
+    } catch (error) {}
   }
 
   const onImageChange = (event: any) => {
@@ -122,21 +111,43 @@ const PostWarehouse: React.FC = () => {
     <>
       <LandingNavbar />
       {!!message && <CustomizedSnackBar AlertOn={true} Message={message} />}
-      {!!error && <CustomizedSnackBar AlertOn={true} Message={error} Severity="error" />}
+      {!!error && (
+        <CustomizedSnackBar
+          AlertOn={true}
+          Message={'Error While Posting Warehouse'}
+          Severity="error"
+        />
+      )}
+      {images.length === 0 && (
+        <CustomizedSnackBar
+          AlertOn={true}
+          Message={'Add atleast one image of your warehouse'}
+          Severity="warning"
+        />
+      )}
 
-      <Container maxWidth="sm" sx={{ marginY: '3rem' }}>
+      <Container maxWidth="sm">
+        <Typography variant="h3" sx={{ marginY: '3rem' }}>
+          Post Your Warehouse
+        </Typography>
         <Box sx={{ height: '150vh' }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack direction={'column'} spacing={4}>
               <Controller
                 name="title"
                 control={control}
-                rules={{ required: true }}
+                rules={{
+                  required: true,
+                  pattern: {
+                    value: /(\w)+/i,
+                    message: 'invalid title, very short title',
+                  },
+                }}
                 render={({ field }) => (
                   <TextField
                     {...field}
                     error={!!errors.title}
-                    helperText={!!errors.title && 'Incorrect entry.'}
+                    helperText={errors?.title?.message}
                     label="Title"
                     placeholder="Title"
                   />
@@ -245,19 +256,7 @@ const PostWarehouse: React.FC = () => {
                 name="services"
                 control={control}
                 render={({ field }) => (
-                  <Select
-                    {...field}
-                    input={
-                      <OutlinedInput
-                        label="Name"
-                        inputProps={{
-                          'data-testid': 'services-input-testid',
-                        }}
-                      />
-                    }
-                    multiple
-                    renderValue={(selected) => selected.join(', ')}
-                  >
+                  <Select {...field} multiple renderValue={(selected) => selected.join(', ')}>
                     {services.map(({ label, Icon }) => (
                       <MenuItem key={label} value={label}>
                         <Icon />
@@ -298,9 +297,9 @@ const PostWarehouse: React.FC = () => {
               variant="contained"
               sx={{ marginY: '3rem' }}
               type="submit"
-              disabled={Object.keys(errors).length > 0}
+              disabled={Object.keys(errors).length > 0 || uploadingWarehouse || uploadingImages}
             >
-              {uploadingWarehouse || uploadingImages ? 'Loading' : 'Create Warehouse'}
+              {uploadingWarehouse || uploadingImages ? 'Creating...' : 'Create Warehouse'}
             </Button>
           </form>
           {uploadingWarehouse || (uploadingImages && <CircularProgress />)}

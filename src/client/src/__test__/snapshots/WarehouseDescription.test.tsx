@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom'
 import renderer from 'react-test-renderer'
 import WarehouseDescription from '../../components/WarehouseDetails/Description'
-import { warehouses } from '../TestHelpers/fixtures'
+import { warehouses } from '../test-helpers/fixtures'
 
 const user = {
   name: 'Mohamed',

@@ -1,6 +1,6 @@
 import WarehousesList from '../../../components/WarehousesList/WarehousesList'
-import { render, screen } from '../../TestHelpers/redux-router-util'
-import { warehouses } from '../../TestHelpers/fixtures'
+import { render, screen } from '../../test-helpers/redux-router-util'
+import { warehouses } from '../../test-helpers/fixtures'
 
 describe('WarehousesList Component', () => {
   test('should render warehouses list', async () => {

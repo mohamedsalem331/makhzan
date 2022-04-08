@@ -54,11 +54,9 @@ export const warehouseCreationSlice = createSlice({
         })
       })
       .addCase(postWarehouse.rejected, (state, action: PayloadAction<any>) => {
-        return (state = {
-          message: '',
-          error: action.payload.error,
-          pending: false,
-        })
+
+        state.error = action.payload.error
+        state.pending = false
       })
   },
 })

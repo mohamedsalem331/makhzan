@@ -1,11 +1,11 @@
 import {
   warehouseDetailsHandlerException,
   warehousesHandlerException,
-} from '../TestHelpers/handlers'
+} from '../test-helpers/handlers'
 import WarehouseDetailsComponent from '../../containers/WarehouseDetailsPage'
-import { render, screen } from '../TestHelpers/redux-router-util'
+import { render, screen } from '../test-helpers/redux-router-util'
 import { Route, Routes } from 'react-router-dom'
-import { mswServer } from '../TestHelpers/msw-server'
+import { mswServer } from '../test-helpers/msw-server'
 
 describe('WarehouseDetails Reduxified Container', () => {
   test('should display warehouse and user details', async () => {

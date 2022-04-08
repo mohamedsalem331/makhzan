@@ -1,13 +1,10 @@
 import React from 'react'
 import { Skeleton, Stack } from '@mui/material'
 
+import Warehouse from './Warehouse'
 import { Box } from '@mui/system'
 
-import '../../styles/WarehouseList.css'
-import 'swiper/swiper.min.css'
-import 'swiper/components/pagination/pagination.min.css'
-import 'swiper/swiper-bundle.min.css'
-import Warehouse from './Warehouse'
+import '../../styles/Warehouse.css'
 
 export interface IWarehousesListState {
   warehouses: object[]
