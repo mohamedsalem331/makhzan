@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import MyLogo from '../../assets/logo.png'
+import MyLogo from '../../Assets/logo.png'
 
 interface ILogoProps {
   ImgSize?: number
