@@ -23,5 +23,6 @@ jobs:
           cache: npm
 
       # Runs a set of commands using the runners shell
-      - run: npm ci
+      - run: npm idependencies
       - run: npm test
+      - run: npm build
