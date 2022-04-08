@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`snackbar component snapshot renders correctly  1`] = `
-<div
-  className="css-f779bt-MuiStack-root"
-/>
-`;
