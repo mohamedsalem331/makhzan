@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, Paper, Button, Stack, useMediaQuery } from '@mui/material'
 import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined'
 import SquareFootSharpIcon from '@mui/icons-material/SquareFootSharp'
-import DefaultImage from '../../assets/empty.jpg'
+import DefaultImage from '../../Assets/empty.jpg'
 
 import { Box } from '@mui/system'
 import { formatRentValue } from '../../utils/format-number'

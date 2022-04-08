@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, useMediaQuery } from '@mui/material'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 
-import DefaultImage from '../../assets/empty.jpg'
+import DefaultImage from '../../Assets/empty.jpg'
 
 import '@splidejs/splide/dist/css/splide.min.css'
 
