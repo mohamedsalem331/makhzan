@@ -11,13 +11,12 @@ import uploadRouter from './routes/uploadRouter'
 export default function initializeServer() {
   const app = express()
   const isProduction = process.env.NODE_ENV === 'production'
-  const origin = { origin: isProduction ? false : '*' }
 
   if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
   app.use(express.urlencoded({ extended: true }))
   app.use(express.json())
-  app.use(cors(origin))
+  app.use(cors())
   app.use(compression())
 
   app.use(express.static(__dirname + '/uploads'))
