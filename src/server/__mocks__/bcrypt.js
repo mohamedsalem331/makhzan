@@ -1,9 +1,0 @@
-export default {
-    compare() {
-
-    },
-
-    hash() {
-
-    }
-}

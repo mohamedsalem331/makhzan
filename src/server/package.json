@@ -55,7 +55,7 @@
     "test": "jest --watch --detectOpenHandles",
     "dev": "nodemon --config nodemon.json src/index.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "ts-node src/index.ts",
+    "start": "tsc && node dist/src/index.js",
     "pm2": "tsc && pm2 start pm2.config.js",
     "data:populate": "ts-node src/seeder.ts -populate",
     "data:destroy": "ts-node src/seeder.ts -destroy"
