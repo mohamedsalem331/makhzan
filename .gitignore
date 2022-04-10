@@ -6,7 +6,6 @@ node_modules/
 coverage/
 
 /dist
-/build
 
 # misc
 .DS_Store
