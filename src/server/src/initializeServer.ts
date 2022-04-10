@@ -10,7 +10,6 @@ import uploadRouter from './routes/uploadRouter'
 
 export default function initializeServer() {
   const app = express()
-  const isProduction = process.env.NODE_ENV === 'production'
 
   if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
@@ -21,9 +20,9 @@ export default function initializeServer() {
 
   app.use(express.static(__dirname + '/uploads'))
 
-  app.use('/users', userRouter)
-  app.use('/warehouses', warehouseRouter)
-  app.use('/uploads', uploadRouter)
+  app.use('/api/users', userRouter)
+  app.use('/api/warehouses', warehouseRouter)
+  app.use('/api/uploads', uploadRouter)
   app.use(notFoundRoute)
 
   return app

@@ -4,11 +4,11 @@
   "description": "web-based application for finding warehouse property",
   "scripts": {
     "idependencies": "cd src && cd server && npm install && cd ../client && npm install",
-    "client-build": "cd src && cd client && npm run build",
+    "build": "cd src && cd client && npm run build",
     "test": "cd src && cd client && npm run test",
     "client": "cd src && cd client && npm start",
     "server": "cd src && cd server && npm run dev",
-    "build": "cd src && cd server && npm run start"
+    "server-build": "cd src && cd server && npm run build"
   },
   "author": "Mohamed Salem",
   "license": "MIT"
